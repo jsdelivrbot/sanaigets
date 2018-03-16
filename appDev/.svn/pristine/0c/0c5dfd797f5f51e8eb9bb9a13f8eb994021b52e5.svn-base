@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<body>
+		
+		<img src="img/button_xz.png" data-rjs="img/1x/button_xz.png" style="width: 100px;height: 50px;"/>
+		<div style="background-image: url(img/button_xz.png);width: 100px;height: 50px;background-size: 100% 100%;" data-rjs="img/1x/button_xz.png"></div>
+	<script type="text/javascript" src="js/retina.min.js"></script>
+	<script type="text/javascript">
+		retinajs();
+		
+	</script>
+	</body>
+</html>

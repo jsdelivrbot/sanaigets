@@ -1,0 +1,62 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+
+/*一级页面*/
+import Index from '@/components/index/Index'
+import Tab2 from '@/components/tab2/Tab2'
+import Tab3 from '@/components/tab3/Tab3'
+import Personalzone from '@/components/personalzone/Personalzone'
+/*二级页面*/
+import Hello from '@/components/personalzone/Hello'
+import XhfHello from '@/components/personalzone/Xhf'
+import Login from '@/components/personalzone/login/Login'
+import Register from '@/components/personalzone/register/Register'
+
+
+Vue.use(Router);
+
+export default new Router({
+//	mode: 'history',
+  routes: [
+  	{// 一级页面 :tab 第一帧---首页
+      path: '/',
+      name: 'Index',
+      component: Index
+    },
+    {// 一级页面 :tab 第二帧---tab2
+      path: '/tab2',
+      name: 'Tab2',
+      component: Tab2
+    },
+    {// 一级页面 :tab 第三帧---tab3
+      path: '/tab3',
+      name: 'Tab3',
+      component: Tab3
+    },
+     {// 一级页面 :tab 第四帧---个人中心
+      path: '/personalzone',
+      name: 'Personalzone',
+      component: Personalzone
+    },
+    {// Personalzone二级页面 :hello
+      path: '/personalzone/hello',
+      name: 'Hello',
+      component: Hello
+    },
+    {// Personalzone二级页面 :登录
+      path: '/personalzone/login',
+      name: 'Login',
+      component: Login
+    },
+    {// Personalzone二级页面 :注册
+      path: '/personalzone/register',
+      name: 'Register',
+      component: Register
+    },   
+    {// Personalzone二级页面 : xhf
+      path: '/personalzone/xhf',
+      name: 'XhfHello',
+      component: XhfHello
+    }
+  ]
+})

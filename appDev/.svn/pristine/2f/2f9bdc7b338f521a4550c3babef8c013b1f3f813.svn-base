@@ -1,0 +1,33 @@
+<!--author：sanaigets;effect:一个简单的描述该文件功能-->
+<template>
+	<div class="xhf-aaaa">
+		<h1>这是一个纯示范节点</h1>
+		<div>{{xhfHello}}</div>  
+    	<button @click="changeHello">点击</button>
+    	<button @click="xhfChangeToHello">切换回Hello页</button>
+	</div>	
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+export default {
+  name: 'hello',
+  computed: {
+    ...mapGetters([
+      "xhfHello"
+    ])
+  },
+  methods: {
+    changeHello () {
+      this.$store.dispatch('xhfHello');
+    },
+    xhfChangeToHello(){
+    	this.$router.push({ path: '/' })
+    }
+  }
+}
+</script>
+
+<style scoped>
+	h1{color: red;font-size: 40px;}
+</style>

@@ -1,0 +1,12 @@
+��ӭ��������ӵ��svn���� Ҳ�?��һ���ë��������Ŷ��
+netstat -tnlp	//�鿴ռ�õĶ˿ں�
+svnserve -d -r /usr/local/svnRepo/first   //����svn����
+kill -9 ��̺�   //ɱ����ID�Ľ��		
+
+��������ͬ����ָ���ļ���ô�����ԣ�
+svn������    svnserve -d -r /usr/local/svnRepo/first
+
+8080：   webupdev
+3000：  webup
+查看状态   pm2 list  
+查日志  pm2 logs appDev

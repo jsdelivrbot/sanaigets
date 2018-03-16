@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue2.x基本结构备注</title>
+	<meta charset="UTF-8"/>
+	<style type="text/css">
+		.step{border: 1px solid red;margin-bottom: 5px;}
+	</style>
+</head>	
+<body>
+<!--step1:{{数据参数}}-->
+	<div id="app" title="我是step1" class="step">
+	  {{ message }}
+	</div>
+<!--step2：v-bind：title="参数名" / :title="参数名"-->
+	<div id="app-2" class="step">
+	  <span v-bind:title="message">
+	    鼠标悬停几秒钟查看此处动态绑定的提示信息！
+	  </span>
+	</div>
+<!--step3：v-if条件： v-if="参数名"-->
+	<div id="app-3" class="step">
+	  <p v-if="seen">现在你看到我了</p>
+	</div>
+<!--step4：v-for循环 v-for="指代变量 in 数组变量"-->
+	<div id="app-4" class="step">
+	  <ol>
+	    <li v-for="todo in todos">
+	      {{ todo.text }}
+	    </li>
+	  </ol>
+	</div>
+<!--step5：v-on指令(v-on:click="方法名" === @click="方法名") 绑定一个调用 Vue 实例方法的事件监听器-->
+	<div id="app-5" class="step">
+	  <p>{{ message }}</p>
+	  <button v-on:click="reverseMessage">逆转消息</button>
+	</div>
+<!--step6：v-model指令   双向绑定-->
+	<div id="app-6" class="step">
+	  <p>{{ message }}</p>
+	  <input v-model="message">	  
+	  <span v-once>v-once指令:This will never change: {{ message }}</span>
+	</div>
+<!--step7:组件-->	
+	<div id="app-7">
+	  <ol>
+	    <!-- 现在我们为每个todo-item提供待办项对象    -->
+	    <!-- 待办项对象是变量，即其内容可以是动态的 -->
+	    <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+	  </ol>
+	</div>
+<!--Vue 实例-->
+<br /><br />
+<pre>
+Vue 实例
+
+构造器
+
+每个 Vue.js 应用都是通过构造函数 Vue 创建一个 Vue 的根实例 启动的：
+var vm = new Vue({
+  // 选项
+})
+虽然没有完全遵循 MVVM 模式， Vue 的设计无疑受到了它的启发。因此在文档中经常会使用 vm (ViewModel 的简称) 这个变量名表示 Vue 实例。
+在实例化 Vue 时，需要传入一个选项对象，它可以包含数据、模板、挂载元素、方法、生命周期钩子等选项。全部的选项可以在 API 文档中查看。
+可以扩展 Vue 构造器，从而用预定义选项创建可复用的组件构造器：
+var MyComponent = Vue.extend({
+  // 扩展选项
+})
+// 所有的 `MyComponent` 实例都将以预定义的扩展选项被创建
+var myComponentInstance = new MyComponent()
+尽管可以命令式地创建扩展实例，不过在多数情况下建议将组件构造器注册为一个自定义元素，然后声明式地用在模板中。我们将在后面详细说明组件系统。现在你只需知道所有的 Vue.js 组件其实都是被扩展的 Vue 实例。
+属性与方法
+
+每个 Vue 实例都会代理其 data 对象里所有的属性：
+var data = { a: 1 }
+var vm = new Vue({
+  data: data
+})
+vm.a === data.a // -> true
+// 设置属性也会影响到原始数据
+vm.a = 2
+data.a // -> 2
+// ... 反之亦然
+data.a = 3
+vm.a // -> 3
+注意只有这些被代理的属性是响应的。如果在实例创建之后添加新的属性到实例上，它不会触发视图更新。我们将在后面详细讨论响应系统。
+除了 data 属性， Vue 实例暴露了一些有用的实例属性与方法。这些属性与方法都有前缀 $，以便与代理的 data 属性区分。例如：
+var data = { a: 1 }
+var vm = new Vue({
+  el: '#example',
+  data: data
+})
+vm.$data === data // -> true
+vm.$el === document.getElementById('example') // -> true
+// $watch 是一个实例方法
+vm.$watch('a', function (newVal, oldVal) {
+  // 这个回调将在 `vm.a`  改变后调用
+})
+注意，不要在实例属性或者回调函数中（如 vm.$watch('a', newVal => this.myMethod())）使用箭头函数。因为箭头函数绑定父上下文，所以 this 不会像预想的一样是 Vue 实例，而是 this.myMethod 未被定义。
+
+实例生命周期
+
+每个 Vue 实例在被创建之前都要经过一系列的初始化过程。例如，实例需要配置数据观测(data observer)、编译模版、挂载实例到 DOM ，然后在数据变化时更新 DOM 。在这个过程中，实例也会调用一些 生命周期钩子 ，这就给我们提供了执行自定义逻辑的机会。例如，created 这个钩子在实例被创建之后被调用：
+var vm = new Vue({
+  data: {
+    a: 1
+  },
+  created: function () {
+    // `this` 指向 vm 实例
+    console.log('a is: ' + this.a)
+  }
+})
+// -> "a is: 1"
+也有一些其它的钩子，在实例生命周期的不同阶段调用，如 mounted、 updated 、destroyed 。钩子的 this 指向调用它的 Vue 实例。一些用户可能会问 Vue.js 是否有“控制器”的概念？答案是，没有。组件的自定义逻辑可以分布在这些钩子中。
+生命周期图示
+
+下图说明了实例的生命周期。你不需要立马弄明白所有的东西，不过以后它会有帮助。
+<p><img src="./images/lifecycle.png" alt="Lifecycle"></p>
+</pre>	
+<br /><br />
+<!--step8: v-html指令 支持节点渲染而不是字符串渲染-->
+<div id="app-8" v-html="tempHtmlNode"  class="step"></div>
+<!--step9 v-bind:style 的对象语法十分直观——看着非常像 CSS ，其实它是一个 JavaScript 对象。 CSS 属性名可以用驼峰式（camelCase）或短横分隔命名（kebab-case）：-->
+<div id="app-9" v-bind:style="styleObject"  class="step">
+	<pre>
+		"\div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"\" "\/div\"
+		data: {
+		  activeColor: 'red',
+		  fontSize: 30
+		}
+		也行
+	</pre>
+</div>
+<!--step10:条件渲染-->
+<div id="app-10" class="step">
+	<div v-if="type === 'A'">
+	  A
+	</div>
+	<div v-else-if="type === 'B'">
+	  B
+	</div>
+	<div v-else-if="type === 'C'">
+	  C
+	</div>
+	<div v-else>
+	  Not A/B/C 而是： {{type}}
+	</div>
+</div>
+<!--step11:v-for 1：object支持对象的 value, key, index 三个参数   2：整数将会循环次数且n等于当前数值-->
+<div id="app-11" class="step">
+	<div v-for="(value, key, index) in object">
+	  {{ index }}. {{ key }} : {{ value }}
+	</div>
+	<div>
+	  <span v-for="n in 10">{{ n }}<br /></span>
+	</div>
+</div>
+<!--数组跟新检测-->
+<div class="step">	
+	<p>
+		<span style="color: red;font-size: 25px;">数组!!</span>
+		Vue 包含一组观察数组的变异方法，所以它们也将会触发视图更新。这些方法如下：
+		push()
+		pop()
+		shift()
+		unshift()
+		splice()
+		sort()
+		reverse()
+		<br />
+		注意事项:
+		<br />
+		由于 JavaScript 的限制， Vue 不能检测以下变动的数组：
+		当你利用索引直接设置一个项时，例如： vm.items[indexOfItem] = newValue
+		当你修改数组的长度时，例如： vm.items.length = newLength
+		为了解决第一类问题，以下两种方式都可以实现和 vm.items[indexOfItem] = newValue 相同的效果， 同时也将触发状态更新：
+		// Vue.set
+		Vue.set(example1.items, indexOfItem, newValue)
+		// Array.prototype.splice`
+		example1.items.splice(indexOfItem, 1, newValue)
+		为了解决第二类问题，你也同样可以使用 splice：
+		example1.items.splice(newLength)
+	</p>	
+</div>
+<!--事件修饰符-->
+<pre class="step">
+事件修饰符
+
+在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。尽管我们可以在 methods 中轻松实现这点，但更好的方式是：methods 只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。
+为了解决这个问题， Vue.js 为 v-on 提供了 事件修饰符。通过由点(.)表示的指令后缀来调用修饰符。
+.stop
+.prevent
+.capture
+.self
+.once
+<pre><div class="line"><span class="comment">&lt;!-- 阻止单击事件冒泡 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.stop</span>=<span class="string">"doThis"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 提交事件不再重载页面 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>=<span class="string">"onSubmit"</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 修饰符可以串联  --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.stop.prevent</span>=<span class="string">"doThat"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 只有修饰符 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 添加事件侦听器时使用事件捕获模式 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:click.capture</span>=<span class="string">"doThis"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:click.self</span>=<span class="string">"doThat"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre>
+2.1.4 新增v-on:click.once="事件名" 不像其它只能对原生的 DOM 事件起作用的修饰符，.once 修饰符还能被用到自定义的组件事件上.
+</pre>
+
+<!--键盘按键修饰符-->
+<pre class="step">
+	按键修饰符
+
+在监听键盘事件时，我们经常需要监测常见的键值。 Vue 允许为 v-on 在监听键盘事件时添加按键修饰符：
+<pre><div class="line"><span class="comment">&lt;!-- 只有在 keyCode 是 13 时调用 vm.submit() --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">v-on:keyup.13</span>=<span class="string">"submit"</span>&gt;</span></div></pre>
+<figure class="highlight html"><table><tbody><tr><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 同上 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">v-on:keyup.enter</span>=<span class="string">"submit"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 缩写语法 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> @<span class="attr">keyup.enter</span>=<span class="string">"submit"</span>&gt;</span></div></pre></td></tr></tbody></table></figure>
+全部的按键别名：
+.enter
+.tab
+.delete (捕获 “删除” 和 “退格” 键)
+.esc
+.space
+.up
+.down
+.left
+.right
+可以通过全局 config.keyCodes 对象自定义按键修饰符别名：
+// 可以使用 v-on:keyup.f1
+Vue.config.keyCodes.f1 = 112
+
+2.1.0 新增
+可以用如下修饰符开启鼠标或键盘事件监听，使在按键按下时发生响应。
+.ctrl
+.alt
+.shift
+.meta
+注意：在Mac系统键盘上，meta对应命令键 (⌘)。在Windows系统键盘meta对应windows徽标键(⊞)。在Sun操作系统键盘上，meta对应实心宝石键 (◆)。在其他特定键盘上，尤其在MIT和Lisp键盘及其后续，比如Knight键盘，space-cadet键盘，meta被标记为“META”。在Symbolics键盘上，meta被标记为“META” 或者 “Meta”。
+<figure class="highlight html"><table><tbody><tr><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Alt + C --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> @<span class="attr">keyup.alt.67</span>=<span class="string">"clear"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Ctrl + Click --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> @<span class="attr">click.ctrl</span>=<span class="string">"doSomething"</span>&gt;</span>Do something<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></tbody></table></figure>
+</pre>
+<!--step12  带名字的slot：内容分发 模板插值-->
+<div id="app-12" class="step">
+	<app-layout>
+	  <h1 slot="header">这里是一个页面标题slot header</h1>
+	  <p>中间的自定义内容。非slot部分</p>
+	  <p>另一个中间的自定义内容。非slot部分</p>
+	  <p slot="footer">这里是一个页面底部slot footer</p>
+	</app-layout>
+</div>
+<!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+<script src="./js/vue2.min.js"></script>
+<script type="text/javascript">
+/*step1*/
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Step1: Hello Vue!'
+  }
+})
+/*step2*/
+var app2 = new Vue({
+  el: '#app-2',
+  data: {
+    message: '页面加载于 ' + new Date()
+  }
+})
+/*step3*/
+var app3 = new Vue({
+  el: '#app-3',
+  data: {
+    seen: true
+  }
+})
+/*step4*/
+var app4 = new Vue({
+  el: '#app-4',
+  data: {
+    todos: [
+      { text: '首先学习 JavaScript' },
+      { text: '然后学习 Vue1.x' },
+      { text: '现在学习 Vue2.x' },
+      { text: '最好整个牛项目' }
+    ]
+  }
+})
+/*step5*/
+var app5 = new Vue({
+  el: '#app-5',
+  data: {
+    message: 'Hello Vue.js!'
+  },
+  methods: {
+    reverseMessage: function () {
+      this.message = this.message.split('').reverse().join('')
+    }
+  }
+})
+/*step6*/
+var app6 = new Vue({
+  el: '#app-6',
+  data: {
+    message: 'Hello Vue!双向数据绑定'
+  }
+})
+/*step7   !：匿名函数直接执行*/
+!function () {
+	Vue.component('todo-item', {
+	  props: ['todo'],
+	  template: '<li :todo="todo.text">{{ todo.text }}</li>'
+	})
+	var app7 = new Vue({
+	  el: '#app-7',
+	  data: {
+	    groceryList: [
+	      { text: '自定义属性todo.text1' },
+	      { text: '自定义属性todo.text2' },
+	      { text: '自定义属性todo.text3' },
+	      { text: '自定义属性todo.text4' }
+	    ]
+	  }
+	})
+}()
+/*step8*/
+var app8 = new Vue({
+  el: '#app-8',
+  data: {
+    tempHtmlNode: '<p> 我是p节点! </p>'
+  }
+})
+/*step9*/
+var app9 = new Vue({
+  el: '#app-9',
+  data: {
+	  styleObject: {
+	    color: 'red',
+	    fontSize: '13px'
+	  }
+   }
+})
+/*step10*/
+var app10 = new Vue({
+  el: '#app-10',
+  data: {
+	  type: "a"
+   }
+})
+/*step11*/
+new Vue({
+  el: '#app-11',
+  data: {
+    object: {
+      FirstName: '我是value1',
+      LastName: '我是value2',
+      Age: 30
+    }
+  }
+})
+/*step12*/
+!function () {
+	Vue.component("app-layout",{
+		template:'<div class="container"><header><slot name="header"></slot></header><main><slot></slot></main><footer><slot name="footer"></slot></footer></div>',
+		data: function () {
+	    return {
+	    
+	    }
+	  }
+	})
+	var app12 = new Vue({
+	  el: '#app-12',
+	  data: {
+	    
+	  }
+	})
+}()
+
+</script>
+</body>
+</html>

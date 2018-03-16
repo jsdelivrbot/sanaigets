@@ -1,0 +1,17 @@
+<template>
+	<div class="register">
+		我是注册页面 路径：@/components/personalzone/register/Register
+		
+	</div>
+</template>
+
+<script>
+
+export default {
+	name:"register"
+}
+</script>
+
+<style lang="less" scoped>
+	
+</style>

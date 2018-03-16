@@ -1,0 +1,4 @@
+.jQdialog{ position: absolute; background: #eee; border: 1px solid #666; color: #333}
+#gamebox{position: relative; border:1px solid #666 ; margin: 0 auto; overflow: hidden;}
+.car{ position: absolute;/*background: url(../img/dr.jpg) !important;background-size: 100% 100% !important;*/}
+#scoreBox{ width: 100%; height: 25px; line-height: 25px; background: #000; color: #0f0;}

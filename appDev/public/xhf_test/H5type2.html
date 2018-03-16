@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>H5单屏tpye2</title>
+		<meta name="viewport" content="width=750, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+	</head>
+	<style type="text/css">
+		html,body{
+			overflow: hidden;
+			position: relative;
+		    width: 100%;
+    		height: 100%;
+    		background: #F2F2F2;
+		}
+		body{
+    		max-width: 750px;
+			margin: 0 auto;
+			overflow: hidden;
+			background: #FFF;
+			font-size: 12px;
+		}
+		.container{
+			overflow: hidden;
+			position: relative;
+		    width: 100%;
+    		height: 100%;
+		}
+		p{
+			height: 12px;
+			line-height: 12px;
+			font-size: 12px;
+			background: yellow;
+			overflow: hidden;
+		}
+		span{
+			display: inline-block;
+			height: 12px;
+			background: green;
+			color: blue;
+			overflow: hidden;
+		}
+		.h12{font-size: 12px;height: 12px;line-height: 12px;}
+		.h14{font-size: 14px;height: 14px;line-height: 14px;}
+		.h16{font-size: 16px;height: 16px;line-height: 16px;}
+		.h18{font-size: 18px;height: 18px;line-height: 18px;}
+		.h20{font-size: 20px;height: 20px;line-height: 20px;}
+		.h22{font-size: 22px;height: 22px;line-height: 22px;}
+		.h24{font-size: 24px;height: 24px;line-height: 24px;}
+		.page{
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+		}
+		.next{
+			animation: next 0.5s linear 0s 1;
+			animation-fill-mode: forwards;
+			font-size: 16px;
+		}
+		@keyframes next{
+			from{transform: translateY(100%);z-index: -1;}
+			to{transform: translateY(0);z-index: 100;}
+		}
+		 canvas {
+		  position: absolute;
+		  z-index: 0;
+		  top: 0;
+		  left: 0;
+		  background-color: black;
+		  box-shadow: 0 0 6px black;
+		}
+		.circle{
+			width: 300px;
+			height: 300px;
+			border-radius: 50%;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -150px;
+			margin-top: -150px;
+			background: #fff;
+		}
+		#a{z-index: 10;background: red;
+			perspective: 1000px;
+			transform-style: preserve-3d;
+		}			
+	</style>
+	<body>
+		<div class="container">
+			<div class="page">
+				<p>我是测试12px字体大小的内容<span class="h12">12px高度</span></p>
+				<span class="h12">12px高度</span>
+				<span class="h14">14px高度</span>
+				<span class="h16">16px高度</span>
+				<span class="h18">18px高度</span>
+				<span class="h20">20px高度</span>
+				<span class="h22">22px高度</span>
+				<span class="h24">24px高度</span>			
+			</div>
+			<div class="page" id="a">2
+				<canvas id="c"></canvas>
+				<div class="circle"></div>
+			</div>
+			<div class="page">3</div>
+			<div class="page">4</div>
+			<div class="page">5</div>
+			<div class="page">6</div>
+			<div class="page">7</div>
+		</div>
+
+		<script type="text/javascript">
+			var w =  c.width = 750//window.innerWidth,
+				h = c.height = window.innerHeight,
+				ctx = c.getContext('2d'),
+				cen = {
+					x: w / 2,
+					y: h / 2
+				},
+				radiant = 0,
+				particles = [],
+				particleCount = 1,
+				frame = 0,
+				middleCover = ctx.createRadialGradient(cen.x, cen.y, 0, cen.x, cen.y, 20);
+			middleCover.addColorStop(0, 'rgba(0, 0, 0, .1)');
+			middleCover.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+			function anim() {
+				window.requestAnimationFrame(anim);
+				update();
+			}
+			anim();
+  
+			function Particle() {
+				this.x = cen.x;
+				this.y = cen.y;
+				this.vx = Math.cos(radiant);
+				this.vy = Math.sin(radiant);
+				this.ax = this.vx / 50;
+				this.ay = this.vy / 50;
+				this.color = 'hsl(rad, 80%, 50%)'
+					.replace('rad', ((radiant / Math.PI) * 180) | 0);
+			}
+			Particle.prototype.update = function() {
+				this.x += this.vx += this.ax;
+				this.y += this.vy += this.ay;
+				ctx.fillStyle = this.color;
+				ctx.fillRect(this.x, this.y, 2, 2);
+			}
+
+			function update() {
+				ctx.fillStyle = 'rgba(0, 0, 0, .04)';
+				ctx.fillRect(0, 0, w, h);
+				radiant += .5;
+				radiant %= Math.PI * 2;
+				++frame;
+				if(frame > particleCount) {
+					frame = 0;
+					particles.push(new Particle);
+				}
+				for(var i = 0; i < particles.length; ++i) {
+					var par = particles[i];
+					par.update();
+					if(par.x > w || par.x < 0 || par.y > h || par.y < 0) {
+						particles.splice(i, 1);
+						--i;
+					}
+				}
+				ctx.fillStyle = middleCover;
+				ctx.beginPath();
+				ctx.arc(cen.x, cen.y, 20, 0, Math.PI * 2);
+				ctx.fill();
+			}
+			document.addEventListener('click', function() {
+				for(var i = 0; i < 10; ++i) update();
+			})
+			for(var i = 0; i < 100; ++i) update();
+		</script>
+		<script type="text/javascript">
+			//setTimeout('document.getElementsByClassName("page")[0].setAttribute("class","page next")',2000)			
+		</script>
+	</body>
+</html>

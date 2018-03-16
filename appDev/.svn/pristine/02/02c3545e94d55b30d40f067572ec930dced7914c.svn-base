@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/init.css"/>
+	</head>
+	<style type="text/css">
+		#demo{
+			width: 400px;
+			height: 400px;
+			/*background-color: red;*/
+			margin: 50px auto;
+			animation: blink 1s linear 0s infinite alternate;
+		}
+		@keyframes blink{
+			from{opacity: 0;}
+			to{opacity: 1;}
+		}
+	</style>
+	<body>
+		<div id="demo"><img src="img/button_xz@2x.png" alt="" /></div>
+	</body>
+</html>

@@ -1,0 +1,16 @@
+<!--孙响实验专用-->
+<template>
+	<div class="hello">
+		孙响实验专用
+	</div>
+</template>
+
+<script>
+export default {
+	name:"we"
+}
+</script>
+
+<style lang="less" scoped>
+	
+</style>

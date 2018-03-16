@@ -1,0 +1,55 @@
+<template>
+	<div class="pageheadbar">
+		<img src="//gfire.top:8080/vueapp/vueProject/src/images/icon-back.png" class="pageheadbar-icon" v-show="headInfo.back" @click="goback" />
+		{{headInfo.name}}
+	</div>
+</template>
+
+<script>
+export default {
+	name:"personalzonelistitem",
+	props: {
+		headInfo: {
+            type: Object,
+            default() {
+                return {
+                    name: '公共组件--Pageheaderbar',
+                    back:	false
+                }
+            }
+        }
+    },
+	created() {
+	  	
+	},
+	methods:{
+		goback : function () {
+			let that = this;
+			that.$router.go(-1);
+		}
+	}
+}
+</script>
+
+<style lang="less" scoped>
+@import '../../css/common.less';
+.pageheadbar{
+	position:relative;
+	background: #fff;
+	height: 0.5rem;
+	line-height: 0.5rem;
+	text-align:center;
+	/*font-weight:bold;*/
+	.fontsize(0.17rem);	
+	.pageheadbar-icon{
+		width: 0.2rem;
+		height: 0.2rem;
+		position: absolute;
+		left: 0.2rem;
+		top: 0.15rem;
+	}
+}	
+	
+	
+	
+</style>

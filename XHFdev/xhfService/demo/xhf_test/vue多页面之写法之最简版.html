@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue2.x</title>
+	<meta charset="UTF-8"/>
+	<style type="text/css">
+		div{
+			animation-play-state: running;
+		}
+	</style>
+</head>	
+<body>
+	<div id="app">
+		<div v-on:click="addStr1">
+		  {{ message }}
+		  <br />
+		   a => {{a}}
+		  <br /> 
+		   b => {{b}}
+	   </div>
+	   <br>
+	   <span @click="del">
+	   		b => {{b}}
+	   	</span>	
+	</div>
+	
+	
+<!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+<script src="./js/vue.js"></script>
+<script type="text/javascript">
+	var app = new Vue({	//实例化vue对象
+	  el: '#app',	//节点
+	  data: {//数据
+	  	num:0,
+	  	a:1,
+	    message: 'Hello Vue!'
+	  },
+	  methods:{// 方法
+	  	addStr1:function () {
+	  		this.a = this.a + 1;
+	  	},
+	  	del:function () {
+	  		this.a = this.a - 1;
+	  	}
+	  },
+	  computed:{// 计算
+	  	/*b:{	  		
+            get:function(){
+                return this.a+2;
+            },
+            set:function(val){
+                return this.a=val;
+            }
+        }*/
+       b:function () {
+       		return this.a + "《0.0》";
+       }
+	  }
+	})
+				
+</script>
+</body>
+</html>

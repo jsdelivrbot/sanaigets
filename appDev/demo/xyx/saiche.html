@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/main.css" type="text/css" rel="stylesheet" />
+		<style type="text/css">
+			.jQdialog{border-radius: 25%;text-align: center;line-height: 200px;}
+			#null{background: url(img/fenggeyihao.png) !important;background-size: 100% 100% !important;}
+		</style>
+	</head>
+	<body>
+		<button class="agn">重新开始</button>
+		<div id="acc" style="position: absolute;left: 0;bottom: 0;">
+			
+		</div>
+		<div id="gamebox"></div>
+		<div id="scoreBox"></div>
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js" ></script>
+		<script type="text/javascript" src="js/objCommon.js" ></script>
+		<script type="text/javascript" src="js/jqdialog.js" ></script>
+		<script type="text/javascript" src="js/index.js" ></script>
+	</body>
+	<script type="text/javascript">   	
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   			plus.accelerometer.watchAcceleration( function ( a ) {
+   				
+				acc.innerText =  "x:" + a.xAxis + "\ny:" + a.yAxis + "\nz:" + a.zAxis;
+				if (a.xAxis>0) {
+					globalObj.player.config.pir="right";
+				}else{
+					globalObj.player.config.pir="left";
+				}
+			}, function ( e ) {
+				alert( "Acceleration error: " + e.message ); 
+			} );
+   		});  		
+    </script>
+</html>

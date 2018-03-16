@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>微信修改分享内容</title>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		
+	<script type="text/javascript">	
+    /*var imgUrl = 'http://xxxx';
+    var lineLink = 'http://xxxxx';
+    var descContent = "更多功能，请关注xxx订阅号";
+    var shareTitle = 'xxxx';
+    var appid = '';
+ 
+    function shareFriend() {
+        WeixinJSBridge.invoke('sendAppMessage',{
+            "appid": appid,
+            "img_url": imgUrl,
+            "img_width": "640",
+            "img_height": "640",
+            "link": lineLink,
+            "desc": descContent,
+            "title": shareTitle
+        }, function(res) {
+            _report('send_msg', res.err_msg);
+        })
+    }
+    function shareTimeline() {
+        WeixinJSBridge.invoke('shareTimeline',{
+            "img_url": imgUrl,
+            "img_width": "640",
+            "img_height": "640",
+            "link": lineLink,
+            "desc": descContent,
+            "title": shareTitle
+        }, function(res) {
+            _report('timeline', res.err_msg);
+        });
+    }
+    function shareWeibo() {
+        WeixinJSBridge.invoke('shareWeibo',{
+            "content": descContent,
+            "url": lineLink,
+        }, function(res) {
+            _report('weibo', res.err_msg);
+        });
+    }
+    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+ 
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function(argv){
+            shareFriend();
+        });
+ 
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function(argv){
+            shareTimeline();
+        });
+ 
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function(argv){
+            shareWeibo();
+        });
+    }, false);*/
+	</script>
+	<script src="js/wx.config.js" type="text/javascript" charset="utf-8"></script>
+	
+	
+	<!--第二种修改配置设置-->
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	$(function () {	
+		function isWeiXin() {
+			var ua = window.navigator.userAgent.toLowerCase();
+			if(ua.match(/MicroMessenger/i) == 'micromessenger') {
+				return true
+			} else {
+				return false
+			}
+		}
+		var _u="https://m.icaibei.net/thirdParty/weixin/getJsSdkSign?url="+encodeURIComponent(""+location.href);
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		    window.shareData = {
+		        "timeLineLink": ""+location.href,    
+		        "sendFriendLink": ""+location.href,
+		        "weiboLink": ""+location.href,
+		        "tTitle": "彩贝财经名师云集，牛人炒股看个够！",
+		        "tContent": "大咖坐镇！$room.nick正在直播  $room.liveName，看直播、查行情、问股票、学笔记，就上彩贝财经。",
+		        "fTitle": "彩贝财经名师云集，牛人炒股看个够！",
+		        "fContent": "大咖坐镇！$room.nick正在直播  $room.liveName，看直播、查行情、问股票、学笔记，就上彩贝财经。",
+		        "wContent": "大咖坐镇！$room.nick正在直播  $room.liveName，看直播、查行情、问股票、学笔记，就上彩贝财经。"
+		        };
+	        
+	        WeixinJSBridge.on('menu:share:appmessage', function (argv) {// 好友
+	            WeixinJSBridge.invoke('sendAppMessage', {
+	                "img_url": "$room.avatar",//"{ 老师头像 }"
+	                "img_width": "301",
+	                "img_height": "301",
+	                "link": window.shareData.sendFriendLink,
+	                "desc": window.shareData.fContent,
+	                "title": window.shareData.fTitle
+	            }, function (res) {
+	                _report('send_msg', res.err_msg);
+	            })
+	        });
+	        
+	        WeixinJSBridge.on('menu:share:timeline', function (argv) {// 朋友圈
+	            WeixinJSBridge.invoke('shareTimeline', {
+	                "img_url": "$room.avatar",
+	                "img_width": "401",
+	                "img_height": "275",
+	                "link": window.shareData.timeLineLink,
+	                "desc": window.shareData.tContent,
+	                "title": window.shareData.tTitle
+	            }, function(e){
+	            		alert(e.err_msg);
+	            });
+	        });
+	 
+	    }, false);
+		if(isWeiXin()) {	
+			$.ajax({
+			type:"get",
+			url:_u,
+			async:true,
+			success:function (e) {
+					wx.config({
+					    debug: false,
+					    appId: ''+e.data.appId,
+					    timestamp: e.data.timestamp,
+					    nonceStr: ''+e.data.nonceStr,
+					    signature: ''+e.data.signature,
+					    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+					});
+						    				  				  
+			    }
+			});
+		}	
+	})	
+	</script>
+	</head>
+	<body>
+		<h1>分享内容定制-jssdk</h1>
+	</body>
+</html>

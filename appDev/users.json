@@ -1,0 +1,26 @@
+{
+   "user1" : {
+      "name" : "root",
+	  "password" : "root",
+	  "profession" : "teacher",
+	  "id": 1
+   },
+   "user2" : {
+      "name" : "xiehaifeng",
+	  "password" : "xiehaifeng",
+	  "profession" : "锋哥无敌",
+	  "id": 2
+   },
+   "user3" : {
+      "name" : "sunxiang",
+	  "password" : "sunxiang",
+	  "profession" : "响哥无敌",
+	  "id": 3
+   },
+   "user4" : {
+      "name" : "hanting",
+	  "password" : "hanting",
+	  "profession" : "韩婷无敌",
+	  "id": 3
+   }
+}

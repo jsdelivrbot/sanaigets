@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html >
+<head lang = "en" >
+    <meta charset = "UTF-8" >
+    <title >canvas</title >
+    <link rel = "stylesheet" href = "/css/reset.css" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="./js/jquery.min.js"></script >
+    <script src="./js/rem6.js"></script >
+    /*<!--<script src="./js/console.js"></script >-->*/
+    <style >
+        html{background: #f2f2f2;height: 100%}
+        body{
+            width: 100%;
+            max-width: 750px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            min-height: 100%;
+        }
+        h1,h2{text-align: center;font-size: 20px;}
+        .main{
+            height: auto;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .clock{
+            width: 100vw;
+            height: 0;
+            padding-top: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        p{
+            font-size: 18px;
+            line-height:0.3rem;
+        }
+        a{
+            margin-top: 0.1rem;
+            display: block;
+            text-align: center;
+        }
+    </style >
+</head >
+<body >
+    <h1>canvas</h1>
+    <hr />
+    <div class="clock" style="
+            width: 100vw;
+            height: 0;
+            padding-top: 100%;
+            position: relative;
+            overflow: hidden;">
+        <canvas id="myclock"
+                width="1000"
+                height="1000"
+                style="display: block;
+                position: absolute;
+                top: 0;left: 0;
+                transform: scale(1);
+                transform-origin: left top">
+            该浏览器不支持canvas绘图功能，请更新该浏览器或者移步到google浏览器
+        </canvas>
+    </div>
+    <h2>当前时间：<span class="nowtime"></span></h2>
+    <hr />
+    <h2>Link</h2>
+    <a href = "/map.html" >网站地图</a >
+    <a href = "/highcharts-cb.html" >分时图</a >
+    <a href = "/index.html" >登录</a >
+    <a href = "vue2base.html" >Vue2.x部分基础语法</a >    
+    <a href = "/demo/xhf_test/jsfileread.html" >js本地处理文件预览图片</a >
+    <a href = "/demo/xhf_test/piccanvasbase64.html" >图片canvas过滤base64准备 上传piccanvasbase64.html</a >
+<script >
+    /*实时时钟*/
+    function clock(){
+        var now = new Date();
+        var sec = now.getSeconds();
+        var min = now.getMinutes();
+        var hr  = now.getHours();
+        hr = hr>=12 ? hr-12 : hr;
+        var ctx = document.getElementById('myclock').getContext('2d');
+        ctx.save();
+        ctx.clearRect(0,0,1000,1000);
+        ctx.translate(500,500);
+        //ctx.scale(0.3,0.3);
+        ctx.rotate(-Math.PI/2);
+        ctx.strokeStyle = "black";
+        ctx.fillStyle = "black";
+        ctx.lineWidth = 10;
+
+        // Hour marks
+        ctx.save();
+        for (var i=0;i<12;i++){
+            ctx.beginPath();
+
+            ctx.moveTo(500,0);
+            ctx.lineTo(450,0);
+            ctx.stroke();
+            ctx.closePath();
+            ctx.rotate(Math.PI/6);
+        }
+        ctx.restore();
+
+        // Minute marks
+        ctx.save();
+        ctx.strokeStyle = "#333";
+        ctx.lineWidth = 5;
+        for (i=0;i<60;i++){
+            if (i%5!=0) {
+                ctx.beginPath();
+                ctx.moveTo(500,0);
+                ctx.lineTo(475,0);
+                ctx.stroke();
+            }
+            ctx.rotate(Math.PI/30);
+        }
+        ctx.restore();
+
+        // Hours
+        ctx.save();
+        ctx.rotate( hr*(Math.PI/6) + (Math.PI/360)*min + (Math.PI/21600)*sec ) ;
+        ctx.strokeStyle = "green";
+        ctx.fillStyle = "green";
+        ctx.lineWidth = 10;
+        ctx.beginPath();
+        ctx.moveTo(-50,0);
+        ctx.lineTo(150,0);
+        ctx.stroke();
+        ctx.restore();
+
+        // Minutes
+        ctx.save();
+        ctx.rotate( (Math.PI/30)*min + (Math.PI/1800)*sec );
+        ctx.strokeStyle = "#0000ff";
+        ctx.fillStyle = "#0000ff";
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(-75,0);
+        ctx.lineTo(225,0);
+        ctx.stroke();
+        ctx.restore();
+
+        // seconds
+        ctx.save();
+        ctx.rotate(sec * Math.PI/30);
+        ctx.strokeStyle = "#ff0000";
+        ctx.fillStyle = "#ff0000";
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(-100,0);
+        ctx.lineTo(300,0);
+        ctx.stroke();
+        ctx.restore();
+
+        // 表中心
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 2;  //14
+        ctx.fillStyle = '#999';
+        ctx.arc(0,0,15,0,Math.PI*2,true);  	// 圆心
+        ctx.fill();
+        ctx.restore();
+
+        // 表圈
+        ctx.beginPath();
+        ctx.lineWidth = 2;  //14
+        ctx.strokeStyle = '#999';
+        ctx.arc(0,0,499,0,Math.PI*2,true);  	// 圆环
+        ctx.stroke();
+        ctx.restore();
+
+        $(".nowtime").html(now.toLocaleString());
+    }
+    window.setInterval(clock,1000);
+    clock();
+    //m端pc端适配
+    if(Number(window.innerWidth) >1100){
+        $("#myclock").css("transform","scale(0.75)");
+    }else{
+        var _scl = Number(window.innerWidth)/1000;
+        $("#myclock").css("transform","scale("+_scl+")");
+    }
+
+
+</script >
+</body >
+</html >

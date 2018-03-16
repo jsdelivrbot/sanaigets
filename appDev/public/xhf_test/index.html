@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+   	<script src="css/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="css/init.css"/>
+    <style type="text/css">
+		body{
+			margin: 0;
+			padding: 0;
+			width: 100vw;
+    		height: 100vh;
+    		overflow-x: hidden;
+		}
+    	div{
+    		width: 100vw;
+    		height: 100vh;
+    		background-color: gray;
+    		overflow: hidden;
+    		 position: relative;
+    	}
+	    	p{
+	    		width: 160px;
+	    		height: 160px;
+	    		background-color: blue;
+	    		position: absolute;top: 50%;left: 50%;transform:translate(-50%,-50%);
+	    		
+	    		text-align: center;
+	    		color:red;
+	    		border-radius:50% ;
+	    		/*animation: rott 5s linear 0s infinite;*/
+	    	}
+	    @keyframes rott{
+	    	from{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
+	    	to{transform:translate(-50%,-50%) rotate(360deg) scale(2);}
+	    }	
+    </style>
+</head>
+<body>
+	<div class="change_user" onclick="location.href='http://m.icaibei.net/user/login?redirectUrl='+encodeURIComponent(''+location.href);">更换账户</div>
+	<div id="demo_test">
+		<p></p>
+	</div>
+</body>
+<script type="text/javascript">
+	$("p").html("测试尺寸<br>宽:"+$("#demo_test").width()+"px"+"<br>高:"+$("#demo_test").height()+"px");
+	function hhh(h) {
+		$("#demo_test").css("height",h||"50vh")
+	}
+	hhh("80vh");
+	
+	function add(a){
+		console.log((a+1)||"1")
+	}
+	setInterval("add(5)",2000);
+</script>
+</html>

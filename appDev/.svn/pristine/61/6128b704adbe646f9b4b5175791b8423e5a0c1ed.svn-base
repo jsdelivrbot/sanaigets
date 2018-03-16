@@ -1,0 +1,90 @@
+<template>
+  <div class="login">
+    <div class="loginName">
+      <span>账号</span><input type="name" ref="name1"/>
+    </div>
+    <div class="passWord">
+      <span>密码</span><input type="password" ref="password1"/>
+    </div>
+    <div class="button">
+      <span @click="loginButton">登录</span>
+      <span><router-link to="/personalzone/register">注册</router-link></span>
+    </div>
+  </div>
+</template>
+
+<script>
+
+export default {
+	name:"login",
+  methods:{
+    loginButton(){
+        //console.log("2");
+      var that = this;
+	      that.$ajax({
+	        method:"get",
+	        url:"/api/users/login",
+	        params: {
+	          usename:that.$refs.name1.value,
+	          password:that.$refs.password1.value
+	        }
+	      })
+        .then(function(res){
+          console.log(that.$refs.name1.value=="root")
+          console.log(that.$refs.password1.value=="root")
+          let  flag =res.data
+          console.log(flag)
+
+          //···一顿操作
+        })
+        .catch(function(err){
+          console.log(err)
+        })
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+@boderC:dodgerblue;
+.login{
+
+  width:3rem;
+  height: 2rem;
+  border:1px solid @boderC;
+  position: absolute;
+  left: 0;top: 0;right:0;bottom:0;margin: auto;
+  border-radius:0.3rem;
+}
+.loginName{
+  margin-top:0.3rem ;
+  width: 2rem;
+  margin-left: 0.5rem;
+}
+.passWord{
+  margin-top:0.3rem ;
+  width: 2rem;
+  margin-left: 0.5rem;
+}
+.loginName input:nth-child(1),input:nth-child(2){
+  height:0.25rem;
+  margin-left:0.22rem;
+}
+.button{
+  margin-top: 0.2rem;
+  width: 2rem;
+  margin-left: 0.5rem;
+}
+.button span:nth-child(1){
+  border:1px solid @boderC;
+  padding: 0.05rem;
+  border-radius:5px;
+  float: left;
+}
+.button span:nth-child(2){
+  border:1px solid @boderC;
+  padding: 0.05rem;
+  border-radius:5px;
+  float: right;
+}
+</style>

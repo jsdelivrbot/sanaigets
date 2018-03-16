@@ -1,0 +1,70 @@
+# vueproject
+
+#为方便管理，暂定以下开发规范
+1:每个文件或者组件由开发者顶部添加注释说明   author：作者昵称；effect：文件的功能
+例：vue文件：<!--author：sanaigets;effect:一个简单的描述该文件功能-->
+
+2:class类添加私有简写前缀防止变量名称污染	xhf-** ; sx-** ;ht-**
+例：<div class="xhf-aaaa">这是一个纯示范节点</div>
+
+3:由于Vue语法对方法名不支持-连接 所以采用驼峰式命名 
+例：我xhf想要一个commit的方法名方法名默认大写 即设置为 XhfCommit(){...} 
+
+4：数据也是同样但是不需要首字母大写 
+例：xhfHello:"谢海锋组建所需的state"
+
+5:路由就随意了 语义化基本符合restful规范就Ok
+
+6数据请求本地开发使用了代理设置  统一接口地址domain    http://gfire.top:8080修改成 /api
+例：目标url:"http://gfire.top:8080/tests/db/select" 就该修改成 "/api/tests/db/select",
+	var that = this;
+	that.$ajax({
+		method:"get",
+		url:"/api/tests/db/select",
+	})
+	.then(function(res){
+	  console.log(res.data)
+	  //···一顿操作
+	})
+	.catch(function(err){
+	  console.log(err)
+	}) 
+	以上为一次基本的请求例子
+7：
+
+
+
+
+
+
+
+
+
+> 项目
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+
+# run unit tests
+npm run unit
+
+# run e2e tests
+npm run e2e
+
+# run all tests
+npm test
+```
+
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

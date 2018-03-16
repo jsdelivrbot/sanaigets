@@ -1,0 +1,8 @@
+export default {
+  hello ({commit, platform}) {
+    commit('hello', platform)
+  },
+  xhfHello({commit, platform}){
+  	commit('xhfHello', platform)
+  }
+}

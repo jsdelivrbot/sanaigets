@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	
+	<body>
+		
+			
+		<script src="//static.cdn.icaibei.net/static/common/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(window).bind('beforeunload', function(){
+			  alert(123);
+			  return "123445677899"
+			});
+			
+			
+			
+			//IE兼容其他不兼容
+			/*$(window).unload(function(){
+				confirm("确定要清空数据吗？");
+				
+				if(confirm("确定要清空数据吗？"))
+	 			{
+				 	console.log("456");
+				 	alert("Goodbye!");
+				}else{
+					console.log("789");
+					alert("stayhere!");
+				}
+			  
+			});*/
+			
+			//confirm("确定要清空数据吗？")
+		</script>
+	</body>
+</html>

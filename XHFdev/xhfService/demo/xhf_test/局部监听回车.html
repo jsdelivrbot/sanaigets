@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>		
+		<link rel="stylesheet" type="text/css" href="//static.cdn.icaibei.net/static/common/css/reset.css" />
+		<script src="//static.cdn.icaibei.net/static/common/js/jquery.min.js" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="one"><p>12345</p></div>
+		
+		<div class="two none"><p>6789</p></div>
+		<script type="text/javascript">
+		document.onkeydown=function(event){
+				var e = event || window.event || arguments.callee.caller.arguments[0];                           
+			    
+			    if(e.keyCode == "13"&&$(".two").css("display")!="none"){
+			    	$(".two").css("color","blue");
+			    }
+			    console.log($(".one").css("display")!="none");
+			    console.log($(".two").css("display")!="none");
+			    if (e.keyCode == "13"&& $(".one").css("display")!="none") {//keyCode=13是回车键
+			        $(".one").css("color","red");
+			        console.log($(".two").css("display"));
+			    }
+			    
+			};
+		
+		</script>
+	</body>
+</html>

@@ -1,0 +1,55 @@
+<template>
+	<router-link :to="info.to">
+		<div class="personalzone-list-item">
+			<img :src="info.imgUrl" class="item-icon" />
+			<div class="item-name borderbot-1">{{info.name}}</div>
+		</div>
+	</router-link>
+</template>
+
+<script>
+export default {
+	name:"personalzonelistitem",
+	props: {
+		info: {
+            type: Object,
+            default() {
+                return {
+                    imgUrl: '/api/images/h.png',
+                    name: '钱包'
+                }
+            }
+        }
+    },
+	created() {
+	  	console.log("personalzonelistitem");
+	}
+}
+</script>
+
+<style lang="less" scoped>
+@import '../../../css/common.less';
+.personalzone-list-item{
+	position:relative;
+	background: #fff;
+	height: 0.5rem;
+	line-height: 0.5rem;
+	/*padding-left: 0.6rem;*/
+	padding: 0 0.15rem;
+	.fontsize(0.15rem);	
+	.item-icon{
+		width: 0.2rem;
+		height: 0.2rem;
+		position: absolute;
+		left: 0.2rem;
+		top: 0.15rem;
+		
+	}
+	.item-name{
+		padding-left: 0.45rem;
+	}
+}	
+	
+	
+	
+</style>

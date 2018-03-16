@@ -1,0 +1,8 @@
+export default {
+  hello (state, platform) {
+    state.hello = '改变一下吧'
+  },
+  xhfHello (state, platform) {
+    state.xhfHello = '谢海锋所需的state的mutation转换'
+  }
+}

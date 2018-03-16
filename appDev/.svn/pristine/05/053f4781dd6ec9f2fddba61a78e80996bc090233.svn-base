@@ -1,0 +1,1 @@
+var html=document.getElementsByTagName("html")[0];if(html){var w=window.innerWidth;var fontSize=(w>768?768:w)/640*200;html.style.fontSize=fontSize+"px"}window.onload=function(){window.onresize=function(){var a=window.innerWidth;var b=(a>768?768:a)/640*200;html.style.fontSize=b+"px"}};

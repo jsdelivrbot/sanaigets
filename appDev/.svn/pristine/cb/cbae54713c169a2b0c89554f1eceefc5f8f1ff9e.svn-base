@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html >
+<head lang = "en" >
+    <meta charset = "UTF-8" >
+    <title >首页</title >
+    <link rel = "stylesheet" href = "./css/reset.css" />
+    <script src="./js/jquery.min.js"></script >
+    <script src="./js/console.js"></script >
+    <style >
+        html,body{
+            width: 100%;
+            height: 100%!important;
+            position: relative;
+        }
+        body{
+            min-width: 640px;
+            height: 800px;
+            overflow: hidden;
+            background-image: url(/images/bg3.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        h1{
+            height: 100px;
+            line-height: 100px;
+            font-size: 30px;
+            margin: 0 auto;
+            text-align: center;
+            font-style: 30px;color: #ffffff;
+            font-weight: bold;
+        }
+        .login-box{
+            width: 600px;
+            height: 400px;
+            background: rgb(255,255,255);
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            margin: 0 auto;
+            opacity: 0.2;
+            position: absolute;
+            z-index: 10;
+            top: 50%;
+            left: 0;
+            right: 0;
+            margin-top: -200px;
+            overflow: hidden;
+        }
+        .login-box:hover{opacity: 1}
+        .col{
+            width: 400px;
+            height:50px;
+            margin: 0 auto;
+            margin-top: 50px;
+            font-size: 15px;
+        }
+        label{font-weight: bold;color: #333;margin-right: 30px}
+        input{border: none;padding: 0;margin: 0;
+            width: 250px;
+            height: 50px;
+            padding-left: 30px;
+            font-size: 15px;
+            color: #333;
+            border: 1px solid #00B7FF;
+        }
+        .btn{
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 15px;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            border: 1px solid yellow;
+            background: #00B7FF;
+            color: #333;
+        }
+        .clock{
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style >
+</head >
+<body >
+	<audio id="audio" src="./media/nmghp.mp3" loop autoplay autoplay="autoplay" autoplay="true"></audio>
+    <h1>娶个标题不容易</h1>
+    <div class="login-box">
+        <div class="col">
+            <label for="usename">用&nbsp;&nbsp;&nbsp;&nbsp;户：</label><input type="text" name="" id="usename" placeholder="请输入用户名"/>
+        </div>
+        <div class="col">
+            <label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label><input type="password" name="" id="password" placeholder="请输入密码"/>
+        </div>
+        <div class="col">
+            <div class="btn btn-reset left">清&nbsp;&nbsp;空</div>
+            <div class="btn btn-login right">登&nbsp;&nbsp;录</div>
+        </div>
+        <div class="col error-hook none">
+            <p style="color: red; text-align: center">账号/密码不存在，请确认后重试</p>
+        </div>
+    </div>
+    <div class="clock">
+        <canvas id="myclock" width="300" height="300" style="display: block;border-radius: 50%;">
+            该浏览器不支持canvas绘图功能，请更新该浏览器或者移步到google浏览器
+        </canvas>
+    </div>
+    <script >
+        $(".btn-reset").on("click",function(){
+            $("#usename,#password").val("");
+        })
+        $(".btn-login").on("click",function(){
+            if($("#usename").val()!="" && $("#password").val()!=""){
+                $.ajax({
+                    type:"get",
+                    url:"/api/users/login",
+                    async:true,
+                    data:{
+                        usename: $("#usename").val(),
+                        password: $("#password").val()
+                    },
+                    success: function(msg){
+                        console.log(msg);
+                        //以下前端自己控制阀值跳转没问题，现在需要的是node跳转
+                        if(msg.data.result == true){
+                            location.href = "./bird.html";
+                        }else{
+                            $(".error-hook").removeClass("none");
+                            setTimeout('$(".error-hook").addClass("none")',1000);
+                            $("#usename,#password").val("");
+                        }
+                    }
+                });
+            }
+        })
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)||/(Android)/i.test(navigator.userAgent)) {
+            $("body").css("background-image","url(/images/bg1.jpg)");
+            $(".login-box").css("margin-top","-100px");
+        }
+        /*实时时钟*/
+        function clock(){
+            var now = new Date();
+            var sec = now.getSeconds();
+            var min = now.getMinutes();
+            var hr  = now.getHours();
+            hr = hr>=12 ? hr-12 : hr;
+            var ctx = document.getElementById('myclock').getContext('2d');
+            ctx.save();
+            ctx.clearRect(0,0,300,300);  	//150
+            ctx.translate(150,150);  	//75
+            ctx.scale(0.53,0.53);
+            ctx.rotate(-Math.PI/2);
+            ctx.strokeStyle = "white";
+            ctx.fillStyle = "white";
+            ctx.lineWidth = 4;	//8
+
+            // Hour marks
+            ctx.save();
+            for (var i=0;i<12;i++){
+                ctx.beginPath();
+
+                ctx.moveTo(240,0);  //100
+                ctx.lineTo(280,0);  //120
+                ctx.stroke();
+                ctx.closePath();
+                ctx.rotate(Math.PI/6);
+            }
+            ctx.restore();
+
+            // Minute marks
+            ctx.save();
+            ctx.lineWidth = 3;
+            for (i=0;i<60;i++){
+                if (i%5!=0) {
+                    ctx.beginPath();
+                    ctx.moveTo(260,0);	//117
+                    ctx.lineTo(280,0);	//120
+                    ctx.stroke();
+                }
+                ctx.rotate(Math.PI/30);
+            }
+            ctx.restore();
+            ctx.fillStyle = "black";
+
+            // write Hours
+            ctx.save();
+            ctx.rotate( hr*(Math.PI/6) + (Math.PI/360)*min + (Math.PI/21600)*sec ) ;
+            ctx.strokeStyle = "green";
+            ctx.fillStyle = "green";
+            ctx.lineWidth = 5;  	//14
+            ctx.beginPath();
+            ctx.moveTo(-20,0);  	//-20
+            ctx.lineTo(120,0);  	//80
+            ctx.stroke();
+            ctx.restore();
+
+            // write Minutes
+            ctx.save();
+            ctx.rotate( (Math.PI/30)*min + (Math.PI/1800)*sec );
+            ctx.strokeStyle = "#0000ff";
+            ctx.fillStyle = "#0000ff";
+            ctx.lineWidth = 6;  	//8
+            ctx.beginPath();
+            ctx.moveTo(-28,0);  	//-28
+            ctx.lineTo(150,0);  	//92
+            ctx.stroke();
+            ctx.restore();
+
+            // Write seconds
+            ctx.save();
+            ctx.rotate(sec * Math.PI/30);
+            ctx.strokeStyle = "#ff0000";
+            ctx.fillStyle = "#ff0000";
+            ctx.lineWidth = 6;  	//6
+            ctx.beginPath();
+            ctx.moveTo(-30,0);
+            ctx.lineTo(206,0);  	//103
+            ctx.stroke();
+            ctx.restore();
+
+            ctx.beginPath();
+            ctx.lineWidth = 7;  //14
+            ctx.strokeStyle = '#fff';
+            ctx.arc(0,0,284,0,Math.PI*2,true);  	//142
+            ctx.stroke();
+
+            ctx.restore();
+        }
+        window.setInterval(clock,1000);
+        clock();
+        $('body').one('touchstart',function(){//不自动播放的兼容处理：触屏就开始播放
+			    if(audio.paused) {
+			    	console.log(audio.paused+"1")
+						audio.play() ;
+			    } else { 
+			    	console.log(audio.paused+"2")
+			    	audio.pause();
+			    	audio.play();
+			    }
+			});
+    </script >
+</body >
+</html >

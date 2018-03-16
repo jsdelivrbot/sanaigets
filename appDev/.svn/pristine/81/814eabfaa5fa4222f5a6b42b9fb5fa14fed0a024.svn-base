@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>swiper案例</title>
+		<link rel="stylesheet" type="text/css" href="css/init.css"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/swiper-3.3.1.min.css"/>
+		<style type="text/css">
+			/*.anli_1{width: 80vw;margin: 0 auto;height: 40vh;background-color: red;}
+			.swiper-wrapper img{width: 100%;height: auto;}
+			.swiper-pagination-bullet{width: 5vw;height: 5vw;line-height: 5vw;}*/
+			
+			/*<!--这句话使用就可以往对应的1234span里面加背景图:如下方就成了小缩略图而不是圆点-->*/
+			/*.swiper-pagination span{background: #fff;width: 10vw;height: 10vw;border-radius: 0px;}
+			.swiper-pagination span:nth-of-type(1){background:url(img/world_1.jpg) no-repeat;background-size: cover;}
+			.swiper-pagination span:nth-of-type(2){background:url(img/world_2.jpg) no-repeat;background-size: cover;}
+			.swiper-pagination span:nth-of-type(3){background:url(img/world_3.jpg) no-repeat;background-size: cover;}
+			.swiper-pagination span:nth-of-type(4){background:url(img/world_4.jpg) no-repeat;background-size: cover;}*/
+			.swiper-pagination-bullet-active{border: 1px dashed red;box-sizing: border-box;opacity:1}
+			
+		</style>
+	</head>
+	<body>
+		<div class="anli_1">
+			<div class="swiper-container">
+			  <div class="swiper-wrapper">
+			    <div class="swiper-slide" style=""><img src="img/lifecycle.png"/></div>
+			    <div class="swiper-slide"><img src="./img/cloud.png"/></div>
+			    <div class="swiper-slide"><img src="./img/lifecycle.png"/></div>
+			    <div class="swiper-slide"><img src="./img/pointer.png"/></div>
+			  </div>
+			  
+			  <div class="swiper-pagination"></div>	
+			  <div class="swiper-button-prev"></div>
+    		  <div class="swiper-button-next"></div>
+			</div>
+		</div>
+			
+
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+	<script> 
+	//注册一个swiper	
+	var mySwiper = new Swiper('.swiper-container', {
+		autoplay: 2000,		//	轮播间隔
+		autoplayDisableOnInteraction : false,   // 用户操作后是否停止swiper 设置为false就是继续自动轮播
+		grabCursor : true,	// 可有可无这条属性
+		loop:"loop",	//循环
+		pagination : '.swiper-pagination',	//圆点操作栏
+		paginationClickable :true,	//圆点可点
+  		prevButton:'.swiper-button-prev',	//向左边 前一张 按钮
+		nextButton:'.swiper-button-next',	//向右
+		autoHeight: true/*,	
+		paginationBulletRender: function (index, className) {						//上面换小图的缩略图这里就可以删除
+      return '<span class="swiper-pagination-bullet"> '+ (index + 1) +' </span>';
+  }*/
+	});
+</script>
+</html>

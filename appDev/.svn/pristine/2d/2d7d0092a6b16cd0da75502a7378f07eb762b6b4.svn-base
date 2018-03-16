@@ -1,0 +1,210 @@
+<template>
+  <transition name="slide-rightIn">
+    <div class="login">
+      <headerHandle :headInfo="headInfo"></headerHandle>
+      <div class="loginName">
+        <span class="loginFlog nameP"></span>
+        <input type="name" class=""  ref="name1" @focus="hideTipN"/>
+        <div class="borderbot-1 surbase"></div>
+      </div>
+
+      <div class="passWord">
+        <span class="loginFlog passP"></span>
+        <input type="password" ref="password1" @focus="hideTipP"/>
+        <div class="borderbot-1 surbase"></div>
+        <div v-show="loginFlag" class="wrongF">{{tipMsg}}</div>
+      </div>
+
+
+      <div class="button">
+        <p @click="loginButton">登录</p>
+        <p><router-link to="/personalzone/register" class="fColor">注册</router-link></p>
+      </div>
+    </div>
+
+  </transition>
+
+</template>
+
+<script>
+  const headerHandle = resolve => require(['@/components/common/Pageheadbar'], resolve)
+  //import  headerHandle  from '@/components/common/Pageheadbar'
+  import { mapGetters } from 'vuex'
+  export default {
+    name:"login",
+    data:function () {
+      return{
+        headInfo:{
+          name:"登录页",
+          back: true
+        },
+        tipMsg:""
+      }
+    }
+    ,
+    components:{
+      headerHandle
+    },
+    computed: {
+      ...mapGetters([
+        'loginFlag'
+      ])
+    },
+    methods:{
+      hideTipN(){ //获取账号焦点
+        this.$store.dispatch('loginFlagFalse');
+      },
+      hideTipP(){//获取密码焦点
+        this.$store.dispatch('loginFlagFalse');
+        this.$refs.password1.value ="";
+      },
+      loginButton(){//点击登录按钮
+        //console.log("2");
+		    var that = this;
+		    if(that.$refs.name1.value == ""){
+          that.$store.dispatch('loginFlagTrue')
+          that.tipMsg = "请输入账号"
+        }else if(that.$refs.password1.value == ""){
+          that.$store.dispatch('loginFlagTrue')
+          that.tipMsg = "请输入密码"
+        }
+        else
+        {
+          fetch(
+            "/api/users/login",
+            {
+              usename: that.$refs.name1.value,
+              password: that.$refs.password1.value
+            },
+            function (res) {
+              //res = res.data; //jq转换axios就都在这个位置加这一条
+              let flag = res;
+              console.log(res);
+              if (flag.data.result) {
+                //that.$router.push("/")
+                //哪里来的应该回哪里去 状态改成登录就好 要去全局的设置一个userInfo:{} 里头带上用户信息方便其他地方调用
+                that.$router.go(-1);
+              } else {
+                that.$store.dispatch('loginFlagTrue');
+                that.tipMsg = "您输入的密码不正确"
+              }
+            })
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="less" scoped>
+  /*相对路径引入公共less表 方便全局修改整体设计规格*/
+  @import '../../../css/common.less';
+  @mar-L:0.62rem;
+  .login{
+    background: url("../../../images/bbb.jpg") no-repeat;
+    width:100%;
+    height: 100%;
+    position: absolute;
+    left: 0;top: 0;right:0;bottom:0;margin: auto;
+    overflow: hidden;
+  }
+  .loginName{
+    margin-top:1.7rem ;
+    width: 2.5rem;
+    height: 0.5rem;
+    margin-left: @mar-L;
+  }
+  .wrongF{
+    font-size: 0.1rem;
+    color: #f47983;
+    margin-top: 0.15rem;
+    text-align: center;
+    font-size: 0.15rem;
+    font-family: 微软雅黑;
+    float: right;
+    width: 1.9rem;
+  }
+  .loginFlog{
+    height: 0.5rem;
+    float: left;
+    width: 0.5rem;
+    display: block;
+
+  }
+  .nameP{
+    background: url("../../../images/name.png") ;
+    background-size: 0.5rem 0.5rem;
+  }
+  .passP{
+    background: url("../../../images/password.png") ;
+    background-size: 0.5rem 0.5rem;
+  }
+  .login .loginName input{
+    height: 0.5rem;
+    width: 1.9rem;
+    display: block!important;
+    float: right;
+  }
+  .login .passWord input{
+    height: 0.5rem;
+    width: 1.9rem;
+    display: block!important;
+    float: right;
+  }
+  .passWord{
+    margin-top:0.3rem ;
+    width: 2.5rem;
+    height: 0.5rem;
+    margin-left: @mar-L;
+  }
+  .loginName input:nth-child(1),input:nth-child(2){
+    text-align: center;
+    border-bottom-color:rgba(255,255,255,0.5) ;
+    width:1.2rem;
+    height:0.25rem;
+    background-color:transparent;
+    border-color:transparent;
+    -webkit-appearance: none;
+    outline: none;
+    /*border-bottom: 1px solid rgba(255,255,255,0.5);*/
+    font-size: 0.25rem;
+    font-family: 微软雅黑;
+    color: rgba(255,255,255,0.5);
+  }
+  .surbase{
+    width:1.9rem ;
+    margin-left: 0.5rem;
+    margin-top: 5px;
+    float: right;
+  }
+  .button{
+    margin-top: 0.6rem;
+    width: 100%;
+    margin-left: @mar-L;
+    overflow: hidden;
+  }
+  .button p:nth-child(1){
+    background: #f47983;
+    width: 2.5rem;
+    border-radius:1rem;
+    height: 0.5rem;
+    text-align: center;
+    line-height:0.5rem;
+    font-size: 0.2rem;
+    letter-spacing: 0.1rem;
+    font-family: 微软雅黑;
+    color: rgba(255,255,255,0.5);
+  }
+  .button p:nth-child(2){
+    height: 0.5rem;
+    text-align: center;
+    line-height:0.5rem;
+    font-size: 0.15rem;
+    letter-spacing: 0.1rem;
+    width: 2.5rem;
+    font-family: 微软雅黑;
+    margin-top:0.1rem ;
+  }
+  .fColor{
+    color: rgba(255,255,255,0.5);
+  }
+</style>

@@ -1,0 +1,22 @@
+@a:#fff;
+
+body{
+    background: @a;
+}
+.bgColor{
+    background: @a;
+}
+a{
+    color: #000;
+}
+.list{
+    background: #eee;
+    display: flex;
+    flex-direction: row;
+}
+.list a,.flexCol{
+    display: inline-block;
+    flex: 1;
+    height: 100%;
+    text-align: center;
+}

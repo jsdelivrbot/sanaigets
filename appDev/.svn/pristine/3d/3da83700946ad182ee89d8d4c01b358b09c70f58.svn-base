@@ -1,0 +1,95 @@
+var express = require('express');
+var router = express.Router();
+var fs = require("fs");
+var path = require("path");
+var root = path.resolve(__dirname,'../');
+
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+    console.log("__dirname==>"+__dirname);
+    console.log("node进程所在目录==>"+process.cwd());
+    fs.readFile(root + "/users.json", function (err, data) {
+        if (err) {
+            return console.error(err);
+        }
+        console.log("异步读取: " + data.toString());
+        res.send(data.toString());
+    });
+});
+/* 登录接口 */
+router.get('/login', function(req, res, next) {
+    fs.readFile(root + "/users.json", function (err, data) {
+        if (err) {
+            return console.error(err);
+        }
+        var _result = {
+            "status": 0,
+            "data": {
+                result: false
+            },
+            msg:""
+        };
+        //console.log(JSON.parse(data.toString()));
+        var _data = JSON.parse(data.toString());
+        for( var key in _data){
+            //console.log(_data[key]);
+            console.log(_data[key].name+"--- < 账号对比 > ---"+req.query.usename +"\n"+ _data[key].password+"--- < 密码对比 > ---"+req.query.password);
+            if(_data[key].name==req.query.usename && _data[key].password==req.query.password){
+                _result.data.result = true;
+                _result.msg = "登录成功";
+                _result.status = 1;
+                console.log("______切割机______");
+                console.log(_result);
+                console.log("______切割机______");
+                //方案一：对口号形式Ok，但是麻烦
+                return res.json(_result);
+
+                 /*//方案二：redirect
+                //对ajax请求无法重定向页面地址 ,地址栏直接输入http://localhost:8080/users/login?usename=xiehaifeng&password=xiehaifeng 和http://localhost:8080/users/redirect就可以正常跳
+                return res.redirect("/highcharts-cb.html");  //  暂时未解决问题:对ajax请求无法重定向页面地址
+                */
+
+                /*//方案三：render    结果同方案二redirect一致   地址栏直接请求http://localhost:8080/users/login?usename=xiehaifeng&password=xiehaifeng和http://localhost:8080/users/render都可以  ajax没反应
+                return res.render(
+                 'highcharts-cb',
+                 {
+                 name:_data[key].name,
+                 password:_data[key].password
+                 },
+                 function(err, html) {
+                 res.send(html);
+                 });*/
+
+
+                /*//方案四 sendFile      结果同方案二三一样 地址栏直接请求http://localhost:8080/users/login?usename=xiehaifeng&password=xiehaifeng和http://localhost:8080/users/sendFile都可以  ajax没反应
+                return res.sendFile(root+"/public/highcharts-cb.html");
+                */
+            }
+        }
+        _result.msg = "账号不存在";
+        return res.json(_result);
+        //console.log("异步读取: " + data.toString());
+        //res.send(data.toString());
+    });
+});
+
+router.get("/redirect",function(req,res){
+    res.redirect("/highcharts-cb.html");
+});
+
+router.get("/render",function(req,res){
+    return res.render(
+        'highcharts-cb',
+        {
+            name:"root",
+            password:"root"
+        },
+        function(err, html) {
+            res.send(html);
+        });
+});
+
+router.get("/sendFile",function(req,res){
+    return res.sendFile(root+"/public/highcharts-cb.html");
+});
+module.exports = router;

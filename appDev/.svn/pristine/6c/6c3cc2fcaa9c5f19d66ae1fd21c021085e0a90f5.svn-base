@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<input accept="image/*" type="file" id="choose">
+	</body>
+	<script type="text/javascript">
+		
+    
+	</script>
+</html>

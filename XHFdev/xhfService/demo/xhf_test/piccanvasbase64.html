@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+	
+	<!--<script type="text/javascript" src="js/zepto.js"></script>-->
+	<script src="http://static.cdn.icaibei.net/static/common/js/jquery.min.js" charset="utf-8"></script>
+	<!--<script src="js/touch.js" type="text/javascript"></script>-->
+		
+	<body>
+		
+		<canvas id="can" width="100" height="100"  ></canvas>
+		<input type="file" name="" id="haha" value="选择"  onchange="haha()" />
+		
+		<img src="" id="hhhh" width="100" height="100"/>
+		<label for="haha" id="nihao" width="100" height="100"><img  width="100" height="100" id="wha"/></label>
+	</body>
+	<script type="text/javascript">
+		
+		
+		function haha(){
+			 
+			var file = document.getElementById("haha").files[0];
+			var reader = new FileReader();
+		    //将文件以Data URL形式读入页面
+		    var img = $("#wha")[0];
+		    reader.readAsDataURL(file);
+		    reader.onload = function(e){
+		    darw(e.target.result);
+		     
+		    
+		    }
+		    
+		}
+		
+		function darw(ha){
+			var c = document.getElementById("can");
+			var context =c.getContext("2d")
+			var img = new Image();
+			var imgg = $("#hhhh")[0];
+			
+			img.src = ha;
+			img.onload = function(){
+				context.fillStyle = "#fff";   
+				context.fillRect(0, 0, 100, 100)
+				context.drawImage(img,0,0,100,100)
+				imgg.src = c.toDataURL("image/jpeg",0.7);//压缩之后的base64
+			}
+			
+			
+		}
+		
+		
+		  
+	</script>
+	<style type="text/css">
+		#ha{
+			width: 100px;
+			height: 100px;
+			background: peachpuff;
+		}
+		#haha{
+			display: none;
+		}
+		#can{
+			border: 1px solid #ccc;
+			display: none;
+		}
+		#wha{
+			//position: absolute;
+			background: #ccc;
+			tap-highlight-color: rgba(0, 0, 0, 0);
+			z-index: 999;
+		}
+		#nihao{
+			tap-highlight-color: rgba(0, 0, 0, 0);
+		}
+		#hhhh{
+			border: 1px solid #ccc;
+			background: #FFFFFF;
+		}
+	</style>
+</html>

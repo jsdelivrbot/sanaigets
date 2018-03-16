@@ -1,0 +1,50 @@
+var express = require('express');
+var router = express.Router();
+var fs = require("fs");
+var path = require("path");
+var root = path.resolve(__dirname,'../');
+/*
+domain==gfire.top
+匹配domain/tests/
+ * */
+router.get('/', function(req, res) { 	
+	//统一返回结构
+	let _result = {
+        "status": 0,
+        "data": {
+        	
+        },
+        msg:""+root
+    };
+    //返回的数据+处理 
+	_result.data={
+		host:req.hostname,
+		IP:req.ip
+	}
+	if (req.query) {
+		_result.data.query = req.query;	
+	}
+	
+	//jsonp对外通用接口
+   	var _callback = req.query.callback;
+	if (_callback){
+		_result.jsonp = true;
+		return res.jsonp(_result);
+	}
+	res.json(_result);
+    
+});
+
+/*
+// 测试请求 
+$.ajax({
+	type:"get",
+	url:"http://gfire.top:3000/tests/",
+	async:true,
+	dataType:"jsonp",
+	success:function (e) {
+		console.dir(e)
+	}
+});
+*/
+module.exports = router;

@@ -1,0 +1,37 @@
+<template>
+	<div class="content" style="text-align: center;">
+		我是index里subtab 2 模块内容<br />
+		##--------------------##
+		YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+		YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+		YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+		YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+		YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+		YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+		YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+		YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+		YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+		##--------------------##
+	</div>	
+</template>
+
+<script>
+export default {
+	name:"subtab2",
+	data:function() {
+	    return {
+	      	
+		}
+	},
+	methods:{
+	  	goBack(){
+	    	this.$router.go(-1);
+	    }
+	}
+}	
+</script>
+
+<style lang="less" scoped>
+@import '../../../css/common.less';
+	
+</style>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<title>开关原理（绑定点击事件赋值）</title>
+  	<meta charset="UTF-8"/>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+    <style type="text/css">
+    	.red{
+    		color: red;
+    	}    	
+    </style>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+var LikeButton = React.createClass({
+  getInitialState: function() {
+    return {liked: false};
+  },
+  handleClick: function(event) {
+    this.setState({liked: !this.state.liked});
+  },
+  render: function() {
+    var text = this.state.liked ? 'like' : 'haven\'t liked';
+    return (
+      <p onClick={this.handleClick}>
+      	点击改变text值
+        You 
+        <span className='red'>{text}</span>
+        this. Click to toggle.
+      </p>
+    );
+  }
+});
+
+ReactDOM.render(
+  <LikeButton />,
+  document.getElementById('example')
+);
+    </script>
+  </body>
+</html>
+

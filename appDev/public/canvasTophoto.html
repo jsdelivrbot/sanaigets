@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>canvas存图</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<style type="text/css">
+			html,body{
+				width: 100%;
+				height: 100%;
+				background: #CCCCCC;
+			}
+			body{overflow-x: hidden;min-height: 100%;margin: 0;padding: 0;}
+			.pic1{width: 50%;height: auto;display: block;margin: 0 auto;}
+			.pic2{width: 2.82rem;height: 3.4rem;position: absolute;bottom: 0;left: 0;right: 0;margin: 0 auto;}
+		</style>
+	</head>
+	<body>
+		<!--对比图1-->
+		<img src="http://m.icaibei.net/images/activity/iphone8/hd_yaoqing2.png" alt="" class="pic1" />
+		<!--底图2-->
+		<div class="pic2">
+			
+		</div>	
+		<script type="text/javascript">
+//			function getBase64Image(img) {
+//	            var canvas = document.createElement("canvas");
+//	            canvas.width = img.width;
+//	            canvas.height = img.height;
+//	            var ctx = canvas.getContext("2d");
+//	            ctx.drawImage(img, 0, 0, img.width, img.height);
+//	            var dataURL = canvas.toDataURL("image/jpg");
+//	            return dataURL // return dataURL.replace("data:image/png;base64,", ""); 
+//	        }
+//			function loadImage(url,callback) {
+//			    /*var img = new Image();
+//			    img.crossOrigin = 'true';
+//			    img.src = ((/\?/.test(url) ? url + '&' : url + '?') + btoa(window.location.origin)).replace('http:', '');
+//			    return img;*/
+//			   	var img = new Image();
+//				img.src = url; 
+//				if(img.complete) {
+//					//_callback.call(img);
+//					console.log("image单张【"+url+"】载入complete完毕1");
+//					return img;
+//				}
+//				img.onload = function() { 
+//					//_callback.call(img);
+//					console.log("image单张【"+url+"】加载firstTime完毕2");
+//					
+//					console.log("宽：%s--高;%s",img.width,img.height)
+//					var data = getBase64Image(img); 
+//              	console.log(data);
+//					return data;
+//				}
+//			   	
+//			   
+//			}
+			/*setTimeout(function () {
+				loadImage("http://m.icaibei.net/images/activity/iphone8/hd_yaoqing2.png")
+			},3000)*/
+			//loadImage("http://m.icaibei.net/images/activity/iphone8/hd_yaoqing2.png")
+			function getBase64Image(img) {
+	            var canvas = document.createElement("canvas");
+	            canvas.width = img.width;
+	            canvas.height = img.height;
+	            var ctx = canvas.getContext("2d");
+	            ctx.drawImage(img, 0, 0, img.width, img.height);
+	            var dataURL = canvas.toDataURL("image/png");
+	            return dataURL // return dataURL.replace("data:image/png;base64,", ""); 
+	        } 
+	        function main() { 
+	            var img = document.createElement('img'); 
+	            img.src = 'http://m.icaibei.net/images/activity/iphone8/hd_yaoqing2.png'; 
+	            img.onload =function() { 
+	            	console.log(img.height); 
+	                var data = getBase64Image(img); 
+	                alert.log(data); 
+	            } 
+	            document.body.appendChild(img); 
+	        }
+	        main();
+		</script>
+	</body>
+</html>

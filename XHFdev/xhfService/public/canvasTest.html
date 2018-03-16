@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>闪瞎钛合金狗眼系列绘图</title>
+		<!--<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		
+		<style type="text/css">
+			html{
+				height: 100%;
+			}
+			body{
+				width: 100vw;
+				height: 100%;
+				overflow: hidden;
+				background: #CCCCCC;
+			}
+			#myCanvas{
+				display: block;
+				margin: 0;
+				background: #fff;
+			}
+			#a{
+				position: absolute;display: none;
+				z-index: 10;
+				top: 50px;
+				left:375px;
+				width: 300px;
+				height: 300px;
+				border-radius: 50%;
+				background: rgba(0,255,0,0.5);
+			}
+			#b{
+				width: 200px;
+				height: 200px;
+				border-radius: 50%;
+				background: rgb(255,255,255);
+				margin: 50px auto;word-break: break-all;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div id="a">
+			<div id="b"></div>
+		</div>
+		<canvas id="myCanvas" width= "900" height="900"></canvas>
+		<div style="width: 100%;height: 1.4rem;position: absolute;top: 0.5rem;left: 0;">
+			<canvas id="cbkp" width="750" height="280" style="position: absolute;top: 0;left:0;background: #FFFFFF;transform-origin: 0 0;"></canvas>
+		</div>
+		
+		<script type="text/javascript">
+			//求斜边长度  
+			function getBeveling(x,y){  
+			    return Math.sqrt(Math.pow(x,2)+Math.pow(y,2));  
+			}  
+			  
+			function drawDashLine(context,x1,y1,x2,y2,dashLen){  
+			    dashLen = dashLen === undefined ? 5 : dashLen;  
+			    //得到斜边的总长度  
+			    var beveling = getBeveling(x2-x1,y2-y1);  
+			    //计算有多少个线段  
+			    var num = Math.floor(beveling/dashLen); 
+			      
+			    for(var i = 0 ; i < num; i++){  
+			        context[i%2 == 0 ? 'moveTo' : 'lineTo'](x1+(x2-x1)/num*i,y1+(y2-y1)/num*i);  
+			    }  
+			    context.stroke();  
+			}
+			var xbase = ["07/18","07/19","07/20","07/21","07/22","07/23","07/24","07/25","07/26","07/27","07/28"];
+			var ybase = [74,27,46,68,9,100,9,74,27,46,68];  //基础数据Y点集合   
+			
+			var pen = document.getElementById('cbkp').getContext('2d');
+			pen.save();
+			//基准线
+			pen.lineWidth=2;
+			pen.strokeStyle="#E6E6E6";
+			drawDashLine(pen,40,50,710,50,5);
+			drawDashLine(pen,40,130,710,130,5);
+			
+			pen.beginPath();
+			pen.moveTo(40,210);
+			pen.lineTo(710,210);
+			pen.stroke();
+			pen.closePath();
+			//canvas坐标单点集合
+			var xData = [];
+			var yData = [];
+			var xWidth = (375-(8.5+28)*2)*2;console.log(xWidth);
+			ybase.forEach(function (item,index,arr) {
+				console.log("%s-:--%s--%O",index,item,arr);
+				var x = (8.5+28)*2+(xWidth/(arr.length-1))*index;
+				xData.push(x);
+				var y = (25+(80-(80*item)/100))*2;
+				yData.push(y);
+			})
+			
+			console.log("x坐标点：%O---y坐标点：%O",xData,yData);
+			pen.restore();
+        	pen.save();
+        	pen.beginPath();
+        	//连线
+			function linkLine (p,xArr,yArr) {
+				p.moveTo(xArr[0],yArr[0]);
+				p.strokeStyle = "rgb(235,235,235)";
+				for (var i=0; i<xArr.length; i++) {
+					p.lineTo(xArr[i],yArr[i]);
+				}
+				p.stroke();
+			}
+			linkLine(pen,xData,yData);
+			var baseDeg = 150/180;
+			//画圈
+			function  percentCircle(p,xArr,yArr,xNumArr,yNumArr) {
+				p.fontWeight = "bold";
+				for (var ii=0; ii<xArr.length; ii++) {
+					//底色
+					//p.moveTo(xArr[ii],yArr[ii]);
+					p.beginPath();
+					p.fillStyle = "rgb(235,235,235)";
+					p.arc(xArr[ii],yArr[ii],8.5*2,0,2*Math.PI);
+					p.fill();
+					p.closePath();
+					
+					//展示色
+					p.beginPath();
+					if (yNumArr[ii]<50) {
+						p.fillStyle = "#64C67A";
+					}else{
+						p.fillStyle = "#F3575B";	
+					}
+									
+        			p.arc(xArr[ii],yArr[ii],8.5*2,baseDeg*Math.PI,(150+2.4*yNumArr[ii])/180*Math.PI);
+        			p.lineTo(xArr[ii],yArr[ii]);
+        			p.closePath();        			
+        			p.fill();
+        			
+        			//文字
+        			p.font="bold 24px ‘微软雅黑’";
+        			if (yNumArr[ii]>9&&yNumArr[ii]<100) {
+        				p.fillText(yNumArr[ii],xArr[ii]-14,yArr[ii]-22);        				
+        			}else if(yNumArr[ii]<=9){
+        				p.fillText(yNumArr[ii],xArr[ii]-7,yArr[ii]-22);
+        			}else{
+        				p.fillText(yNumArr[ii],xArr[ii]-21,yArr[ii]-22);
+        			}
+        			p.font="20px ‘微软雅黑’";
+        			p.fillStyle = "#999999";
+		        	p.fillText(xNumArr[ii],xArr[ii]-26,250);
+        			
+        			//白色
+					p.beginPath();
+					p.fillStyle = "#FFF";
+					p.arc(xArr[ii],yArr[ii],6.5*2,0,2*Math.PI);
+					p.fill();
+					p.closePath();
+					//中心点
+					p.beginPath();
+					if (yNumArr[ii]<50) {
+						p.fillStyle = "#64C67A";
+					}else{
+						p.fillStyle = "#F3575B";	
+					}
+					p.arc(xArr[ii],yArr[ii],2*2,0,2*Math.PI);
+					p.fill();
+					p.closePath();
+				}
+				
+			}
+			percentCircle(pen,xData,yData,xbase,ybase);
+			var _phoneWidth = window.innerWidth;
+			$("#cbkp").css("transform","scale("+Number(_phoneWidth/750)+")");
+			
+			var ctx = document.getElementById('myCanvas').getContext('2d');
+        	ctx.save();
+        	
+        function draw () {
+        	var numaaa=parseInt(Math.random()*255);
+        	var numbbb=parseInt(Math.random()*255);
+        	var numccc=parseInt(Math.random()*255);
+        	
+        	//外圈
+        	ctx.beginPath();
+        	ctx.strokeStyle = "blue";
+        	ctx.fillStyle = "rgb("+numaaa+","+numbbb+","+numccc+")";
+        	ctx.moveTo(900,450);
+        	ctx.arc(450,450,450,0,2*Math.PI);
+        	ctx.fill();
+        	ctx.closePath();
+        	
+        	//五角
+        	ctx.restore();
+        	ctx.save();
+	        function drawStar( cxt , r , R , x , y , rot , borderWidth , borderStyle , fillStyle){
+		        cxt.beginPath();
+		        for( var i = 0 ; i < 5 ; i ++){
+		            cxt.lineTo(Math.cos((18+72*i - rot)/180*Math.PI) * R + x ,- Math.sin((18+72*i - rot )/180*Math.PI) * R + y);
+		            cxt.lineTo(Math.cos((54+72*i - rot)/180*Math.PI) * r + x ,- Math.sin((54+72*i - rot )/180*Math.PI) * r + y);
+		        }
+		        cxt.closePath();
+		
+		        cxt.lineWidth = borderWidth;
+		        cxt.strokeStyle = borderStyle;
+		        cxt.fillStyle = fillStyle;
+		
+		        cxt.fill();
+		        cxt.stroke();
+		        cxt.closePath();
+		    }
+	        drawStar(ctx,222,450,450,450,0,1,"yellow","red");
+	        
+	        //内圈
+	        ctx.restore();
+        	ctx.save();
+        	ctx.beginPath();
+        	
+        	//ctx.moveTo(672.5,450);
+        	/*ctx.translate(450,450);
+        	ctx.rotate(45*Math.PI/180);
+        	ctx.translate(-450,-450);*/
+        	ctx.fillStyle = "rgb("+numaaa+","+numccc+","+numbbb+")";  
+        	ctx.arc(450,450,222.5,0,1.5*Math.PI);
+        	ctx.lineTo(450,450);
+        	
+        	ctx.fill();
+        	ctx.closePath();
+        	
+        	ctx.restore();
+        	ctx.save();
+        	ctx.beginPath();
+        	ctx.fillStyle = "#00B7FF";
+        	ctx.fillRect(420,430,150,40);
+        	
+        	ctx.fillStyle = "rgba(255,0,255,0.5)";
+        	ctx.fillRect(440,420,20,250);
+        	
+        	ctx.fillStyle = "rgba(0,0,0,1)";
+        	ctx.arc(450,450,10,0,2*Math.PI);
+        	ctx.fill();
+        	
+        	ctx.font="40px Verdana";
+        	ctx.strokeText("字体怎么样",0,50);
+        	
+        	ctx.font="30px ‘微软雅黑’";
+        	ctx.fillStyle = "rgb("+numbbb+","+numccc+","+numaaa+")";
+        	ctx.textAlign="right";
+        	ctx.fillText("字体怎么样",900,50);
+        	
+        	ctx.restore();
+        	ctx.save();
+        	ctx.beginPath();
+        	//椭圆柱
+        	CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+		        if (w < 2 * r) r = w / 2;
+		        if (h < 2 * r) r = h / 2;
+		        this.beginPath();
+		        this.moveTo(x+r, y);
+		        this.arcTo(x+w, y, x+w, y+h, r);
+		        this.arcTo(x+w, y+h, x, y+h, r);
+		        this.arcTo(x, y+h, x, y, r);
+		        this.arcTo(x, y, x+w, y, r);
+		        this.closePath();
+		        return this;
+		    }
+        	ctx.strokeStyle = "purple";
+        	//旋转角度
+        	
+        	ctx.translate(450,450);
+        	ctx.rotate(window._num*6*Math.PI/180);
+        	ctx.translate(-450,-450);
+        	ctx.roundRect(400,400,500,100,50).stroke();
+        	
+        	ctx.fillStyle = "rgba("+numbbb+","+numaaa+","+numccc+",0.8)";
+        	console.log(ctx.fillStyle)
+        	ctx.roundRect(400,400,500,100,50).fill();
+        	ctx.closePath();
+        	ctx.restore();
+        	ctx.save();
+        }	
+        	
+        	function shake (ctx) {
+        		
+        		ctx.translate(450,450);
+	        	ctx.rotate(window._num*Math.PI/180);
+	        	ctx.translate(-450,-450);
+	        	ctx.roundRect(400,400,500,100,50).stroke();
+	        	
+	        	ctx.fillStyle = "rgba("+parseInt(Math.random()*255)+","+parseInt(Math.random()*255)+","+parseInt(Math.random()*255)+",0.8)";
+	        	ctx.roundRect(400,400,500,100,50).fill();
+	        	ctx.closePath();
+	        	ctx.restore();		
+	        	ctx.save();
+        	}
+        	window._num = window.init = -90 + Number(new Date().getSeconds()) + 9;
+        	setInterval(function () {
+        		if (window._num<window.init+60) {
+        			window._num++
+        		} else{
+        			window._num = window.init
+        		}
+        		console.log(window._num*6);
+        		//shake(ctx1);
+        		draw()
+        		
+        	},1000)
+        	
+        	
+        	
+        	
+        	
+		</script>
+	</body>
+</html>

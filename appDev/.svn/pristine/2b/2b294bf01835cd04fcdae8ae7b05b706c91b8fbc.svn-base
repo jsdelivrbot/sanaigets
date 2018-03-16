@@ -1,0 +1,19 @@
+import React from 'react';
+class DemoNode extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            demo: 'demo123456'
+        }
+    }
+
+    render() {
+        return (
+            <div className="col-sm-12" title="module.js">
+                {this.state.demo}
+            </div>
+        )
+    }
+}
+
+export default DemoNode

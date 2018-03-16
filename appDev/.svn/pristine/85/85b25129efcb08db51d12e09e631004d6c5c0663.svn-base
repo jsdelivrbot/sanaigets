@@ -1,0 +1,304 @@
+var express = require('express');
+var router = express.Router();
+var fs = require("fs");
+var path = require("path");
+var root = path.resolve(__dirname,'../');
+//=============================================================基本数据结构====================================================================
+router.get('/', function(req, res) { 	
+	//统一返回结构
+	let _result = {
+        "status": 0,
+        "data": {
+        	
+        },
+        msg:""+root
+    };
+//do something ···start
+    //返回的数据+处理
+	_result.data={
+		host:req.hostname,
+		IP:req.ip
+	}
+	if (req.query) {
+		_result.data.query = req.query;	
+	}
+//do something ···end	
+	//jsonp对外通用接口
+   	var _callback = req.query.callback;
+	if (_callback){
+		_result.jsonp = true;
+		return res.jsonp(_result);
+	}
+	res.json(_result);    
+});
+//=============================================================查====================================================================
+/*
+domain==gfire.top
+匹配domain/tests/
+对数据库进行操作后返回
+ * */
+router.get('/db/select', function(req, res) { 	
+	//统一返回结构
+	let _result = {
+        "status": 0,
+        "data": {
+        	
+        },
+        msg:""+root
+   };        
+//do something -- 数据库查询开始	
+var mysql  = require('mysql');  
+ 
+var connection = mysql.createConnection({     
+  host     : 'localhost',       
+  user     : 'xhf',              
+  password : 'xiehaifeng',       
+  port: '3306',                   
+  database: 'vuedb', 
+});  
+connection.connect();
+ 
+var  sql = 'select * from login';
+//查
+connection.query(sql,function (err, result) {
+        if(err){
+          console.log('[SELECT ERROR] - ',err.message);
+          return;
+        }
+ 
+       console.log('--------------------------SELECT----------------------------');
+       console.log("开始查询%s",JSON.parse(JSON.stringify(result)));
+       
+       _result.cx = JSON.parse(JSON.stringify(result));
+       console.log("查询完毕%s",_result.cx);
+       console.log('------------------------------------------------------------\n\n');        
+//接口返回结果       
+    ///返回的数据+处理 
+	_result.data={
+		host:req.hostname,
+		IP:req.ip
+	}
+	if (req.query) {
+		_result.data.query = req.query;	
+	}	
+	//jsonp对外通用接口
+   	var _callback = req.query.callback;
+	if (_callback){
+		_result.jsonp = true;
+		return res.jsonp(_result);
+	}
+	res.json(_result);
+       
+}); 
+connection.end();    
+//do something -- 数据库查询结束	
+console.log("准备输出到外部");
+console.log(_result);    
+  
+});
+//======================================================增===========================================================================
+num = 0;
+router.get('/db/add', function(req, res) { 	
+	//统一返回结构
+	let _result = {
+        "status": 0,
+        "data": {
+        	
+        },
+        msg:""+root
+   };        
+	//do something -- 数据库查询开始	
+	var mysql  = require('mysql');   
+	var connection = mysql.createConnection({     
+	  host     : 'localhost',       
+	  user     : 'xhf',              
+	  password : 'xiehaifeng',       
+	  port: '3306',                   
+	  database: 'vuedb', 
+	});  
+	connection.connect();
+	//查 --mysql命令
+	var  sql = 'select * from login';
+	//增 --mysql命令
+	var  addSql = 'INSERT INTO login(username,password) VALUES(?,?)';
+	
+	var _username = 'add'+num;
+	var _password = "addpassword"+num;
+	//待增数据
+	var  addSqlParams = [_username, _password];
+
+	connection.query(addSql,addSqlParams,function (err, result) {
+        if(err){
+         console.log('[INSERT ERROR] - ',err.message);
+         return;
+        }        
+       console.log('--------------------------INSERT----------------------------');
+       //console.log('INSERT ID:',result.insertId);        
+       console.log('INSERT ID:',result);        
+       console.log('-----------------------------------------------------------------\n\n');
+       num++;
+       
+		//再查       
+		connection.query(sql,function (err, result) {
+		        if(err){
+		          console.log('[SELECT ERROR] - ',err.message);
+		          return;
+		        }
+		 
+		       console.log('--------------------------SELECT----------------------------');
+		       console.log("开始查询%s",JSON.parse(JSON.stringify(result)));
+		       
+		       _result.cx = JSON.parse(JSON.stringify(result));
+		       console.log("查询完毕%s",_result.cx);
+		       console.log('------------------------------------------------------------\n\n');        
+		//接口返回结果       
+		    //返回的数据+处理 
+			_result.data={
+				host:req.hostname,
+				IP:req.ip
+			}
+			if (req.query) {
+				_result.data.query = req.query;	
+			}	
+			//jsonp对外通用接口
+		   	var _callback = req.query.callback;
+			if (_callback){
+				_result.jsonp = true;
+				return res.jsonp(_result);
+			}
+			res.json(_result);		       
+		});
+		//此处断开连接才能正常返回数据
+		connection.end();
+	});
+	console.log(_result);    
+  
+});
+//======================================================删===========================================================================
+router.get('/db/del', function(req, res) { 	
+	//统一返回结构
+	let _result = {
+        "status": 0,
+        "data": {
+        	
+        },
+        msg:""+root
+    };        
+	//do something -- 数据库查询开始	
+	var mysql  = require('mysql');   
+	var connection = mysql.createConnection({     
+	  host     : 'localhost',       
+	  user     : 'xhf',              
+	  password : 'xiehaifeng',       
+	  port: '3306',                   
+	  database: 'vuedb', 
+	});  
+	connection.connect();
+	//删 --mysql命令
+	if (req.query.username==""||req.query.username==null) {
+		return
+	}
+	// mysql删除的字段严格要求字符串记得带引号！！！！！
+	var delSql = 'DELETE FROM login where username="' + req.query.username + '"';
+	console.log(delSql);
+	//删
+	connection.query(delSql,function (err, result) {
+	        if(err){
+	          console.log('[DELETE ERROR] - ',err.message);
+	          return;
+	        }     
+	       console.log('--------------------------DELETE----------------------------');
+	       console.log('DELETE affectedRows',result.affectedRows);
+	       _result.delCount = result.affectedRows;
+	       console.log('-----------------------------------------------------------------\n\n');
+	    //接口返回结果       
+		    //返回的数据+处理 
+			_result.data={
+				host:req.hostname,
+				IP:req.ip
+			}
+			if (req.query) {
+				_result.data.query = req.query;	
+			}	
+			//jsonp对外通用接口
+		   	var _callback = req.query.callback;
+			if (_callback){
+				_result.jsonp = true;
+				return res.jsonp(_result);
+			}
+			res.json(_result);
+	       
+	}); 
+	connection.end();
+});
+//======================================================改===========================================================================
+router.get('/db/updata', function(req, res) { 	
+	//统一返回结构
+	let _result = {
+        "status": 0,
+        "data": {
+        	
+        },
+        msg:""+root
+    };        
+	//do something -- 数据库查询开始	
+	var mysql  = require('mysql');   
+	var connection = mysql.createConnection({     
+	  host     : 'localhost',       
+	  user     : 'xhf',              
+	  password : 'xiehaifeng',       
+	  port: '3306',                   
+	  database: 'vuedb', 
+	});  
+	connection.connect();
+	//改 --mysql命令
+	var modSql = 'UPDATE login SET username = ?,password = ? WHERE Id = ?';
+	//待改数据
+	let _username =  req.query.username || 'add0';
+	let _password =  req.query.password || 'addpassword0';
+	let _id =  req.query.Id || 5;
+	var modSqlParams = [_username,_password,_id];
+	//改
+	connection.query(modSql,modSqlParams,function (err, result) {
+	   if(err){
+	         console.log('[UPDATE ERROR] - ',err.message);
+	         return;
+	   }        
+	  console.log('--------------------------UPDATE----------------------------');
+	  console.log('UPDATE affectedRows',result.affectedRows);
+	  _result.updata = result.affectedRows;
+	  console.log('-----------------------------------------------------------------\n\n');
+  //接口返回结果       
+	    //返回的数据+处理 
+		_result.data={
+			host:req.hostname,
+			IP:req.ip
+		}
+		if (req.query) {
+			_result.data.query = req.query;	
+		}	
+		//jsonp对外通用接口
+	   	var _callback = req.query.callback;
+		if (_callback){
+			_result.jsonp = true;
+			return res.jsonp(_result);
+		}
+		res.json(_result);
+	});
+	connection.end();
+});
+
+
+/*
+// 测试请求 
+$.ajax({
+	type:"get",
+	url:"http://gfire.top:3000/tests/",
+	async:true,
+	dataType:"jsonp",
+	success:function (e) {
+		console.dir(e)
+	}
+});
+*/
+module.exports = router;

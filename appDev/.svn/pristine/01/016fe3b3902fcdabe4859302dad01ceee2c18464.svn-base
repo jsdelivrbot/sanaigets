@@ -1,0 +1,303 @@
+<template>
+	<transition name="slide-rightIn">
+	<div class="subpage moreinfo">
+		<Pageheadbar :headInfo="headInfo"></Pageheadbar>
+		<div class="page-desc">
+			<h3 class="borderbot-1">用户须知</h3>
+			<p class="desc-content">
+				当前展示内容为用户基本信息，<br />
+				<span class="red">用户账号和用户名为注册时系统自动生成，无法更改</span><br />
+				用户可以进行昵称和头像的跟换<br />
+				step1:重新输入用户昵称<br />
+				step2:点击灰色头像区域选择新头像(不大于40KB图片)<br />
+				点击右侧上传图片按钮，上传完毕左侧更新为新头像<br />
+				step3:点击保存修改即可修改用户新的信息<br />
+				(注意：未保存将不会上传最新的用户修改内容)
+			</p>
+		</div>
+		<div class="row">
+			<span class="row-title">用户名：</span>
+			<span ref="username">{{userInfo.username}}</span>
+		</div>
+		<div class="row">
+			<span class="row-title">账号ID：</span>
+			<span ref="appcount">{{userInfo.appcount}}</span>
+		</div>
+		<div class="row">
+			<span class="row-title">昵称：</span>
+			<input type="text" class="nick" ref="nick" :value="userInfo.nick"/>
+		</div>
+		<div class="row avatar">
+			<span class="row-title">头像：</span>
+			<img :src="userInfo.avatar" class="avatar-show" ref="avatar" />
+			<form id="moreinfoForm" ref="moreinfoForm">
+				<input type="file" id="getContentMediaUrl" ref="moreinfoFormfile"/>
+				<div class="commit" @click.stop.prevent="uploadavatar" >选择完毕上传新头像</div>
+			</form>
+		</div>
+		
+		<div class="commit-info" @click="updataUserInfo">保存修改</div>
+		<!--上传头像-->
+		<!--<form id="moreinfoForm" ref="moreinfoForm">
+			<input type="file" id="getContentMediaUrl" ref="moreinfoFormfile"/>
+			<button class="commit" @click.stop.prevent="uploadavatar" >上传头像</button>
+		</form>-->
+		<!--<script type="text/javascript">
+			uploadavatar () {
+				var formData = new FormData($("#moreinfoForm")[0]);
+				var _useinfo = {
+					username:"xhf",
+					nick:"大风起兮云飞扬云飞扬",
+					id:2
+				}
+				formData.append("userinfo",JSON.stringify(_useinfo));
+				
+				formData.append("file",$("#getContentMediaUrl")[0].files[0]);
+				$.ajax({
+					type:"post",									
+					data:formData,
+					url:"http://gfire.top:8080/api/users/avatarupload",
+					//url:"http://gfire.top:8080/api/tests/file/ajaxuploadpic",
+					//url:"http://gfire.top:3000/api/tests/file/ajaxuploadpic",
+					contentType:"multipart/form-data",
+					contentType: false, //必须false才会避开jQuery对 formdata 的默认处理 XMLHttpRequest会对 formdata 进行正确的处理  
+					processData: false,	//必须false才会自动加上正确的Content-Type
+					async:true,
+					beforeSend:function(){console.log("正在进行，即将上传 ，请稍候");},
+					success:function (e) {
+						console.log("返回结果：%O",e);
+						//一顿操作。。。
+					},
+					error:function (err) {
+						console.log(err.msg);
+					}
+				});
+	    	}
+		</script>-->		
+	</div>
+	</transition>
+</template>
+
+<script>
+//引入顶部条组件	
+const Pageheadbar = resolve => require(['@/components/common/Pageheadbar'], resolve)
+import { mapGetters } from 'vuex'
+import axios from 'axios'
+import qs from 'qs';
+
+export default {
+	name:"moreinfo",
+	data:function() {
+	    return {
+	      	transitionName: 'slide-left',
+	      	headInfo:{
+	      		name:"更多信息",
+	      		back: true
+	      	}
+		}
+	},
+	computed: {
+	    ...mapGetters([
+	      'userInfo'
+	    ])
+	},
+	methods:{
+	  	goBack(){
+	    	this.$router.go(-1);
+	    },
+	    uploadavatar () {
+	    	let that = this;
+	    	if (this.$refs.moreinfoFormfile.value == '') {
+	    		return
+	    	}else{
+				var formData = new FormData($("#moreinfoForm")[0]);
+				var _useinfo = {
+					username:"xhf",
+					nick:"大风起兮云飞扬云飞扬",
+					id:2
+				}
+				formData.append("userinfo",JSON.stringify(_useinfo));				
+				formData.append("file",$("#getContentMediaUrl")[0].files[0]);
+				$.ajax({
+					type:"post",									
+					data:formData,
+					url:"http://gfire.top:8080/api/users/avatarupload",
+					//url:"http://gfire.top:8080/api/tests/file/ajaxuploadpic",
+					//url:"http://gfire.top:3000/api/tests/file/ajaxuploadpic",
+					contentType:"multipart/form-data",
+					contentType: false, //必须false才会避开jQuery对 formdata 的默认处理 XMLHttpRequest会对 formdata 进行正确的处理  
+					processData: false,	//必须false才会自动加上正确的Content-Type
+					async:true,
+					beforeSend:function(){console.log("正在进行，即将上传 ，请稍候");},
+					success:function (e) {
+						console.log("返回结果：%O",e);
+						//that.$refs.avatar.value = e.data.userinfo.avatar;
+						that.$store.dispatch('updataUserInfo',e.data.userinfo);
+					},
+					error:function (err) {
+						console.log(err.msg);
+					}
+				});
+			}	
+	    },
+	    updataUserInfo () {
+	    	let p = confirm("确认修改完毕，进行用户信息提交");
+	    	const that =this;
+	    	let sendJson = {
+	            usename: that.$refs.username.innerHTML,
+	            id: Number(that.$refs.appcount.innerHTML),
+	            avatar:that.$refs.avatar.src,
+	            nick:that.$refs.nick.value
+            }
+	    	console.log(sendJson);
+	    	console.log(p);
+	    	if (p) {
+	    		fetch(
+		            "/api/users/updataUserInfo",
+		            sendJson,
+		            function (res) {
+		              res = res.data; //jq转换axios就都在这个位置加这一条
+		              let flag = res;
+		              console.log(res);
+		              if (flag.data.result) {
+		              	that.$store.dispatch('updataUserInfo',{
+		              		username:sendJson.usename,
+		              		nick:sendJson.nick,
+		              		id:sendJson.id,
+		              		avatar:sendJson.avatar
+		              	});
+		                that.$router.push("/personalzone")
+		                //that.$router.go(-1);
+		              } else {
+		                alert("跟新失败，请重试");
+		              }
+            	})
+	    	}else{
+	    		return
+	    	}
+	    }
+	},
+	components: {
+		Pageheadbar
+	}
+}
+</script>
+
+<style lang="less" scoped>
+/*相对路径引入公共less表 方便全局修改整体设计规格*/
+@import '../../../css/common.less';
+@unable: #ddd;
+.page-desc{
+	margin-top: 0.15rem;
+	padding: 0 0.1rem;
+	min-height: 0.5rem;
+	height: auto;
+	background: #FFFFFF;
+	h3{
+		text-align: center;
+		font-size: 0.13rem;
+		height: 0.3rem;
+		line-height: 0.3rem;
+		position: relative;
+		&:after{
+			background: orange;
+		}
+	}
+	.desc-content{
+		line-height: 0.23rem;
+		padding-left: 0.2rem;
+		padding-top: 0.1rem;
+		.red{
+			color: red;
+		}
+	}
+}
+.row{
+	height: 0.5rem;
+	line-height: 0.5rem;
+	overflow: hidden;
+	background: #FFFFFF;
+	padding: 0 0.2rem;	
+	font-size: 0.15rem;
+	margin-top: 0.15rem;
+	.row-title{
+		display: inline-block;
+		width: 0.8rem;
+		text-align: center;	
+	}
+	.nick{
+		display: inline-block;
+		width: 2.5rem;
+		height: 0.3rem;
+		padding: 0.1rem 0;
+		outline: none;
+		margin: 0;
+		font-size: 0.15rem;
+		border: 0;
+	}
+}
+.diswritable{
+	background: @unable;
+}
+.avatar{
+	position: relative;
+	height: 0.8rem;
+	padding: 0.1rem 0.2rem;
+	font-size: 0;
+	.row-title{
+		vertical-align: middle;
+		font-size:0.15rem;
+	}
+	.avatar-show{
+		display: inline-block;
+		width: 0.8rem;
+		height: 0.8rem;
+		vertical-align: middle;
+		background: #ccc;
+	}
+	#moreinfoForm{
+		position: absolute;
+		width: 2rem;
+		height: 0.8rem;
+		padding-left: 0.8rem;
+		top: 0.1rem;
+		left: 1rem;
+		#getContentMediaUrl{
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: inline-block;
+			width: 0.8rem;
+			height: 0.8rem;
+			font-size: 0;
+			opacity: 0;		
+		}
+		.commit{
+			display: block;
+			border-radius: 0.05rem;
+			margin: 0 auto;
+			padding: 0;
+			border: 0;
+			width: 1.5rem;
+			height: 0.3rem;
+			line-height: 0.3rem;
+			margin-top: 0.25rem;
+			background: @buttombg;
+			color: #FFFFFF;
+			font-size: 0.15rem;
+			text-align: center;
+		}
+	}
+	
+}
+.commit-info{
+	width: 2.5rem;
+	height: 0.4rem;
+	line-height: 0.4rem;
+	color: #FFFFFF;
+	background: @buttombg;
+	border-radius: 0.06rem;
+	text-align: center;
+	margin: 0.2rem auto 0;
+}
+</style>

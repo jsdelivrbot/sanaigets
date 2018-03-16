@@ -1,0 +1,149 @@
+/*app统一变量设定---start*/
+@color:red;
+//文字颜色
+@fontcolor:#333;
+//文字大小
+@fontsize:0.13rem;
+//单页page背景颜色
+@pagebg:#f2f2f2;
+//圆角大小
+@borderradius:0.4rem;
+//文字块背景颜色
+@contentBg：#ffffff;
+
+
+/*app统一变量设定---end*/
+//移动端上下左右一像素
+.bordertop-1{
+  position: relative;
+}  
+.bordertop-1:before{
+    content:"";
+    width:200%;
+    height:1px;
+    background:#ddd;
+    position:absolute;
+    top:0;left:0;
+    -webkit-transform:scale(0.5);
+    -webkit-transform-origin:0 0;
+    transform:scale(0.5);
+    transform-origin:0 0;
+}
+
+.borderbot-1{
+  position: relative;
+}
+.borderbot-1:after{
+    content:"";
+    width:200%;
+    height:1px;
+    background:#ddd;
+    position:absolute;
+    bottom:0;left:0;
+    -webkit-transform:scale(0.5);
+    -webkit-transform-origin:0 0;
+    transform:scale(0.5);
+    transform-origin:0 0;
+}
+
+.borderleft-1{
+  position: relative;
+}
+.borderleft-1:before{
+    content:"";
+    width:1px;
+    height:200%;
+    background:#ddd;
+    position:absolute;
+    top:0;left:0;
+    -webkit-transform:scale(0.5);
+    -webkit-transform-origin:0 0;
+    transform:scale(0.5);
+    transform-origin:0 0;
+}
+
+.borderright-1{
+  position: relative;
+}
+.borderright-1:after{
+    content:"";
+    width:1px;
+    height:200%;
+    background:#ddd;
+    position:absolute;
+    top:0;right:0;
+    -webkit-transform:scale(0.5);
+    -webkit-transform-origin:0 0;
+    transform:scale(0.5);
+    transform-origin:0 0;
+}
+//domain 字符串里插变量写法"****@{domain}******"
+//@domain: "http://gfire.top:8080";  
+//.bg(@domain) {  
+//  background-image: url("@{domain}/images/bg1.jpg");  
+//}
+.bg(@url) {  
+    background-image: url("@{url}");
+    background-size: 100% 100%;
+}
+
+a{color: @fontcolor;} 
+.page{
+    background: @pagebg;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+}
+// 二级页面带顶部栏的
+.subpage{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 0.44rem;
+    background: @pagebg;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+}
+// 动画--页面过度 从右往左slide-rightIn--如果是单独的整页切换 则需顶级父节点置顶position：absolute; top: 0;left: 0;
+.slide-rightIn-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-rightIn-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-rightIn-enter, .slide-rightIn-leave-to
+/* .slide-rightIn-leave-active for <2.1.8 */ {
+  transform: translateX(100%);
+}
+
+//div分隔类----例： .divide-20{.divide(0.2rem)}
+.divide(@num){
+    width: 100%;
+    height: @num;
+}
+//文字大小
+.fontsize(@size){
+    font-size: @size;
+}
+//文字超出省略 限定单行 双行 .line(自定义行数)
+.oneline{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.twoline{
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.line(@linecount){
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: @linecount;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+

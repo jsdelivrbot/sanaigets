@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title><%= title %></title>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<!--表单上传-->
+		<!--<form action="/api/tests/file/formuploadpic" method="post" enctype='multipart/form-data'>
+			<input type="file" multiple='mutiple' name="inputFile"/>
+			<input type="submit" name="btnUp" value="上传" />
+		</form>-->
+		
+		<!--ajax上传-->
+		<form id="uploadForm">
+			<input type="file" id="getContentMediaUrl"/>
+			<input type="submit" name="btnUp" value="上传" />
+		</form>
+		<script type="text/javascript">
+			$("#getContentMediaUrl").on("change",function () {
+				var formData = new FormData($("#uploadForm")[0]);
+				_useinfo = {
+					username:"xhftest",
+					password:"xhfpassword",
+					id:123456789
+				}
+				formData.append("userinfo",JSON.stringify(_useinfo));
+				
+				formData.append("file",$("#getContentMediaUrl")[0].files[0]);
+				$.ajax({
+					type:"post",									
+					data:formData,
+					url:"/api/tests/file/ajaxuploadpic",
+					contentType:"multipart/form-data",
+					contentType: false, //必须false才会避开jQuery对 formdata 的默认处理 XMLHttpRequest会对 formdata 进行正确的处理  
+					processData: false,	//必须false才会自动加上正确的Content-Type
+					async:true,
+					beforeSend:function(){console.log("正在进行，即将上传 ，请稍候");},
+					success:function (e) {
+						console.log("返回结果：%O",e);
+						//一顿操作。。。
+					},
+					error:function (err) {
+						console.log(err.msg);
+					}
+				});
+			})
+		</script>
+	</body>
+</html>

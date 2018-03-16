@@ -1,0 +1,24 @@
+<template>
+	<div class="login">
+		我是登录页面
+		
+		
+	<!--底部tab-->
+	<FooterTab></FooterTab>
+	</div>
+</template>
+
+<script>
+import FooterTab from 'components/FooterTab'
+
+export default {
+	name:"login",
+	components: {
+		FooterTab
+	}
+}
+</script>
+
+<style lang="less" scoped>
+	
+</style>

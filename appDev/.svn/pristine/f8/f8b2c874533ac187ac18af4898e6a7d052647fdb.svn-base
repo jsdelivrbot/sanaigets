@@ -1,0 +1,63 @@
+PC
+
+首页：https://www.icaibei.net/
+关于我们：https://www.icaibei.net/about.html
+账户充值选择：https://www.icaibei.net/pay.html	(被VM替换，和谐掉了的老版本)
+微信扫码充值：https://www.icaibei.net/wxpay.html	（充值页后缀参数 例： ?cashId=-7282715790253949488&platform=4&userId=414）
+支付宝扫码充值：https://www.icaibei.net/alpay.html
+电脑直播教程： https://www.icaibei.net/liveGuide.html
+
+M站
+
+首页：https://m.icaibei.net/
+操作引导：https://m.icaibei.net/guide.html (或者guide2.html)
+跳转下载：https://m.icaibei.net/downloadapp.html https://m.icaibei.net/Judgment.html
+安卓下载：应用宝：http://a.app.qq.com/o/simple.jsp?pkgname=net.icaibei.live (APK地址:https://static.cdn.icaibei.net/download/android/app-release_101_10_caibei_sign.apk)
+IOS下载:https://itunes.apple.com/cn/app/cai-bei-cai-jing-gen-zhe-niu/id1150799097?mt=8
+
+APP
+
+风险提示及免责声明：https://m.icaibei.net/app/riskTips.html
+用户服务协议：https://m.icaibei.net/app/userAgreement.html
+彩贝财经主播规范：https://m.icaibei.net/app/anchorAgreement.html
+帮助反馈：https://m.icaibei.net/app/help.html
+如何发起直播：https://m.icaibei.net/app/helpL1v1.html
+如何成为牛人在平台上进行直播：https://m.icaibei.net/app/helpL2v1.html
+笔记是什么：https://m.icaibei.net/app/helpL3v1.html
+金贝是什么：https://m.icaibei.net/app/helpL4v1.html
+如何给牛人送礼物：https://m.icaibei.net/app/helpL5v1.html
+如何查看行情：https://m.icaibei.net/app/helpL6v1.html
+如何添加/删除/编辑自选股：https://m.icaibei.net/app/helpL7v1.html
+观看直播卡顿怎么办：https://m.icaibei.net/app/helpL8v1.html
+提交反馈：https://m.icaibei.net/app/feedback.html
+版本说明：https://m.icaibei.net/app/version.html （填充内容待增）
+特别嘉宾直播（官方活动邀约主播）预热（路径）：	https://m.icaibei.net/app/guest/foreshow/名字拼音.html (例：https://m.icaibei.net/app/guest/foreshow/qiuxiaohua.html)
+特别嘉宾回看（官方活动邀约主播）回看（路径）	：https://m.icaibei.net/app/guest/replay/名字拼音.html (例：https://m.icaibei.net/app/guest/replay/qiuxiaohua.html)
+大咖直播精选： https://m.icaibei.net/app/guestLive.html
+董秘来了专题：https://m.icaibei.net/app/dongmiSubject.html
+
+分享VM
+
+直播分享：https://m.icaibei.net/room/888979 (例：参数roomId888979)
+点播分享：https://m.icaibei.net/vod/888979 (例：参数liveId为888979)
+M站登录：https://m.icaibei.net/user/login
+M站支付：https://m.icaibei.net/pay
+web开播：https://www.icaibei.net/live/create	（测试环境：http://f01.icaibei.net/live/create)
+web支付：https://www.icaibei.net/pay
+跨年捞金课程活动-吴国平私募王牌投资专享课 ：https://m.icaibei.net/course/home
+课程活动-苏渝传授抓牛股绝招 ：https://m.icaibei.net/course/home?courseId=2
+第二版（分享）
+
+测试环境
+
+分享直播间 ： http://test.m.icaibei.net/live/home (App-m版首页)
+分享直播间 ： http://test.m.icaibei.net/live/timelines (App-m版直播列表页)
+分享直播间 ： https://test.m.icaibei.net/room/100000 （100000替换成roomId）
+分享详情页 ： https://test.m.icaibei.net/timeline/123 （1替换成对应timeline的tid）
+线上
+
+分享直播间 ： https://m.icaibei.net/room/100000 （100000替换成roomId）
+直播列表（顶部导航） ： https://m.icaibei.net/live/timelines (App-m版直播列表页)
+分享直播间 ： https://m.icaibei.net/room/100000 （100000替换成roomId）
+分享详情页 ： https://m.icaibei.net/timeline/123 （123替换成对应timeline的tid）
+视频直播结束：https://m.icaibei.net/timeline/live/1234 (1234替换成liveId）

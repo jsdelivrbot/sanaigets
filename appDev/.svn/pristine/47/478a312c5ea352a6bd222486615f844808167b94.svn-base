@@ -1,0 +1,40 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import Hello from '@/components/Hello'
+import XhfHello from '@/components/Xhf'
+import Login from 'components/Login'
+import Register from 'components/Register'
+import Personalzone from 'components/Personalzone'
+Vue.use(Router);
+
+
+export default new Router({
+//	mode: 'history',
+  routes: [
+    {// 一级页面 :tab 第一帧
+      path: '/',
+      name: 'Hello',
+      component: Hello
+    },
+    {// 二级页面 : xhf
+      path: '/xhf',
+      name: 'XhfHello',
+      component: XhfHello
+    },
+    {// 登录
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {// 注册
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
+    {// 个人中心
+      path: '/personalzone',
+      name: 'Personalzone',
+      component: Personalzone
+    }
+  ]
+})

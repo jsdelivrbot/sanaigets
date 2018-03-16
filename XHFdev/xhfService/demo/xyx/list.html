@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript" src="../bags/jquery-1.11.3.min.js" ></script>
+		<script>
+//			$.ajax({
+//				url:"http://datainfo.duapp.com/gamesinfo/catchgolds/rankinglist.php",
+//				data:{gname:"car00123"}
+//				dataType:"jsonp",
+//				success:function(data){
+//					
+//				}
+//			})
+			$.get("http://datainfo.duapp.com/gamesinfo/catchgolds/rankinglist.php?callback=?",{gname:"car00123"},function(data){
+				console.log(data);
+			})
+		</script>
+	</body>
+</html>

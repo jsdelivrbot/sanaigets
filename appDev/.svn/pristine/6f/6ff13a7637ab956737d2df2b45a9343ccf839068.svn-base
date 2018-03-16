@@ -1,0 +1,23 @@
+import React from 'react';
+//import imgOne from './h.png';
+import imgOne from 'asset/images/h.png';
+class TestImagesUrl extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            demo: 'demo123456'
+        }
+    }
+	
+    render() {
+        return (
+            <div className="col-sm-12" title="module.js">
+                {this.state.demo}   
+                <img src={require('./f.png')} alt="测试公共图片1" />
+                <img src={imgOne} alt="测试公共图片2" />
+            </div>
+        )
+    }
+}
+
+export default TestImagesUrl

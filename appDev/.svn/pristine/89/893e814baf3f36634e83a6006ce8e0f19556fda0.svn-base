@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<title>数据绑定（依赖节点值改变，目标值跟着变）</title>
+  	<meta charset="UTF-8"/>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      var Input = React.createClass({
+        getInitialState: function() {
+          return {value: 'Hello!'};
+        },
+        handleChange: function(event) {
+        	//<!--输出<input type="text">	即event.target == <input type="text">节点 event.target后可以接着写 原生js语法  由下可知执行顺序是setState虽然已经完成但是整体是最后才执行渲染render操作-->
+        	console.log(event.target.id);
+        	//console.log(event.target);
+        	//event.target.id="changedId"+event.target.value;
+        	event.target.setAttribute("abc",event.target.value);
+          this.setState({value: event.target.value});
+          console.log(event.target.id); 
+        },
+        render: function () {
+          var value = this.state.value;
+          console.log(this.state.value);
+          return (
+            <div>
+              <input type="text" value={value} onChange={this.handleChange} id="demoid" />
+              <p>我的值来自于输入框（实现数据绑定）每次利用setState都会重新渲染：{value}</p>
+            </div>
+          );
+        }
+      });
+
+      ReactDOM.render(<Input/>, document.getElementById('example'));
+    </script>
+  </body>
+</html>

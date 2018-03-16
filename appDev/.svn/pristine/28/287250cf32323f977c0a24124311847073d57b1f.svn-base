@@ -1,0 +1,42 @@
+<template>
+	<transition name="slide-rightIn">
+	<div class="subpage moreinfo">
+		<Pageheadbar :headInfo="headInfo"></Pageheadbar>
+		
+		
+	</div>
+	 </transition>
+</template>
+
+<script>
+//引入顶部条组件	
+const Pageheadbar = resolve => require(['@/components/common/Pageheadbar'], resolve)	
+	
+export default {
+	name:"moreinfo",
+	data:function() {
+	    return {
+	      	transitionName: 'slide-left',
+	      	headInfo:{
+	      		name:"更多信息",
+	      		back: true
+	      	}
+		}
+	},
+	watch: {
+	    
+	},
+	methods:{
+	  	goBack(){
+	    	this.$router.go(-1);
+	    }
+	},
+	components: {
+		Pageheadbar
+	}
+}
+</script>
+
+<style lang="less" scoped>
+
+</style>

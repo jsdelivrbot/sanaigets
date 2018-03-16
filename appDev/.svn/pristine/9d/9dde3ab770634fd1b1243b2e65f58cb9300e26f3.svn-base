@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>flexible自适应布局</title>
+		<script src="./js/flexible/flexible_css.debug.js"></script>
+		<script src="./js/flexible/flexible.debug.js"></script>
+		<style type="text/css">
+			html{height: 100%;}
+			body{height: 100%;width: 100%;}
+			section{height: 1rem;background: red;margin-bottom: 1px;}
+			.testRem1{width: 1rem;}
+			.testRem2{width: 2rem;}
+			.testRem3{width: 3rem;}
+			.testRem4{width: 4rem;}
+			.testRem5{width: 5rem;}
+			.testRem6{width: 6rem;}
+			.testRem7{width: 7rem;}
+			.testRem8{width: 8rem;}
+			.testRem9{width: 9rem;}
+			.testRem10{width: 10rem;}
+			.ruler{position: absolute;top: 0;left: 3.5rem;background: rgba(255,255,255,1);width: 0.5px;height: 11rem;}
+			.ruler2{position: absolute;top: 0;left: 2rem;background: rgba(0,255,0,0.6);width: 75px;height: 11rem;}
+			.ruler3{position: absolute;top: 5rem;left: 2rem;background: rgba(0,0,255,0.6);width: 10%;height: 11rem;}
+			.ruler4{position: absolute;top: 1rem;left: 3.5rem;background: rgba(0,0,255,1);width: 0.3px;height: 11rem;}
+			.ruler5{position: absolute;top: 2rem;left: 3.5rem;background: rgba(0,0,0,1);width: 1px;height: 11rem;}
+		</style>
+	</head>
+	<body>
+		<section class="testRem1"></section>
+		<section class="testRem2"></section>
+		<section class="testRem3"></section>
+		<section class="testRem4"></section>
+		<section class="testRem5"></section>
+		<section class="testRem6"></section>
+		<section class="testRem7"></section>
+		<section class="testRem8"></section>
+		<section class="testRem9"></section>
+		<section class="testRem10"></section>
+		<div class="ruler2"></div>
+		<div class="ruler3"></div>
+		<div class="ruler"></div>
+		<div class="ruler4"></div>
+		<div class="ruler5"></div>
+		<p style="font-size: 24px;">安卓的 最小可见单位1px 小于1px的会呈现出  看不见或者与1px保持一致</p>
+		<div style="font-size: 2em;"><p style="font-size: 0.5em;">安卓的 最小可见单位1px 小于1px的会呈现出  看不见或者与1px保持一致----对比字体大小</p></div>
+	</body>
+</html>

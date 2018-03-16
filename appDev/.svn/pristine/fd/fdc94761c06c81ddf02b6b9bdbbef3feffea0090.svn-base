@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<body>
+		<div id="clc">click</div>
+		<div id="xiangying" style="width: 200px;height: 400px;background: red;" class=""></div>
+		<input type="checkbox" name="td" id="td" value="" />
+		<table border="" cellspacing="" cellpadding="">
+			<tr><th>Header</th></tr>
+			<tr><td>Data</td></tr>
+		</table>
+		<div class="change_user" onclick="location.href='http://m.icaibei.net/user/login?redirectUrl='+encodeURIComponent(''+location.href);">更换账户</div>
+		<script type="text/javascript">
+			$("#clc").on("click",function(){
+				//$("#xiangying").toggle();				//单纯显示隐藏通过display控制
+				//$("#xiangying").toggle(false);		//同上  此处false（隐藏）或者true 通常是其他参数变量
+				
+//				$("#xiangying").toggle(5000,function () {
+//					alert("执行完毕")
+//				});			//控制动画显示的持续事件并回调fn
+				
+				//$("td").toggle();
+			
+			})
+			
+			
+		</script>
+	</body>
+</html>

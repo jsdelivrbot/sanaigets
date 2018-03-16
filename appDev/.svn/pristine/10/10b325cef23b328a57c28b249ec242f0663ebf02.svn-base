@@ -1,0 +1,196 @@
+<template>
+	<div class="page index">
+		<!--vue-swipe轮播图-->
+		<div class="swipeBox">
+			<swipe class="my-swipe" :showIndicators="false" :prevent="true">
+			  <swipe-item class="slide1">
+			  	<router-link to="/personalzone">	
+			  		<img src="../../images/x.png"/>	
+			  	</router-link>
+			  	</swipe-item>
+			  <swipe-item class="slide2">
+			  	<img src="../../images/h.png"/>
+			  </swipe-item>
+			  <swipe-item class="slide3">
+			  	<img src="../../images/f.png"/>
+			  </swipe-item>
+			  <swipe-item class="slide4">
+			  	content-1
+			  </swipe-item>
+			  <swipe-item class="slide5">
+			  	content-2
+			  </swipe-item>
+			  <swipe-item class="slide6">
+			  	content-3
+			  </swipe-item>
+			  <swipe-item class="slide7">
+			  	content-4
+			  </swipe-item>
+			  <swipe-item class="slide8">
+			  	content-5
+			  </swipe-item>
+			  <swipe-item class="slide9">
+			  	content-end
+			  </swipe-item>
+			</swipe>
+		</div>
+	<div class="divide-20"></div>
+		<router-link to="/news/new1">
+			<div class="notice">
+				<img src="../../images/h.png" />
+				<div class="notice-content borderleft-1 twoline">
+					<span class="notice-time">【2017-07-06 /11:43】</span>	这里是通知内容的摆放区域、这里是通知内容的摆放区域、这里是通知内容的摆放区域、这里是通知内容的摆放区域、这里是通知内容的摆放区域、这里是通知内容的摆放区域、
+				</div>
+			</div>
+		</router-link>
+	<div class="divide-20"></div>
+		<div class="content tabchange" title="subtab切换栏">			
+			<router-link to="/index/subtab1" class="tab-item">index中内嵌的subtab1</router-link>
+			<router-link to="/index/subtab2" class="tab-item borderleft-1">index中内嵌的subtab2</router-link>
+		</div>		
+		<router-view></router-view>
+	<div class="divide-20"></div>	
+		<div class="content" style="text-align: center;">
+			|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />|<br />
+		</div>
+	<div class="divide-20"></div>	
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+
+<script>
+import FooterTab from '@/components/footerTab/FooterTab'
+require('vue-swipe/dist/vue-swipe.css');
+import { Swipe, SwipeItem } from 'vue-swipe';
+/*// in CommonJS
+const { Swipe, SwipeItem } = require('vue-swipe');
+// in Global variable
+const { Swipe, SwipeItem } = VueSwipe;*/
+
+export default {
+	name:"index",
+	components: {
+		FooterTab,
+		'swipe': Swipe,
+    	'swipe-item': SwipeItem
+	},
+	created() {
+	  	/*$.ajax({
+	  		type:"get",
+	  		url:"http://gfire.top:8080/api/tests/db/select",
+	  		async:true,
+	  		dataType:"jsonp",
+	  		success:function (e) {
+	  			console.log("返回结果：%O",e);
+	  		}
+	  	});*/
+	  	fetch("/api/tests/db/select",{},function (res) {
+	  		res=res.data;
+	  		console.log(res)
+	  	})
+	},
+	mounted(){
+	  	console.log("index---mounted阶段【每次切到页面就会调用】")
+	}
+}
+</script>
+
+<style lang="less" scoped>
+@import '../../css/common.less';
+.index{
+	margin-bottom: 0.5rem;
+	overflow: hidden;
+}
+/*轮播*/
+.swipeBox{
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	width: 100%;
+	.my-swipe {
+	  height: 2rem;
+	  line-height: 2rem;
+	  color: #fff;
+	  font-size: 0.8rem;  
+	  text-align: center;
+	  img{
+	  	height: 100%;
+	  	margin: 0 auto;
+	  }
+	}
+	.slide1 {
+	  background-color: red;
+	  color: #fff;
+	}
+	.slide2 {
+	  background-color: orange;
+	  color: #000;
+	}
+	
+	.slide3 {
+	  background-color: yellow;
+	  color: #fff;
+	}
+	.slide4{
+	  background-color: green;
+	}
+	.slide5{
+	  background-color: Cyan;
+	}
+	.slide6{
+	  background-color: blue;
+	}
+	.slide7{
+	  background-color: purple;
+	}
+	.slide8{
+	  background-color: pink;
+	}
+	.slide9{
+	  background-color: SkyBlue;
+	}
+}
+.notice{
+	position: relative;
+	overflow: hidden;
+	height: 0.8rem;
+	background: #FFFFFF;
+	padding-left: 0.8rem;
+	.notice-content{
+		margin-top: 0.15rem;
+		height: 0.5rem;
+		line-height: 0.25rem;
+		font-size: 0.15rem;
+		color: @fontcolor;
+		padding: 0 0.1rem;
+		overflow: hidden;
+		.notice-time{
+			color: #ffa42f;
+		}
+	}
+	img{
+		position: absolute;
+		top: 0.15rem;
+		left: 0.15rem;
+		width: 0.5rem;
+		height: 0.5rem;
+	}
+}
+.tabchange{
+	background: #FFA42F;
+	display: flex;
+	/*justify-content: space-between;*/
+	align-items: center;
+	.tab-item{
+		display: block;
+		flex: 1;
+		text-align: center;
+		height: 100%;
+		height: 0.5rem;
+		line-height: 0.5rem;
+		position: relative;
+	}
+}
+</style>

@@ -1,0 +1,148 @@
+<template>
+	<div class="personalzone" title="sanaigets-个人中心">
+		<div class="divide-20"></div>
+		<div class="info-user divide(0.2rem)">
+			<div class="user-avatar"></div>
+			<p class="user-nick oneline">saNaigets</p>
+			<p class="user-account">微信号：fenggea520</p>
+			<div class="user-erweima"></div>
+		</div>
+		<div class="divide-20"></div>
+			<Personalzonelistitem :info="info[0]"></Personalzonelistitem>
+		<div class="divide-20"></div>
+			<Personalzonelistitemborderbottom :info="info[1]"></Personalzonelistitemborderbottom>
+			<Personalzonelistitemborderbottom :info="info[2]"></Personalzonelistitemborderbottom>
+			<Personalzonelistitemborderbottom :info="info[3]"></Personalzonelistitemborderbottom>
+			<Personalzonelistitem :info="info[4]"></Personalzonelistitem>
+		<div class="divide-20"></div>
+			<Personalzonelistitem :info="info[5]"></Personalzonelistitem>
+		<div class="divide-20"></div>
+			<Personalzonelistitemborderbottom :info="info[6]"></Personalzonelistitemborderbottom>
+			<Personalzonelistitemborderbottom :info="info[7]"></Personalzonelistitemborderbottom>
+			<Personalzonelistitem :info="info[8]"></Personalzonelistitem>
+		<div class="divide-20"></div>
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+<script>
+import FooterTab from '@/components/footerTab/FooterTab'
+const Personalzonelistitem = resolve => require(['@/components/personalzone/personalzonelistitem/Personalzonelistitem'], resolve)
+const Personalzonelistitemborderbottom = resolve => require(['@/components/personalzone/personalzonelistitemborderbottom/Personalzonelistitemborderbottom'], resolve)
+
+export default {
+	name:"personalzone",
+    data:function(){
+ 	  	return {
+ 	  		info:[{
+		        	imgUrl: '//gfire.top:8080/vueapp/vueProject/src/images/qb.png',
+		        	name: '钱包',
+                    to:"/personalzone/we"
+	    		},
+	    		{
+		        	imgUrl: '//gfire.top:8080/vueapp/vueProject/src/images/sc.png',
+		        	name: '收藏',
+                    to:"/personalzone/we"
+	    		},
+	    		{
+		        	imgUrl: '//gfire.top:8080/vueapp/vueProject/src/images/xc.png',
+		        	name: '相册',
+                    to:"/personalzone/we"
+	    		},
+	    		{
+		        	imgUrl: '//gfire.top:8080/vueapp/vueProject/src/images/kb.png',
+		        	name: '卡包',
+                    to:"/personalzone/we"
+	    		},
+	    		{
+		        	imgUrl: '//gfire.top:8080/vueapp/vueProject/src/images/bq.png',
+		        	name: '表情',
+                    to:"/personalzone/we"
+	    		},
+	    		{
+		        	imgUrl: '//gfire.top:8080/vueapp/vueProject/src/images/shzh.png',
+		        	name: '设置',
+                    to:"/personalzone/we"
+	    		},
+	    		{
+		        	imgUrl: '//gfire.top:8080/vueapp/vueProject/src/images/fjdr.png',
+		        	name: '登录',
+                    to:"/personalzone/login"
+	    		},
+	    		{
+		        	imgUrl: '//gfire.top:8080/vueapp/vueProject/src/images/saoyisao.png',
+		        	name: '注册',
+                    to:"/personalzone/register"
+	    		},
+	    		{
+		        	imgUrl: '//gfire.top:8080/vueapp/vueProject/src/images/find.png',
+		        	name: '修改密码',
+                    to:"/personalzone/we"
+	    		},
+ 	  		]
+ 	  	}
+    },
+	components: {
+		FooterTab,
+		Personalzonelistitem,
+		Personalzonelistitemborderbottom
+	}
+}
+</script>
+<style lang="less" scoped>
+@import '../../css/common.less';
+.divide-20{
+	.divide(0.2rem)
+}
+.personalzone{
+	margin-bottom: 0.5rem;
+	overflow: hidden;
+}
+.info-user{
+	height: 1rem;
+	background: #fff;
+	position: relative;	
+	font-size: @fontsize;
+	.user-avatar{
+		width: 0.7rem;
+		height: 0.7rem;
+		position: absolute;
+		top: 0.15rem;
+		left: 0.15rem;
+		/*相对路径要以common.less的为基准  绝对路径就无所谓*/
+		.bg("../images/avatar-default.jpg")
+	}
+	p{
+		padding-left: 1rem;
+	}
+	.user-nick{
+		max-width: 1.5rem;
+		height: 0.5rem;
+		line-height: 0.8rem;
+		font-weight: bold;		
+		.fontsize(0.15rem);
+		overflow: hidden;
+	}
+	.user-account{
+		max-width: 1.5rem;
+		height: 0.3rem;
+		line-height: 0.3rem;
+		overflow: hidden;
+	}
+	.user-erweima{
+		width: 0.2rem;
+		height: 0.2rem;
+		position: absolute;
+		top: 0.4rem;
+		right: 0.2rem;
+		.bg("../images/avatar-erweima.png")
+	}
+}	
+.list-box{
+	background: #fff;
+}
+
+
+	
+	
+</style>

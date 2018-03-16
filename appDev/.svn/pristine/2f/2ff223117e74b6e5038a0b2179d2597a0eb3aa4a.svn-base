@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>旋转跳跃我不停歇</title>
+		<style type="text/css">
+			#demo{
+				width: 800px;
+				height: 50px;
+				font-size: 50px;
+				color: red;
+				line-height: 50px;
+				animation: zhuan 1s linear 0s infinite;
+				margin: 400px auto 0;
+				background: gray;
+				transform-origin: 200px 25px;
+			}
+			@keyframes zhuan{
+				from{transform: rotate(0deg);}
+				to{transform: rotate(360deg);}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="demo">我是容器内容物、我是容器内容物</div>	
+	</body>
+</html>

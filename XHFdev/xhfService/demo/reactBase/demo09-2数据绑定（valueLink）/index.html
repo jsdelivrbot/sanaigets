@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<title>数据绑定（依赖节点值改变，目标值跟着变）</title>
+  	<meta charset="UTF-8"/>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+    	var BindingChange= {  
+  
+            handleChange: function(key) {  
+  
+                var that = this,  
+                    newState = {};  
+  
+                return function(e) {  
+  
+                    newState[key] = e.target.value;  
+                    that.setState(newState);  
+  
+                }  
+  
+            }  
+  
+        }  
+  
+        var BindingExample1 = React.createClass({  
+  
+            mixins: [BindingChange],  
+  
+            getInitialState: function() {  
+                return {  
+                    text: "",  
+                    comment: ""  
+                }  
+            },  
+            render: function() {  
+                return (  
+                    <div>  
+                         <input type="text" placeholder="请输入内容" onChange={this.handleChange('text').bind(this)} />  
+                                 <textarea onChange={this.handleChange('comment').bind(this)}></textarea>  
+                                     <p>{this.state.text}</p>  
+                                     <p>{this.state.comment}</p>  
+                    </div>  
+                );  
+            }  
+  
+        })  
+        ReactDOM.render(<BindingExample1 />,document.getElementById('example'));
+    </script>
+  </body>
+</html>

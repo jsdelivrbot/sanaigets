@@ -1,0 +1,34 @@
+<template>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+</template>
+
+<script>
+	
+export default {
+  name: 'app',
+  created() {
+  /*  this.$http.get('/api/seller').then((response) => {
+      response = response.body
+        if (response.errno === ERR_OK) {
+            this.seller = response.data
+        }
+    })  */
+  }
+}
+</script>
+
+<style lang="less">
+	@import './css/reset.less';
+	@import './css/common.less';
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: left;
+  color: @fontcolor;
+  margin: 0;
+  padding: 0;
+}
+</style>

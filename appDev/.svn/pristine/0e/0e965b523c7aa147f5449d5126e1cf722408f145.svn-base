@@ -1,0 +1,45 @@
+/*
+ * action 类型
+ */
+
+
+export const Init_state = 'Init_state_json'
+export const ADD = 'ADD';
+export const DElET = 'DElET';
+export const MULTIPLICATION  = 'multiplication'
+export const DIVISION  = 'division'
+export const CHANGECOUNTWAY = 'changecountway'
+export const CHANGECOUNTFIRSTNUM = 'changecountfirstnum'
+export const CHANGECOUNTSECONDNUM = 'changecountsecondnum'
+/*
+ * 其它的常量
+ */
+
+/*
+ * action 创建函数
+ */
+
+export function add(arr) {
+  return { type: ADD, arr }
+}
+export function del(arr) {
+  return { type: DElET, arr }
+}
+export function multiplication(arr) {
+  return { type: MULTIPLICATION, arr }
+}
+export function division(arr) {
+  return { type: DIVISION, arr }
+}
+export function changeCountWay(str) {
+  return { type: CHANGECOUNTWAY, str }
+}
+export function changecountfirstnum(num) {
+  return { type: CHANGECOUNTFIRSTNUM, num }
+}
+export function changecountsecondnum(num) {
+  return { type: CHANGECOUNTSECONDNUM, num }
+}
+export function initState(InitStatesJson) {	
+  return { type: Init_state, InitStatesJson }
+}

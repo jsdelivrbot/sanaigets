@@ -1,0 +1,9 @@
+{
+	"index.html": {
+		"resources": [
+			"css/init.css",
+			"框架库/jquery/dist/jquery.js",
+			"css/jquery.min.js"
+		]
+	}
+}

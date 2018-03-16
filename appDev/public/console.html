@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html >
+<head lang = "en" >
+    <meta charset = "UTF-8" >
+    <title >调试console妙用+改良版适应移动端时钟</title >
+    <link rel = "stylesheet" href = "/css/reset.css" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="/js/jquery.min.js"></script >
+    <script src="/js/rem6.js"></script >
+    <script src="/js/console.js"></script >
+    <style >
+        body{
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+        h1{text-align: center;font-size: 0.2rem;}
+        .main{
+            height: auto;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .clock{
+            width: 100vw;
+            height: 0;
+            padding-top: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+    </style >
+</head >
+<body >
+<h1>改良版适应移动端canvas时钟</h1>
+<hr />
+<div class="clock">
+        <canvas id="myclock" width="1000" height="1000" style="display: block;position: absolute;top: 0;left: 0;transform: scale(1);transform-origin: left top">
+        该浏览器不支持canvas绘图功能，请更新该浏览器或者移步到google浏览器
+    </canvas>
+</div>
+<hr />
+<div class="main">
+    <p>
+    一、console.log格式化打印
+    console.log格式化这一用法一般都在个人博客或其他官网上有，当F12查看网页元素时，在控制台(console)那里偶尔会发现一些个性化的输出，感觉很奇特很好玩，其实现原理不难看一遍就晓得，具体实现如下
+    </p>
+
+    <p>
+        1、%c表示css样式
+        console.log('%c hello world', 'color: red;font-size: 24px;font-weight: bold;text-decoration: underline;');
+    </p>
+
+    <p>
+        2、%d表示数字
+        console.log('%d', 123);
+    </p>
+
+
+    <p>
+        3、%i表示整型数字
+        console.log('%i', 123);
+    </p>
+
+    <p>
+        4、%o表示DOM元素
+        console.log('%o', document.body);
+    </p>
+
+    <p>
+        5、%O表示JavaScript对象
+        console.log('%O', new Date());
+    </p>
+
+    <p>
+        二、console对象的一些方法
+        首先在控制台(console)输入console回车，会看到
+        <br>
+        有如此多的常用的有
+        console.log()    // 打印日志<br>
+        console.debug()  // 打印调试<br>
+        console.error()  // 打印错误<br>
+        console.info()   // 打印信息<br>
+        console.warn()   // 打印警告<br>
+        console.assert() // 打印断言<br>
+        console.clear()  // 清空
+    </p>
+</div>
+<script >
+    /*实时时钟*/
+    function clock(){
+        var now = new Date();
+        var sec = now.getSeconds();
+        var min = now.getMinutes();
+        var hr  = now.getHours();
+        hr = hr>=12 ? hr-12 : hr;
+        var ctx = document.getElementById('myclock').getContext('2d');
+        ctx.save();
+        ctx.clearRect(0,0,1000,1000);  	//150
+        ctx.translate(500,500);  	//75
+        //ctx.scale(0.3,0.3);
+        ctx.rotate(-Math.PI/2);
+        ctx.strokeStyle = "black";
+        ctx.fillStyle = "black";
+        ctx.lineWidth = 10;	//8
+
+        // Hour marks
+        ctx.save();
+        for (var i=0;i<12;i++){
+            ctx.beginPath();
+
+            ctx.moveTo(500,0);  //100
+            ctx.lineTo(450,0);  //120
+            ctx.stroke();
+            ctx.closePath();
+            ctx.rotate(Math.PI/6);
+        }
+        ctx.restore();
+
+        // Minute marks
+        ctx.save();
+        ctx.strokeStyle = "#333";
+        ctx.lineWidth = 5;
+        for (i=0;i<60;i++){
+            if (i%5!=0) {
+                ctx.beginPath();
+                ctx.moveTo(500,0);	//117
+                ctx.lineTo(475,0);	//120
+                ctx.stroke();
+            }
+            ctx.rotate(Math.PI/30);
+        }
+        ctx.restore();
+
+        // Hours
+        ctx.save();
+        ctx.rotate( hr*(Math.PI/6) + (Math.PI/360)*min + (Math.PI/21600)*sec ) ;
+        ctx.strokeStyle = "green";
+        ctx.fillStyle = "green";
+        ctx.lineWidth = 10;  	//14
+        ctx.beginPath();
+        ctx.moveTo(-50,0);  	//-20
+        ctx.lineTo(100,0);  	//80
+        ctx.stroke();
+        ctx.restore();
+
+        // Minutes
+        ctx.save();
+        ctx.rotate( (Math.PI/30)*min + (Math.PI/1800)*sec );
+        ctx.strokeStyle = "#0000ff";
+        ctx.fillStyle = "#0000ff";
+        ctx.lineWidth = 8;  	//8
+        ctx.beginPath();
+        ctx.moveTo(-75,0);  	//-28
+        ctx.lineTo(175,0);  	//92
+        ctx.stroke();
+        ctx.restore();
+
+        // seconds
+        ctx.save();
+        ctx.rotate(sec * Math.PI/30);
+        ctx.strokeStyle = "#ff0000";
+        ctx.fillStyle = "#ff0000";
+        ctx.lineWidth = 6;  	//6
+        ctx.beginPath();
+        ctx.moveTo(-100,0);
+        ctx.lineTo(250,0);  	//103
+        ctx.stroke();
+        ctx.restore();
+
+        // 表圈
+        ctx.beginPath();
+        ctx.lineWidth = 2;  //14
+        ctx.strokeStyle = '#999';
+        ctx.arc(0,0,499,0,Math.PI*2,true);  	// 圆环
+        ctx.stroke();
+
+        ctx.restore();
+    }
+    window.setInterval(clock,1000);
+    clock();
+
+    //m端pc端适配
+    if(Number(window.innerWidth) >1100){
+        $("#myclock").css("transform","scale(0.75)");
+    }else{
+        var _scl = Number(window.innerWidth)/1000;
+        $("#myclock").css("transform","scale("+_scl+")");
+    }
+</script >
+</body >
+</html >

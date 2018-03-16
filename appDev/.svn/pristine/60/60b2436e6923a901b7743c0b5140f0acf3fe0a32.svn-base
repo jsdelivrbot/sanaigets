@@ -1,0 +1,41 @@
+<template>
+	<div class="index">
+		首页
+		
+		
+		
+		
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+
+<script>
+import FooterTab from '@/components/footerTab/FooterTab'
+
+
+export default {
+	name:"index",
+	components: {
+		FooterTab
+	},
+	created() {
+	  	/*$.ajax({
+	  		type:"get",
+	  		url:"http://gfire.top:8080/api/tests/db/select",
+	  		async:true,
+	  		dataType:"jsonp",
+	  		success:function (e) {
+	  			console.log("返回结果：%O",e);
+	  		}
+	  	});*/
+	  	fetch("api/tests/db/select",function (a) {
+	  		console.log(a)
+	  	})
+	}
+}
+</script>
+
+<style lang="less" scoped>
+	
+</style>

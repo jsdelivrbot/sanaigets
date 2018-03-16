@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		$("#getContentMediaUrl").on("change",function () {
+			var formData = new FormData($("#uploadForm")[0]);
+			formData.append("file",$("#getContentMediaUrl")[0].files[0]);
+			$.ajax({
+				type:"post",									
+				data:formData,
+				url:"" + web_basic_domain +"live/timeline/upload",
+				contentType:"multipart/form-data",
+				contentType: false, //必须false才会避开jQuery对 formdata 的默认处理 XMLHttpRequest会对 formdata 进行正确的处理  
+				processData: false,	//必须false才会自动加上正确的Content-Type
+				async:true,
+				beforeSend:function(){console.log("正在进行，即将上传 ，请稍候");},
+				success:function (e) {
+					console.log(e);
+					if (e.data.length>0) {
+						$(".part-pub").attr("data-contentmediaurl",e.data[0].url);
+					
+						console.log("图片上传完毕已获取最新地址"); 			
+						$(".add-pic").addClass("none");
+						$(".added-pic").removeClass("none");
+						$(".part-pub").attr("data-contentmediatype","1");
+					}						
+				}
+			});
+		})
+	</script>
+</html>

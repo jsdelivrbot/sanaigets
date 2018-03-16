@@ -1,0 +1,10 @@
+export default {
+  hello ({commit, platform}) {
+    commit('hello', platform)
+  },
+  xhfHello({state,commit,rootState},platform){
+  	//platform = 123321;
+  	console.log("来自actions.js: ---%O---%O---%s",state,rootState,platform);
+  	commit('xhfHello', platform);
+  }
+}

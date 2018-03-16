@@ -1,0 +1,49 @@
+<template>
+	<div class="personalzone" title="sanaigets-个人中心">
+		<div class="divide-20"></div>
+		<div class="info-user divide(0.2rem)">
+			<div class="user-avatar"></div>
+		</div>
+		
+		
+		
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+
+<script>
+import FooterTab from '@/components/footerTab/FooterTab'
+
+export default {
+	name:"personalzone",
+	components: {
+		FooterTab
+	}
+}
+</script>
+
+<style lang="less" scoped>
+@import '../../css/common.less';
+.info-user{
+	height: 1rem;
+	background: #fff;
+	position: relative;
+}	
+.divide-20{
+	.divide(0.2rem)
+}
+.user-avatar{
+	width: 0.6rem;
+	height: 0.6rem;
+	position: absolute;
+	top: 0.2rem;
+	left: 0.2rem;
+	background-color:rgba(0,0,0,0.1) ;
+	.bg("http://gfire.top:8080/images/down.png")
+}
+
+
+	
+	
+</style>

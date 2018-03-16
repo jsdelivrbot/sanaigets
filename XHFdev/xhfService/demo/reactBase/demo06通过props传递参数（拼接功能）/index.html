@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<title>通过props传递参数（拼接功能）</title>
+  	<meta charset="UTF-8"/>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <div id="example1"></div>
+    <script type="text/babel">
+    	
+			var data ="123";
+      //var data = ["123","a","b","c"];
+      
+      //以下三种没办法自动兼容转换会直接报错
+      //var data;			//等同于undefined
+      //var data = {};
+      //var data = true;
+      var MyTitle = React.createClass({
+        propTypes: {
+          title: React.PropTypes.string.isRequired,							//需求是字符串类型所以数字的123不合格但还是能转换为"123"，换123+""就会符合标准，如果是数组也能全体转化    但是json对象和布尔就不行
+        },
+
+        render: function() {
+          return <h1> {this.props.title} </h1>;
+        }
+      });
+
+      ReactDOM.render(
+        <MyTitle title={data} />,
+        document.getElementById('example')
+      );
+			
+			
+			
+			
+			
+			
+			var CheckLink = React.createClass({
+			  render: function() {
+			    // 这样会把 CheckList 所有的 props 复制到 <a>
+			    return <a {...this.props}>{'√ '}{this.props.children}</a>;			//通过  ...this.props
+			  }
+			});
+
+			ReactDOM.render(
+			  <CheckLink href="../demo01/index.html" title="我是CheckLink上的属性">
+			    Click here!
+			  </CheckLink>,
+			  document.getElementById('example1')
+			);
+    </script>
+  </body>
+</html>
+

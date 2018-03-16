@@ -1,0 +1,163 @@
+<template>
+	<div class="index">
+		<!--vue-swipe轮播图-->
+		<div class="swipeBox">
+			<swipe class="my-swipe">
+			  <swipe-item class="slide1">
+			  	<router-link to="/personalzone">	
+			  		<img src="../../images/x.png"/>	
+			  	</router-link>
+			  	</swipe-item>
+			  <swipe-item class="slide2">
+			  	<img src="../../images/h.png"/>
+			  </swipe-item>
+			  <swipe-item class="slide3">
+			  	<img src="../../images/f.png"/>
+			  </swipe-item>
+			  <swipe-item class="slide4">
+			  	响
+			  </swipe-item>
+			  <swipe-item class="slide5">
+			  	哥
+			  </swipe-item>
+			  <swipe-item class="slide6">
+			  	婷
+			  </swipe-item>
+			  <swipe-item class="slide7">
+			  	妹
+			  </swipe-item>
+			  <swipe-item class="slide8">
+			  	无
+			  </swipe-item>
+			  <swipe-item class="slide9">
+			  	敌
+			  </swipe-item>
+			</swipe>
+		</div>
+	<div class="divide-20"></div>
+		<router-link to="/personalzone">
+			<div class="notice">
+				<img src="../../images/h.png" />
+				<div class="notice-content borderleft-1 twoline">
+					这里是通知内容的摆放区域、这里是通知内容的摆放区域、这里是通知内容的摆放区域、这里是通知内容的摆放区域、这里是通知内容的摆放区域、这里是通知内容的摆放区域、
+				</div>
+			</div>
+		</router-link>
+		
+		
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+
+<script>
+import FooterTab from '@/components/footerTab/FooterTab'
+require('vue-swipe/dist/vue-swipe.css');
+import { Swipe, SwipeItem } from 'vue-swipe';
+/*// in CommonJS
+const { Swipe, SwipeItem } = require('vue-swipe');
+// in Global variable
+const { Swipe, SwipeItem } = VueSwipe;*/
+
+export default {
+	name:"index",
+	components: {
+		FooterTab,
+		'swipe': Swipe,
+    	'swipe-item': SwipeItem
+	},
+	created() {
+	  	/*$.ajax({
+	  		type:"get",
+	  		url:"http://gfire.top:8080/api/tests/db/select",
+	  		async:true,
+	  		dataType:"jsonp",
+	  		success:function (e) {
+	  			console.log("返回结果：%O",e);
+	  		}
+	  	});*/
+	  	fetch("/api/tests/db/select",{},function (res) {
+	  		res=res.data;
+	  		console.log(res)
+	  	})
+	}
+}
+</script>
+
+<style lang="less" scoped>
+@import '../../css/common.less';
+/*轮播*/
+.swipeBox{
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	width: 100%;
+	.my-swipe {
+	  height: 2rem;
+	  line-height: 2rem;
+	  color: #fff;
+	  font-size: 0.8rem;  
+	  text-align: center;
+	  img{
+	  	height: 100%;
+	  	margin: 0 auto;
+	  }
+	}
+	.slide1 {
+	  background-color: red;
+	  color: #fff;
+	}
+	.slide2 {
+	  background-color: orange;
+	  color: #000;
+	}
+	
+	.slide3 {
+	  background-color: yellow;
+	  color: #fff;
+	}
+	.slide4{
+	  background-color: green;
+	}
+	.slide5{
+	  background-color: Cyan;
+	}
+	.slide6{
+	  background-color: blue;
+	}
+	.slide7{
+	  background-color: purple;
+	}
+	.slide8{
+	  background-color: pink;
+	}
+	.slide9{
+	  background-color: SkyBlue;
+	}
+}
+.notice{
+	position: relative;
+	overflow: hidden;
+	height: 0.8rem;
+	background: #FFFFFF;
+	padding-left: 0.8rem;
+	.notice-content{
+		margin-top: 0.15rem;
+		height: 0.5rem;
+		line-height: 0.25rem;
+		font-size: 0.15rem;
+		color: @fontcolor;
+		padding: 0 0.1rem;
+		overflow: hidden;
+	}
+	img{
+		position: absolute;
+		top: 0.15rem;
+		left: 0.15rem;
+		width: 0.5rem;
+		height: 0.5rem;
+	}
+}
+
+</style>

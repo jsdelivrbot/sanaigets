@@ -1,0 +1,5 @@
+export default {
+  hello (state, platform) {
+    state.hello = '改变一下吧'
+  }
+}

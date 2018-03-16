@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>全屏尺寸试验</title>
+		<style type="text/css">
+			div{text-align: center;font-size: 18px;color: red;float: left;margin-right: 20px;}
+			p{text-indent: 2em;}
+			.ip5s{background-color: yellow;width: 320px;height: 568px;position: relative;}
+			.ip6{background-color: green;width: 375px;height: 667px;position: relative;}
+			.ip6s{background-color: blue;width: 414px;height: 736px;position: relative;}
+			.content{background-color: purple;width: 320px;height: 464px;position: relative;}
+			.content1{background-color: purple;width: 320px;height: 504px;position: relative;}
+			.content2{background-color: purple;width: 320px;height: 464px;position: absolute;top: 64px;left: 0;}
+			.content3{background-color: purple;width: 375px;height: 543.75px;position: absolute;top: 64px;left: 0;}
+			.content4{background-color: purple;width: 414px;height: 600.3px;position: absolute;top: 64px;left: 0;}
+			
+			.content5{background-color: green;width: 320px;height: 480.4266666666667px;position: absolute;top: 64px;left: 5px;}
+			.content6{background-color: blue;width: 320px;height: 488.5024154589372px;position: absolute;top: 64px;left: 10px;}
+			h1{text-align: center;color: red;}
+		</style>
+	</head>
+	<body>
+		<div class="clear" style="width: 100%;">
+		<div class="ip5s">苹果5s_320*568<div class="content2" title="">等比缩放——实际能显示的手机内容大小_320*464</div><div class="content5" title="">按6宽高比：等比缩放——实际能显示的手机内容大小_320*464</div><div class="content6" title="">按6p宽高比：等比缩放——实际能显示的手机内容大小_320*464</div></div>
+		<div class="ip6">苹果6_375*667<div class="content3" title="">等比缩放——实际能显示的手机内容大小_375*543.75</div></div>
+		<div class="ip6s">苹果6p_320*736<div class="content4" title="">等比缩放——实际能显示的手机内容大小_414*600.3</div></div>
+		<div class="content" title="">浏览器中实际能显示的手机内容大小_320*464（推荐这个尺寸）</div>
+		<div class="content1" title="">微信中实际能显示的手机内容大小_320*504（主要目标用户是微信的话这个也可以）</div>
+		</div>
+		<h1>得出结论：320*464<br /><p>用5s的宽高比能适合 6  6plus不被亚索<br />最佳兼容性尺寸是320*464的等比缩放@2（6尺寸为主流就好为@3目标稍少一些）<br />只匹配微信的话就推荐320*504的等比缩放</p></h1>
+		
+	</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		#demo{width: 100px;height: 100px;position: absolute;top: 0px;left: 0;right:0;background: red;margin: 10vh auto;}
+	</style>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<body>
+		<div id="demo"></div>
+		<div style="height: 20000px;background: gray;"></div>
+	</body>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		console.log($("body").height())
+		$(window).scroll(function () {
+			$("#demo").css("margin-top",Number($(window).scrollTop())/Number((window).height())*100+20+"vh");
+			console.log($(window).scrollTop());
+			if ($(window).scrollTop()>2000) {
+				console.log("22222")
+				$("body").css({"height":"100vh","overflow":"hidden"});
+			}
+		})
+		
+	</script>
+</html>

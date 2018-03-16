@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<title>自定义模块类(名字大写开头)</title>
+  	<meta charset="UTF-8"/>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+   
+      var CommentBox = React.createClass({
+			  render: function() {
+			    return (
+			      <div className="commentBox">
+			        Hello, world! I am a CommentBox.
+			      </div>
+			    );
+			  }
+			});
+			ReactDOM.render(
+			  <CommentBox />,
+			  document.getElementById('example')
+			);
+    </script>
+  </body>
+</html>

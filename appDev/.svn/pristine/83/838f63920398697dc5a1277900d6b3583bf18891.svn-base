@@ -1,0 +1,27 @@
+<template>
+	<div class="index">
+		首页
+		
+		
+		
+		
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+
+<script>
+import FooterTab from '@/components/footerTab/FooterTab'
+
+
+export default {
+	name:"index",
+	components: {
+		FooterTab
+	}
+}
+</script>
+
+<style lang="less" scoped>
+	
+</style>

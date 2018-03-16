@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>基于canvas的jQuery幸运抽奖大轮盘插件|DEMO_jQuery之家-自由分享jQuery、html5、css3的插件库</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<!--<link rel="stylesheet" type="text/css" href="css/default.css">-->
+	<!--[if IE]>
+		<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="htmleaf-container">
+		<header class="htmleaf-header">
+			<h1>基于canvas的jQuery幸运抽奖大轮盘 </h1>
+		</header>
+		<div class="htmleaf-content bgcolor-3">
+			<canvas id="canvas" width="500" height="500"></canvas>
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/rouletteWheel.js"></script>
+	<script type="text/javascript">
+		$(function(){
+
+			var itemsToShow = 8//parseInt(4 + Math.random()*10);
+			console.log(itemsToShow);
+			var items = {};
+			/*for(var i=0; i < itemsToShow; i++){
+				items[i] = '奖品 ' + (i+1);
+			}*/
+			items[0]="单车0";
+			items[1]="单车1";
+			items[2]="单车2";
+			items[3]="单车3";
+			items[4]="单车4";			
+			items[5]="单车5";
+			items[6]="单车6";
+			items[7]="单车7";
+			items[8]="单车8";
+		  $('#canvas').rouletteWheel({
+		    items : items,
+		    selected : function(key, value){
+		      //alert('SELECTED : ' + key + ' => ' + value);
+		      alert('恭喜你抽到: ' + value + '一台');
+		    },
+		    spinText : '点击就送',
+		  });
+
+		});
+	</script>
+</body>
+</html>

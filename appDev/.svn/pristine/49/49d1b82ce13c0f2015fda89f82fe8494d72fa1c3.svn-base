@@ -1,0 +1,69 @@
+<template>
+	<div class="tab2">
+		Tab2页
+		<br />
+		<button>
+			<router-link to="/personalzone/login">跳转登录页面</router-link>
+		</button>
+		<br />
+		<hr />
+		
+		<button>
+			<router-link to="/personalzone/register">跳转注册页面</router-link>
+		</button>
+		<button>
+			<router-link :to="{path:'/personalzone/register',query:{userId: 123}}">带参数跳转注册页面，变成 /register?userId=123</router-link>
+		</button>
+		<br />
+		<hr />
+		
+		<button>
+			<!--声明式导航 ：to  固定的导航直接 to 不需要冒号 转换后的代码一样-->
+			<router-link :to="{name:'Xhf'}">跳转xhf</router-link>
+		</button>
+		<button>	
+			<router-link to="/personalzone/Xhf">跳转xhf</router-link>
+		</button>
+		<br />
+		<hr />
+		
+		<button>
+			<router-link to="/personalzone/Hello/123">跳转/hello/123</router-link>
+		</button>
+		<button>
+			<router-link :to="{name:'Hello',params:{ userId: 123 }}">带参数形式:to跳转hello/123</router-link>
+		</button>
+		<br />
+		<hr />
+		
+		<button>
+			<router-link to="/personalzone/we">去测试页We</router-link>
+		</button>
+		<br />
+		<button @click="show">
+			测试webpack 设置的全局参数root
+		</button>
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+
+<script>
+import FooterTab from 'components/footerTab/FooterTab'
+
+export default {
+	name:"tab3",
+	components: {
+		FooterTab
+	},
+	methods:{
+		show() {
+			console.log("root")
+		}
+	}
+}
+</script>
+
+<style lang="less" scoped>
+	.tab2 a{color:#333}
+</style>

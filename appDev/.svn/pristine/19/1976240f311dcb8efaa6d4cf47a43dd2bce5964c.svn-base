@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>飞翔的鸟儿_C3H5动画</title>
+		<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+		<link rel="stylesheet" href="css/animate.css">
+		<style type="text/css">
+			body{background-color: deepskyblue;width:100%;height:100%;overflow:hidden}
+			@keyframes namecloud{
+				0%{
+					transform:translate( 1500px ,0px)
+					/*transform: scale(1)*/
+				}
+				100%{
+					transform: translate(-1000px ,0px);
+					/*transform: scale(1)*/
+				}
+			}
+			.cloud{
+				position: relative;
+				width: 100px;
+				height: 100px;
+				border-radius: 50%;
+				background-color: #FFFFFF;
+				box-shadow: 130px -40px 0 #fff,130px 30px 0 #fff,50px 30px 0 #fff;
+				margin: 50px auto;
+				animation: namecloud 4s linear 0s infinite;
+			}
+			.cloud:after{
+				position: absolute;
+				top: -50px;
+				left: 60px;
+				content: "";
+				width: 100px;
+				height: 100px;
+				border-radius: 50%;
+				background-color: #Fff;
+				box-shadow: 130px 15px 0 #fff;
+				margin: 50px auto;
+			}
+		
+			.bird{width: 100px;height: 100px;background: linear-gradient(top , rgb(232, 172, 42) 34% , rgb(244, 88, 10) 81%);
+background: -o-linear-gradient(top , rgb(232, 172, 42) 34% , rgb(244, 88, 10) 81%);
+background: -ms-linear-gradient(top , rgb(232, 172, 42) 34% , rgb(244, 88, 10) 81%);
+background: -moz-linear-gradient(top , rgb(232, 172, 42) 34% , rgb(244, 88, 10) 81%);
+background: -webkit-linear-gradient(top , rgb(232, 172, 42) 34% , rgb(244, 88, 10) 81%);border-radius: 10px;position: absolute;top: 240px;left: 400px;}
+			.eye{position: absolute;width: 20px;height: 20px;background: #fff;border-radius: 50%;top: 15px;right: 10px;border: 5px solid green;}
+			.eye:before{content: "";position: absolute;right:0px;top:8px;width: 10px;height: 10px;background: red;border-radius: 50%;}
+			.mao{position: absolute;width: 20px;height: 20px;background: #ccc;border-radius: 50%;top: 15px;left: 10px;}
+			.mao:before{content: "";position: absolute;width: 10px;height: 10px;background: #ccc;border-radius: 50%;top: 0px;left: 20px;}
+			.mao:after{content: "";position: absolute;width: 10px;height: 10px;background: #ccc;border-radius: 50%;top: 20px;left: 10px;}
+			.zuib{width: 0px;
+				height: 0px;
+				border-top: 25px solid transparent;      
+				border-bottom: 25px solid transparent;
+				border-right: 25px solid transparent;
+				border-left: 25px solid gray;position: absolute;top: 25px;right: -50px;}
+				
+			.weib{width: 0px;
+				height: 0px;
+				border-top: 15px solid blue;     
+				border-bottom: 15px solid transparent;
+				border-left: 15px solid transparent;
+				border-right: 15px solid blue;
+				position: absolute;top: 25px;left: -30px;}
+				
+			@keyframes fly{
+				0%{
+					transform: rotateX(0deg);
+				}
+				100%{
+					transform: rotateX(360deg);
+				}
+			}
+			.chib{width: 0px;
+				height: 0px;
+				border-top: 20px solid #333;     
+				border-bottom: 20px solid transparent;
+				border-left: 20px solid transparent;
+				border-right: 20px solid #333;
+				position: absolute;top: 65px;left: 25px;
+				animation: fly 0.2s linear 0s infinite alternate;
+				transform-origin: top;
+				}
+			/*.bird:hover .chib{animation-play-state: paused;}*/		/*滑到鸟上就停飞*/	
+	</style>		
+	</head>
+	<body>
+		<div class="cloud"></div>
+		<div class="cloud" style="margin:80px 40px 0 100px;"></div>
+		<div class="cloud" style="margin:30px 0px 0 800px;"></div>
+		<div class="cloud" style="margin:10px 0px 0 400px;"></div>
+		<div class="cloud" style="margin:0px 0px 0 1300px;"></div>
+		<div class="bird animated bounceInLeft">
+			<div class="eye"></div>
+			<div class="mao"></div>
+			<div class="zuib"></div>
+			<div class="weib"></div>
+			<div class="chib"></div>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+	$(document).ready(function  () {
+		$("div.bird").mouseenter(function  () {
+			$("div.bird").addClass("hinge");
+			window.setTimeout("window.location.reload();",3000)
+		})
+	})	
+	</script>
+</html>

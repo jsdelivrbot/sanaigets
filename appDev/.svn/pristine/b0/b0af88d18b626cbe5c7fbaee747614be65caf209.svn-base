@@ -1,0 +1,103 @@
+<template>
+	<transition name="slide-rightIn">
+	<div class="subpage moreinfo">
+		<Pageheadbar :headInfo="headInfo"></Pageheadbar>
+		<!--ajax上传-->
+		<form id="moreinfoForm" ref="moreinfoForm">
+			<input type="file" id="getContentMediaUrl" ref="moreinfoFormfile"/>
+			<button class="commit" @click="changeInfo" >上传</button>
+		</form>
+		<!--<script type="text/javascript">
+			$("#getContentMediaUrl").on("change",function () {
+				var formData = new FormData($("#uploadForm")[0]);
+				_useinfo = {
+					username:"xhftest",
+					password:"xhfpassword",
+					id:123456789
+				}
+				formData.append("userinfo",JSON.stringify(_useinfo));
+				
+				formData.append("file",$("#getContentMediaUrl")[0].files[0]);
+				$.ajax({
+					type:"post",									
+					data:formData,
+					url:"/api/tests/file/ajaxuploadpic",
+					contentType:"multipart/form-data",
+					contentType: false, //必须false才会避开jQuery对 formdata 的默认处理 XMLHttpRequest会对 formdata 进行正确的处理  
+					processData: false,	//必须false才会自动加上正确的Content-Type
+					async:true,
+					beforeSend:function(){console.log("正在进行，即将上传 ，请稍候");},
+					success:function (e) {
+						console.log("返回结果：%O",e);
+						//一顿操作。。。
+					},
+					error:function (err) {
+						console.log(err.msg);
+					}
+				});
+			})
+		</script>-->	
+		
+	</div>
+	 </transition>
+</template>
+
+<script>
+//引入顶部条组件	
+const Pageheadbar = resolve => require(['@/components/common/Pageheadbar'], resolve)	
+import axios from 'axios'
+import qs from 'qs';
+
+export default {
+	name:"moreinfo",
+	data:function() {
+	    return {
+	      	transitionName: 'slide-left',
+	      	headInfo:{
+	      		name:"更多信息",
+	      		back: true
+	      	}
+		}
+	},
+	methods:{
+	  	goBack(){
+	    	this.$router.go(-1);
+	    },
+	    changeInfo () {
+				var formData = new FormData($("#moreinfoForm")[0]);
+				var _useinfo = {
+					username:"xhftest",
+					password:"xhfpassword",
+					id:123456789
+				}
+				formData.append("userinfo",JSON.stringify(_useinfo));
+				
+				formData.append("file",$("#getContentMediaUrl")[0].files[0]);
+				$.ajax({
+					type:"post",									
+					data:formData,
+					url:"http://gfire.top:8080/api/users/ajaxuploadpic",
+					contentType:"multipart/form-data",
+					contentType: false, //必须false才会避开jQuery对 formdata 的默认处理 XMLHttpRequest会对 formdata 进行正确的处理  
+					processData: false,	//必须false才会自动加上正确的Content-Type
+					async:true,
+					beforeSend:function(){console.log("正在进行，即将上传 ，请稍候");},
+					success:function (e) {
+						console.log("返回结果：%O",e);
+						//一顿操作。。。
+					},
+					error:function (err) {
+						console.log(err.msg);
+					}
+				});
+	    }	    
+	},
+	components: {
+		Pageheadbar
+	}
+}
+</script>
+
+<style lang="less" scoped>
+
+</style>

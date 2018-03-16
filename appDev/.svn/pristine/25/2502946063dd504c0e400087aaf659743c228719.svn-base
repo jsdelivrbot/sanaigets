@@ -1,0 +1,44 @@
+<!--孙响实验专用-->
+<template>
+	<transition name="slide-rightIn">
+	<div class="page hello">
+		孙响实验专用
+		
+		
+		<button @click="xhfChangeBack">切换回上一页</button>
+		<div style="height: 1500px;"></div>
+	</div>
+	 </transition>
+</template>
+
+<script>
+export default {
+	name:"we",
+	data () {
+    return {
+      transitionName: 'slide-left'
+	    }
+	  },
+	  // dynamically set transition based on route change
+	  watch: {
+	    '$route' (to, from) {
+	      const toDepth = to.path.split('/').length
+	      const fromDepth = from.path.split('/').length
+	      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+	    }
+	  },
+	  methods:{
+	  	xhfChangeBack(){
+	    	this.$router.go(-1);
+	    }
+	  }
+}
+</script>
+
+<style lang="less" scoped>
+.page{background: red;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+</style>

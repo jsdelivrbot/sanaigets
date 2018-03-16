@@ -1,0 +1,88 @@
+<template>
+	<div class="personalzone" title="sanaigets-个人中心">
+		<div class="divide-20"></div>
+		<div class="info-user divide(0.2rem)">
+			<div class="user-avatar"></div>
+			<p class="user-nick oneline">saNaigets</p>
+			<p class="user-account">微信号：fenggea520</p>
+			<div class="user-erweima"></div>
+		</div>
+		<div class="divide-20"></div>
+		<div class="list-box">
+			<Personalzonelistitem></Personalzonelistitem>
+		</div>
+		
+		
+		
+		
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+<script>
+import FooterTab from '@/components/footerTab/FooterTab'
+const Personalzonelistitem = resolve => require(['@/components/personalzone/personalzonelistitem/Personalzonelistitem'], resolve)
+
+export default {
+	name:"personalzone",
+	components: {
+		FooterTab
+	},
+ 	components: {
+       Personalzonelistitem 
+    }
+}
+</script>
+<style lang="less" scoped>
+@import '../../css/common.less';
+.divide-20{
+	.divide(0.2rem)
+}
+.info-user{
+	height: 1rem;
+	background: #fff;
+	position: relative;	
+	font-size: @fontsize;
+	.user-avatar{
+		width: 0.7rem;
+		height: 0.7rem;
+		position: absolute;
+		top: 0.15rem;
+		left: 0.15rem;
+		/*相对路径要以common.less的为基准  绝对路径就无所谓*/
+		.bg("../images/avatar-default.jpg")
+	}
+	p{
+		padding-left: 1rem;
+	}
+	.user-nick{
+		max-width: 1.5rem;
+		height: 0.5rem;
+		line-height: 0.8rem;
+		font-weight: bold;		
+		.fontsize(0.15rem);
+		overflow: hidden;
+	}
+	.user-account{
+		max-width: 1.5rem;
+		height: 0.3rem;
+		line-height: 0.3rem;
+		overflow: hidden;
+	}
+	.user-erweima{
+		width: 0.2rem;
+		height: 0.2rem;
+		position: absolute;
+		top: 0.4rem;
+		right: 0.2rem;
+		.bg("../images/avatar-erweima.png")
+	}
+}	
+.list-box{
+	background: #fff;
+}
+
+
+	
+	
+</style>

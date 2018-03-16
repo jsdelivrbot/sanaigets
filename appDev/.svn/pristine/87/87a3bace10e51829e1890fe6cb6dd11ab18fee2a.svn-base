@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>背景图透明</title>
+	</head>
+	<style type="text/css">
+		
+		#bg{width: 100vw;height: 50vh;background: transparent;}
+		#bg img{width: 100%;height: auto;display: block;}
+		body{background:yellow}
+	</style>
+	<body>
+		选用支持背景透明图片格式 gif、png放背景盒子里		*div id="bg"**img src="img/2x/button_xz@2x.png"/**/div*    <br />
+		盒子设置背景透明								background: transparent;								   <br />
+		
+		<div id="bg"><img src="http://www.icood.vip/xhf/wx/img/auto-orient(11).jpg"/></div>
+		<!--<div id="bg"><img src="img/2x/button_xz@2x.png"/></div>-->
+		
+	</body>
+	<script type="text/javascript">
+		
+	</script>
+</html>

@@ -1,0 +1,280 @@
+<!--
+	此文档依赖jq，置于jquery之后，逻辑代码之前
+-->
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(function () {
+	/*
+	 判断浏览器类型
+	 使用方式:		browser.versions.+类型
+	 webkit为例：	browser.versions.webKit
+	 是否移动端：	browser.versions.mobile||browser.versions.android||browser.versions.ios
+	 三端区分例：	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+					    
+					} else if (/(Android)/i.test(navigator.userAgent)) {
+					
+					} else {
+						
+					};
+	 * */
+	window.browser={
+	    versions:function(){
+	        var u = navigator.userAgent, app = navigator.appVersion;
+	        return {
+	            trident: u.indexOf('Trident') > -1, //IE内核
+	            presto: u.indexOf('Presto') > -1, //opera内核
+	            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+	            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+	            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+	            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+	            android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+	            iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+	            iPad: u.indexOf('iPad') > -1, //是否iPad
+	            webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+	            weixin: u.indexOf('MicroMessenger') > -1, //是否微信 （2015-01-22新增）
+	            qq: u.match(/\sQQ/i) == " qq" //是否QQ
+	        };
+	    }(),
+	    language:(navigator.browserLanguage || navigator.language).toLowerCase()
+	}
+			
+	window.shareData = {
+		"timeLineLink": "" + location.href,
+		"sendFriendLink": "" + location.href,
+		"weiboLink": "" + location.href,
+		"tTitle": "彩贝财经，跟着牛人有钱赚",
+		"tContent": "名师云集牛人炒股看个够，看直播、问股票、就上彩贝财经。",
+		"fTitle": "彩贝财经，跟着牛人有钱赚",
+		"fContent": "名师云集牛人炒股看个够，看直播、问股票、就上彩贝财经。",
+		"wContent": "名师云集牛人炒股看个够，看直播、问股票、就上彩贝财经。",
+		"imgUrl":"https://m.icaibei.net/images/guide/512_70.png"
+	};
+	window.aftercbBridgeReady = function(ag) {console.log("aftercbBridgeReady")}
+	function oncbBridgeReady() {
+        // 测试分享
+        CaibeiJSBridge.on('menu:share', function(type) {
+            CaibeiJSBridge.call('share', {
+                "type": type,
+                "title": ""+window.shareData.tTitle,
+                "link": window.shareData.sendFriendLink,
+                "desc": ""+window.shareData.tContent,
+                "imgUrl": ""+window.shareData.imgUrl
+            }, function(res) {
+                log('share', res);
+            })
+        });
+    }
+	/*
+	 app端监听
+	 * */
+	window.onload=function () {
+		if(typeof CaibeiJSBridge == "undefined") {
+	        if(document.addEventListener) {
+	            document.addEventListener('CaibeiJSBridgeReady', oncbBridgeReady, false)
+	        } else if(document.attachEvent) {
+	            document.attachEvent('CaibeiJSBridgeReady', oncbBridgeReady);
+	            document.attachEvent('CaibeiJSBridgeReady', oncbBridgeReady)
+	        }
+	    } else {
+	        oncbBridgeReady();
+	        aftercbBridgeReady();
+	        
+	    }
+		aftercbBridgeReady();
+	}
+    	
+	function isWeiXin() {
+		var ua = window.navigator.userAgent.toLowerCase();
+		if(ua.match(/MicroMessenger/i) == 'micromessenger') {
+			return true
+		} else {
+			return false
+		}
+	}	
+	/*
+	 微信端监听
+	 * */
+	if(isWeiXin()) {				
+		var _u = ""+m_basic_domain+"thirdParty/weixin/getJsSdkSign?url=" + encodeURIComponent("" + location.href);
+		//var _u = "http://test.m.icaibei.net/thirdParty/weixin/getJsSdkSign?url=" + encodeURIComponent("" + location.href);
+		$.ajax({
+			type: "get",
+			url: _u,
+			async: true,
+			success: function(e) {
+				wx.config({
+					debug: false,
+					appId: '' + e.data.appId,
+					timestamp: e.data.timestamp,
+					nonceStr: '' + e.data.nonceStr,
+					signature: '' + e.data.signature,
+					jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+			}
+		});
+		
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {		
+			WeixinJSBridge.on('menu:share:appmessage', function(argv) { // 好友
+				WeixinJSBridge.invoke('sendAppMessage', {
+					"img_url": ""+window.shareData.imgUrl,
+					"img_width": "301",
+					"img_height": "301",
+					"link": window.shareData.sendFriendLink,
+					"desc": window.shareData.fContent,
+					"title": window.shareData.fTitle
+				}, function(res) {
+					_report('send_msg', res.err_msg);
+				})
+			});
+	
+			WeixinJSBridge.on('menu:share:timeline', function(argv) { 	// 朋友圈
+				WeixinJSBridge.invoke('shareTimeline', {
+					"img_url": ""+window.shareData.imgUrl,
+					"img_width": "401",
+					"img_height": "275",
+					"link": window.shareData.timeLineLink,
+					"desc": window.shareData.tContent,
+					"title": window.shareData.tTitle
+				}, function(e) {
+					console.log(e.err_msg);
+				});
+			});	
+		}, false);				
+	}
+})	
+</script>
+
+
+
+
+
+
+//精简版
+<!--此段依赖jq且只能线上微信已设置的域名范围内-->
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+            $(function() {
+                window.browser = {
+                    versions: function() {
+                        var u = navigator.userAgent,
+                                app = navigator.appVersion;
+                        return {
+                            trident: u.indexOf('Trident') > -1,
+                            presto: u.indexOf('Presto') > -1,
+                            webKit: u.indexOf('AppleWebKit') > -1,
+                            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+                            mobile: !!u.match(/AppleWebKit.*Mobile.*/),
+                            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+                            android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1,
+                            iPhone: u.indexOf('iPhone') > -1,
+                            iPad: u.indexOf('iPad') > -1,
+                            webApp: u.indexOf('Safari') == -1,
+                            weixin: u.indexOf('MicroMessenger') > -1,
+                            qq: u.match(/\sQQ/i) == " qq"
+                        }
+                    } (),
+                    language: (navigator.browserLanguage || navigator.language).toLowerCase()
+                };
+                window.shareData = {
+                    timeLineLink: "" + location.href,
+                    sendFriendLink: "" + location.href,
+                    weiboLink: "" + location.href,
+                    tTitle: "$!{roomInfo.anchorName}($!{roomInfo.anchorDesc})正在视频直播，快来提问！",
+                    tContent: "信息即价值，有问必有答，$!{roomInfo.anchorName}等你来问",
+                    fTitle: "$!{roomInfo.anchorName}($!{roomInfo.anchorDesc})正在视频直播，快来提问！",
+                    fContent: "信息即价值，有问必有答，$!{roomInfo.anchorName}等你来问",
+                    wContent: "信息即价值，有问必有答，$!{roomInfo.anchorName}等你来问",
+                    imgUrl: "https://static.cdn.icaibei.net/static/m/images/icon_share.png"
+                };
+                window.aftercbBridgeReady = function(ag) {
+                    console.log("aftercbBridgeReady")
+                };
+                function oncbBridgeReady() {
+                    CaibeiJSBridge.on('menu:share',
+                            function(type) {
+                                CaibeiJSBridge.call('share', {
+                                            "type": type,
+                                            "title": "" + window.shareData.tTitle,
+                                            "link": window.shareData.sendFriendLink,
+                                            "desc": "" + window.shareData.tContent,
+                                            "imgUrl": "" + window.shareData.imgUrl
+                                        },
+                                        function(res) {
+                                            log('share', res)
+                                        })
+                            })
+                }
+                window.onload = function() {
+                    if (typeof CaibeiJSBridge == "undefined") {
+                        if (document.addEventListener) {
+                            document.addEventListener('CaibeiJSBridgeReady', oncbBridgeReady, false)
+                        } else if (document.attachEvent) {
+                            document.attachEvent('CaibeiJSBridgeReady', oncbBridgeReady);
+                            document.attachEvent('CaibeiJSBridgeReady', oncbBridgeReady)
+                        }
+                    } else {
+                        oncbBridgeReady();
+                        aftercbBridgeReady()
+                    }
+                    aftercbBridgeReady()
+                };
+                function isWeiXin() {
+                    var ua = window.navigator.userAgent.toLowerCase();
+                    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+                if (isWeiXin()) {
+                    var _u = "" + m_basic_domain + "thirdParty/weixin/getJsSdkSign?url=" + encodeURIComponent("" + location.href);
+                    $.ajax({
+                        type: "get",
+                        url: _u,
+                        async: true,
+                        success: function(e) {
+                            wx.config({
+                                debug: false,
+                                appId: '' + e.data.appId,
+                                timestamp: e.data.timestamp,
+                                nonceStr: '' + e.data.nonceStr,
+                                signature: '' + e.data.signature,
+                                jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo']
+                            })
+                        }
+                    });
+                    document.addEventListener('WeixinJSBridgeReady',
+                            function onBridgeReady() {
+                                WeixinJSBridge.on('menu:share:appmessage',
+                                        function(argv) {
+                                            WeixinJSBridge.invoke('sendAppMessage', {
+                                                        "img_url": "" + window.shareData.imgUrl,
+                                                        "img_width": "301",
+                                                        "img_height": "301",
+                                                        "link": window.shareData.sendFriendLink,
+                                                        "desc": window.shareData.fContent,
+                                                        "title": window.shareData.fTitle
+                                                    },
+                                                    function(res) {
+                                                        _report('send_msg', res.err_msg)
+                                                    })
+                                        });
+                                WeixinJSBridge.on('menu:share:timeline',
+                                        function(argv) {
+                                            WeixinJSBridge.invoke('shareTimeline', {
+                                                        "img_url": "" + window.shareData.imgUrl,
+                                                        "img_width": "401",
+                                                        "img_height": "275",
+                                                        "link": window.shareData.timeLineLink,
+                                                        "desc": window.shareData.tContent,
+                                                        "title": window.shareData.tTitle
+                                                    },
+                                                    function(e) {
+                                                        console.log(e.err_msg)
+                                                    })
+                                        })
+                            },
+                            false)
+                }
+            });
+        </script>

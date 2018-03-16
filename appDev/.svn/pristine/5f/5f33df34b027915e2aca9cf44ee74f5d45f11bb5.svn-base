@@ -1,0 +1,6 @@
+欢迎来到这个坑爹的svn环境 也许还有一大堆毛病等着你哦！
+netstat -tnlp	//查看占用的端口号
+svnserve -d -r /usr/local/svnRepo/first   //开启svn服务
+kill 进程号   //杀死该ID的进程		
+
+服务器能同步到指定文件夹么？测试！

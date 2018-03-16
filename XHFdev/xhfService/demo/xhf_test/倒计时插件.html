@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.btn{width: 100px;height: 200px;background: blue;}
+			a{display: block;width: 100px;height: 50px;background: gray;}
+		</style>
+	</head>
+	<body>
+		<div class="btn">点击蓝色区域开始倒计时、仅点击一次
+			<a href=""></a>
+		</div>
+	</body>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+ 
+$(".btn").click(function(){
+    $(this).countdown(60);
+});
+ 
+ 
+$.fn.extend({
+     countdown:function(seconds){
+        var time=seconds;
+        var timer;
+        var _this=$(this);
+        _this.addClass("on");
+        _this.find("a").html("重新获取("+seconds+"s)");
+        timer=setInterval(function(){
+            time--;
+            if(time<0){
+                clearInterval(timer);
+                _this.removeClass("on");
+                _this.find("a").html("获取验证码");
+                time=seconds;
+            }else{
+                _this.find("a").html("重新获取("+time+"s)");
+            }
+        },1000);
+         }
+ 
+});
+ 
+ 
+</script>
+</html>

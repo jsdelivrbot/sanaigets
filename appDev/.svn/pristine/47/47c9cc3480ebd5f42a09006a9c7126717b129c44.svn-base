@@ -1,0 +1,27 @@
+<template>
+	<div class="tab3">
+		Tab3页
+		
+		
+		
+		
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+
+<script>
+import FooterTab from '@/components/footerTab/FooterTab'
+
+
+export default {
+	name:"tab3",
+	components: {
+		FooterTab
+	}
+}
+</script>
+
+<style lang="less" scoped>
+	
+</style>

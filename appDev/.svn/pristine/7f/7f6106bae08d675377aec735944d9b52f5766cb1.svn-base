@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>块状内的层级属性的作用域</title>
+		<style type="text/css">
+		body{
+			padding: 0;
+			margin: 0;
+		}
+			div{
+				width: 100px;height: 100px;padding: 0;
+			margin: 0;
+				opacity: 0.8;
+			}
+			p{
+				width: 40px;height: 40px;background: purple;position: absolute;
+			margin: 0;padding: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div style="position: relative;z-index: 10;background: red;top: 10px;left: 0;">
+			<p></p>
+		</div>
+		<div style="position: fixed;z-index: 20;background: yellow;top: 40px;left: 30px;">
+			<p style="z-index: 28;bottom: 0;left: 50%;"></p>
+			<p style="position: absolute;z-index: 1000;bottom: 20%;left: 40%;background: #5BC0DE;"></p>
+		</div>
+		<div style="position: absolute;z-index: 30;background: green;top: 70px;left: 60px;">
+			<p style="position: absolute;z-index: -1;bottom: 0;left: 50%;"></p>
+			<p style="position: absolute;z-index: 1;bottom: 20%;left: 40%;background: blue;"></p>
+		</div>
+		<br /><br /><br /><br />
+		<h3>结论：单独的每一个块状内的z-index都是相对于当前的父级块的层级来算 相当于一个独立的坐标系</h3>
+	</body>
+</html>

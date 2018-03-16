@@ -1,0 +1,170 @@
+<template>
+	<div class="personalzone" title="sanaigets-个人中心">
+		<div class="divide-20"></div>
+		<router-link to="/personalzone/login" v-if="this.$store.state.userInfo.username == null">
+			<div class="info-user divide(0.2rem)">
+				<div class="user-avatar"></div>
+				<p class="user-nick oneline">请登录</p>
+				<p class="user-account">您的APP账号</p>
+				<div class="user-unlogin"></div>
+			</div>
+		</router-link>
+		<router-link to="/" v-else="">
+			<div class="info-user divide(0.2rem)">
+				<div class="user-avatar" :style="{backgroundImage: 'url('+this.$store.state.userInfo.avatar+')'}"></div>
+				<p class="user-nick oneline">{{this.$store.state.userInfo.username}}</p>
+				<p class="user-account">APP账号：{{this.$store.state.userInfo.appcount}}</p>
+				<div class="user-erweima"></div>
+			</div>
+		</router-link>
+		<div class="divide-20"></div>
+			<Personalzonelistitem :info="info[0]"></Personalzonelistitem>
+		<div class="divide-20"></div>
+			<Personalzonelistitemborderbottom :info="info[1]"></Personalzonelistitemborderbottom>
+			<Personalzonelistitemborderbottom :info="info[2]"></Personalzonelistitemborderbottom>
+			<Personalzonelistitemborderbottom :info="info[3]"></Personalzonelistitemborderbottom>
+			<Personalzonelistitem :info="info[4]"></Personalzonelistitem>
+		<div class="divide-20"></div>
+			<Personalzonelistitem :info="info[5]"></Personalzonelistitem>
+		<div class="divide-20"></div>
+			<Personalzonelistitemborderbottom :info="info[6]" v-show="this.$store.state.userInfo.username == null"></Personalzonelistitemborderbottom>			
+			<Personalzonelistitem :info="info[7]" v-show="this.$store.state.userInfo.username == null"></Personalzonelistitem>
+			<Personalzonelistitemborderbottom :info="info[8]" v-show="this.$store.state.userInfo.username != null"></Personalzonelistitemborderbottom>
+			<Personalzonelistitem :info="info[9]" v-show="this.$store.state.userInfo.username != null"></Personalzonelistitem>
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+<script>
+import FooterTab from '@/components/footerTab/FooterTab'
+const Personalzonelistitem = resolve => require(['@/components/personalzone/personalzonelistitem/Personalzonelistitem'], resolve)
+const Personalzonelistitemborderbottom = resolve => require(['@/components/personalzone/personalzonelistitemborderbottom/Personalzonelistitemborderbottom'], resolve)
+
+export default {
+	name:"personalzone",
+    data:function(){
+ 	  	return {
+ 	  		info:[{
+		        	imgUrl: 'http://gfire.top:8080/vueapp/vueProject/src/images/qb.png',
+		        	name: '钱包',
+                    to:this.$store.state.userInfo.username == null?"/personalzone/login":"/personalzone/qianbao"
+	    		},
+	    		{
+		        	imgUrl: 'http://gfire.top:8080/vueapp/vueProject/src/images/sc.png',
+		        	name: '收藏',
+                    to:this.$store.state.userInfo.username == null?"/personalzone/login":"/personalzone/shoucang"
+	    		},
+	    		{
+		        	imgUrl: 'http://gfire.top:8080/vueapp/vueProject/src/images/xc.png',
+		        	name: '相册',
+                    to:this.$store.state.userInfo.username == null?"/personalzone/login":"/personalzone/xiangce"
+	    		},
+	    		{
+		        	imgUrl: 'http://gfire.top:8080/vueapp/vueProject/src/images/kb.png',
+		        	name: '卡包',
+                    to:this.$store.state.userInfo.username == null?"/personalzone/login":"/personalzone/we"
+	    		},
+	    		{
+		        	imgUrl: 'http://gfire.top:8080/vueapp/vueProject/src/images/bq.png',
+		        	name: '表情',
+                    to:this.$store.state.userInfo.username == null?"/personalzone/login":"/personalzone/we"
+	    		},
+	    		{
+		        	imgUrl: 'http://gfire.top:8080/vueapp/vueProject/src/images/shzh.png',
+		        	name: '设置',
+                    to:this.$store.state.userInfo.username == null?"/personalzone/login":"/personalzone/we"
+	    		},
+	    		{
+		        	imgUrl: 'http://gfire.top:8080/vueapp/vueProject/src/images/fjdr.png',
+		        	name: '登录',
+                    to:"/personalzone/login"
+	    		},
+	    		{
+		        	imgUrl: 'http://gfire.top:8080/vueapp/vueProject/src/images/saoyisao.png',
+		        	name: '注册',
+                    to:"/personalzone/register"
+	    		},
+	    		{
+		        	imgUrl: 'http://gfire.top:8080/vueapp/vueProject/src/images/xcx.png',
+		        	name: '修改密码',
+                    to:"/personalzone/we"
+	    		},
+	    		{
+		        	imgUrl: 'http://gfire.top:8080/vueapp/vueProject/src/images/note.png',
+		        	name: '更多信息',
+                    to:"/personalzone/we"
+	    		}
+	    		
+ 	  		]
+ 	  	}
+    },
+	components: {
+		FooterTab,
+		Personalzonelistitem,
+		Personalzonelistitemborderbottom
+	},
+	created(){
+		console.log("未登录:%s",this.$store.state.userInfo.username == null)
+	}
+}
+</script>
+<style lang="less" scoped>
+@import '../../css/common.less';
+.divide-20{
+	.divide(0.2rem)
+}
+.personalzone{
+	margin-bottom: 0.5rem;
+	overflow: hidden;
+}
+.info-user{
+	height: 1rem;
+	background: #fff;
+	position: relative;	
+	font-size: @fontsize;
+	.user-avatar{
+		width: 0.7rem;
+		height: 0.7rem;
+		position: absolute;
+		top: 0.15rem;
+		left: 0.15rem;
+		/*相对路径要以common.less的为基准  绝对路径就无所谓*/
+		.bg("../images/avatar-default.jpg")
+	}
+	p{
+		padding-left: 1rem;
+	}
+	.user-nick{
+		max-width: 1.5rem;
+		height: 0.5rem;
+		line-height: 0.8rem;
+		font-weight: bold;		
+		.fontsize(0.15rem);
+		overflow: hidden;
+	}
+	.user-account{
+		max-width: 1.5rem;
+		height: 0.3rem;
+		line-height: 0.3rem;
+		overflow: hidden;
+	}
+	.user-erweima,.user-unlogin{
+		width: 0.2rem;
+		height: 0.2rem;
+		position: absolute;
+		top: 0.4rem;
+		right: 0.2rem;
+		.bg("../images/avatar-erweima.png")
+	}
+	.user-unlogin{
+		.bg("../images/shzh.png")
+	}
+}	
+.list-box{
+	background: #fff;
+}
+
+
+	
+	
+</style>

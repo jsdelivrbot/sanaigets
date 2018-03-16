@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Author" content="fengfengchup">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>贪吃蛇</title>
+  <style>
+  *{margin:0;padding:0;}
+  #show{width:1000px;height:500px;background:yellow;margin:0 auto;position:relative;margin-top:30px;}
+  #head{position:absolute;width:10px;height:10px;background:red;left:0;top:0;}
+  div{width:10px;height:10px;background:green;position:absolute; }
+  span{display:block;width:10px;height:10px;background:red;position:absolute;}
+  h3{font-size:40px;margin:0 auto;width:1000px;text-align:center;}
+  </style>
+ <script>
+ window.onload=function (){
+		/*var  nandu=Number(prompt("请输入你想挑战的难度对应的数字"+"\n"+"1：神人"+"\n"+"2：癫狂级"+"\n"+"3：凡人"+"\n"+"4：懒人挂机专用"));
+		alert("你选择了难度级别"+nandu+"\n"+"迎接挑战吧~！");
+		nd=4000;//nd=nandu*500;*/
+	var _show=document.getElementById("show");//初始化
+		  var tou=document.getElementById("head");
+		  var bo_dy=document.getElementsByName("bd");//alert(bo_dy.length)
+		  var qsd_x=0,qsd_y=0;
+		  var _timer=0;
+		  var count=count_f=0;
+			sjs_x=0;sjs_y=0;
+			foot();//加载完开始放食物
+			var x=tou.offsetLeft;var y=tou.offsetTop;
+			bo_dy[0].style.left=x;
+			bo_dy[0].style.top=y;
+			bo_dy[5].style.left=bo_dy[4].style.left=bo_dy[3].style.left=bo_dy[2].style.left=bo_dy[1].style.left=0;
+			bo_dy[5].style.top=bo_dy[4].style.top=bo_dy[3].style.top=bo_dy[2].style.top=bo_dy[1].style.top=0;
+	document.onkeydown=function (evt){
+		var e=evt||window.event;
+		aaa=e.keyCode;//alert(aaa);
+		if (aaa==37){count_f=move_aaa;window.clearTimeout(_timer);move_aaa();}	
+		else if(aaa==38){count_f=move_bbb;window.clearTimeout(_timer);move_bbb();}
+		else if(aaa==39){count_f=move_ccc;window.clearTimeout(_timer);move_ccc();}
+		else if(aaa==40){count_f=move_ddd;window.clearTimeout(_timer);move_ddd();}
+		else if(aaa==13){//回车键单次——暂停；再次按——继续；
+				count++;
+				if(count%2!=0){
+					window.clearTimeout(_timer);
+				}else{
+					window.clearTimeout(_timer);
+					_timer=window.setTimeout(count_f,50);
+				}
+			}
+		}
+	
+	function foot(){//生产初始食物或当食物被吃掉时
+		sjs_x=Math.floor(Math.random()*99)*10;
+		sjs_y=Math.floor(Math.random()*49)*10;
+		var _span=document.getElementsByTagName("span")[0];
+		_span.style.left=sjs_x+"px";
+		_span.style.top=sjs_y+"px";
+	}
+	function move_aaa(){
+		var bo_dy=document.getElementsByName("bd");//运动变化坐标计算
+		var x=tou.offsetLeft;var y=tou.offsetTop;		 
+		for (var a=bo_dy.length-1;a>0 ;a-- ){//定位坐标依次后移一个
+			bo_dy[a].style.left=bo_dy[a-1].style.left;
+			bo_dy[a].style.top=bo_dy[a-1].style.top;
+		}
+		if (x<10){
+			gg();
+		}//{x=1000;}
+		 x-=10;tou.style.left=x+"px";tou.style.top=y+"px";
+		 dec();
+		/*	 case 38:y-=10;tou.style.left=x+"px";tou.style.top=y+"px";break;
+		 case 39:x+=10;tou.style.left=x+"px";tou.style.top=y+"px";break;
+		 case 40:y+=10;tou.style.left=x+"px";tou.style.top=y+"px";break;	 */
+		if (x-sjs_x==0	&&y-sjs_y==0){
+			foot();
+			var newbody=document.createElement("div");
+			newbody.setAttribute("name","bd");
+			_show.appendChild(newbody);
+		}
+		window.clearTimeout(_timer);
+		_timer=window.setTimeout(move_aaa,50);
+	}
+	function move_bbb(){
+		var bo_dy=document.getElementsByName("bd");//运动变化坐标计算
+		var x=tou.offsetLeft;var y=tou.offsetTop;		 
+		for (var a=bo_dy.length-1;a>0 ;a-- ){//定位坐标依次后移一个
+			bo_dy[a].style.left=bo_dy[a-1].style.left;
+			bo_dy[a].style.top=bo_dy[a-1].style.top;
+		}
+		if (y<10){
+			gg();
+		}//{y=500;}
+		y-=10;tou.style.left=x+"px";tou.style.top=y+"px";
+		dec();
+		/*	 x-=10;tou.style.left=x+"px";tou.style.top=y+"px";
+	 case 38:break;
+		 case 39:x+=10;tou.style.left=x+"px";tou.style.top=y+"px";break;
+		 case 40:y+=10;tou.style.left=x+"px";tou.style.top=y+"px";break;	 */
+		if (x-sjs_x==0	&&y-sjs_y==0){
+			foot();
+			var newbody=document.createElement("div");
+			newbody.setAttribute("name","bd");
+			_show.appendChild(newbody);
+		}
+		window.clearTimeout(_timer);
+		_timer=window.setTimeout(move_bbb,50)
+	}
+	function move_ccc(){
+		var bo_dy=document.getElementsByName("bd");//运动变化坐标计算
+		var x=tou.offsetLeft;var y=tou.offsetTop;		 
+		for (var a=bo_dy.length-1;a>0 ;a-- ){//定位坐标依次后移一个
+			bo_dy[a].style.left=bo_dy[a-1].style.left;
+			bo_dy[a].style.top=bo_dy[a-1].style.top;
+		}
+		if (x>990){
+			gg();
+		}//{x=-10;}
+		x+=10;tou.style.left=x+"px";tou.style.top=y+"px";
+		dec();
+		/*		 x-=10;tou.style.left=x+"px";tou.style.top=y+"px";
+	 case 38:y-=10;tou.style.left=x+"px";tou.style.top=y+"px";break;
+		 case 39:break;
+		 case 40:y+=10;tou.style.left=x+"px";tou.style.top=y+"px";break;	 */
+		if (x-sjs_x==0	&&y-sjs_y==0){
+			foot();
+			var newbody=document.createElement("div");
+			newbody.setAttribute("name","bd");
+			_show.appendChild(newbody);
+		}
+		window.clearTimeout(_timer);
+		_timer=window.setTimeout(move_ccc,50);
+	}
+	function move_ddd(){
+		var bo_dy=document.getElementsByName("bd");//运动变化坐标计算
+		var x=tou.offsetLeft;var y=tou.offsetTop;		 
+		for (var a=bo_dy.length-1;a>0 ;a-- ){//定位坐标依次后移一个
+			bo_dy[a].style.left=bo_dy[a-1].style.left;
+			bo_dy[a].style.top=bo_dy[a-1].style.top;
+		}		
+		/* x-=10;tou.style.left=x+"px";tou.style.top=y+"px";
+		 case 38:y-=10;tou.style.left=x+"px";tou.style.top=y+"px";break;
+		 case 39:x+=10;tou.style.left=x+"px";tou.style.top=y+"px";break;*/
+		 if (y>490){
+				gg();
+			}//后一个为 可以穿梭型：反方向出现{y=-10;}
+		 y+=10;tou.style.left=x+"px";tou.style.top=y+"px";
+		 dec();
+		if (x-sjs_x==0	&&y-sjs_y==0){
+			foot();
+			var newbody=document.createElement("div");
+			newbody.setAttribute("name","bd");
+			_show.appendChild(newbody);
+		}
+		window.clearTimeout(_timer);
+		_timer=window.setTimeout(move_ddd,50);
+	}	
+	function dec(){//判断自身是否碰撞到身体 为真则游戏失败
+		for (var bj=1;bj<bo_dy.length;bj++ ){
+			if (bo_dy[0].offsetLeft==bo_dy[bj].offsetLeft){
+				if(bo_dy[0].offsetTop==bo_dy[bj].offsetTop){
+					gg();
+				}
+			}
+		}
+	}
+	function gg(){
+		var _gg=confirm("Game Over!");
+		if(_gg){
+			location.reload(true);
+		}
+	}
+ }  
+ </script>
+ </head>
+ <body>
+<h3>单击回车键=暂停，再次按=继续<h3>
+	<div	id="show">
+		<div		name="bd" id="head"></div>
+		<div		name="bd"></div>
+		<div		name="bd"></div>
+		<div		name="bd"></div>
+		<div		name="bd"></div>
+		<div		name="bd"></div>
+		<span></span>
+	</div>
+ </body>
+</html>

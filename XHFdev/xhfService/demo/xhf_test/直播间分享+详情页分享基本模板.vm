@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>彩贝财经 | 直播间</title>
+	<!--\#include file="/include/header.html" -->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="full-screen" content="yes">
+	<meta name="browsermode" content="application">
+	<meta name="x5-orientation" content="portrait">
+	<meta name="x5-fullscreen" content="true">
+	<meta name="x5-page-mode" content="app">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta content="telephone=no" name="format-detection" />
+	<meta content="email=no" name="format-detection" />
+	<meta name="apple-itunes-app" content="app-id=1150799097, affiliate-data=myAffiliateData, app-argument=caibei://">
+	<link rel="stylesheet" type="text/css" href="https://m.icaibei.net/css/bottomfixed-open.css" />
+	<script src="//static.cdn.icaibei.net/static/common/js/jquery.min.js" charset="utf-8"></script>
+	<script src="//static.cdn.icaibei.net/static/common/js/rem6.js" charset="utf-8"></script>
+	<script src="//static.cdn.icaibei.net/static/common/js/touch.js" charset="utf-8"></script>
+	<style type="text/css">
+		#video{
+			width: 100%;
+			height: 100%;
+			position: relative;
+			margin: 0 auto;
+			background-color: #000000;
+		}
+		.bottombox_btn{height: 0.34rem;}
+		.btn_download{background-image: url(/images/detail/fc_ljxz.png);}
+		.btn_openapp{background-image: url(/images/detail/fc_dakai.png);}
+		.headbar{height: 40vh;background: blue;}
+		/*main*/
+		.main{min-height: 0.5rem;height:auto !important;margin-bottom: 0.68rem;background: red;}
+	</style>
+</head>
+<body>
+<!--主题区-->	
+	<div class="headbar">
+		
+	</div>
+	<section class="main">
+		
+	</section>
+	
+	
+	
+<!--下载or打开APP-->
+	<div class="bottomfixed-open none">
+		<!--下载app-->
+		<div class="h5_download bottombox nodown none">
+			<div class="bottom_logo"></div>
+			<div class="bottom_tit">彩贝财经APP</div>
+			<p class="bottom_info">问牛人股票，跟牛人赚钱</p>
+			<a class="bottombox_btn btn_download" href="https://m.icaibei.net/downloadapp.html"></a>
+		</div>
+		<!--h5打开app-->
+		<div class="h5_openapp bottombox downed none">
+			<div class="bottom_logo"></div>
+			<div class="bottom_tit">彩贝财经APP</div>
+			<p class="bottom_info">问牛人股票，跟牛人赚钱</p>
+			<a class="bottombox_btn btn_openapp open"></a>				
+		</div>
+		<!--微信提示换浏览器方式-->
+		<div class="ts none">
+			<div class="ts_pic"></div>
+		</div>
+	</div>
+<!--\#include file="/include/share.html" -->
+<script type="text/javascript">
+	$(function () {
+		/*
+		window.shareData = {
+			"timeLineLink": "" + location.href,
+			"sendFriendLink": "" + location.href,
+			"weiboLink": "" + location.href,
+			"tTitle": "2017如何建仓布局，苏渝传授抓牛股绝招",
+			"tContent": "投资明星苏渝传授抓牛股绝招，布局2017年投资机会。邀请好友报名就赚现金红包。",
+			"fTitle": "2017如何建仓布局，苏渝传授抓牛股绝招",
+			"fContent": "投资明星苏渝传授抓牛股绝招，布局2017年投资机会。邀请好友报名就赚现金红包。",
+			"wContent": "投资明星苏渝传授抓牛股绝招，布局2017年投资机会。邀请好友报名就赚现金红包。",
+			"imgUrl":"https://m.icaibei.net/images/course/suyu/sy.jpg"
+		};//不需要特殊宣传语则默认
+		*/
+		//其他逻辑代码
+		window.aftercbBridgeReady = function () {
+			console.log("aftercbBridgeReady123");
+		}
+		downloadCheck();
+		/*
+		 *下载Or打开 
+		 * */		
+		function downloadCheck() {
+			if (/isappinstalled=0/.test(location.href)) {
+			//***俩个控制类	1：nodown/downed指向盒子整体-根据是否有isappinstalled=0参数进行整体显示，2：open用于操作默认情况下的点击目标*********
+				$(".nodown").removeClass("none");
+				console.log("检测到isappinstalled=0，提示点击下载app");					
+			} else {
+                //1：默认（已下载）显示直接唤醒app按钮open
+                $(".downed").removeClass("none");
+                $(".open").on("tap",open);					
+			}				
+			setTimeout(bottomfixedshow, 2000);
+		}		
+		function bottomfixedshow() {
+			$(".bottomfixed-open").removeClass("none");
+		}
+		function isWeiXin() {
+			var ua = window.navigator.userAgent.toLowerCase();
+			if(ua.match(/MicroMessenger/i) == 'micromessenger') {
+				return true
+			} else{
+				return false
+			}
+		}
+		function  open() {
+			if (navigator.userAgent.match(/(iPhone|iPad|iPod|iOS)/i)) {
+				if (isWeiXin()) {
+                    $(".ts").removeClass("none");
+					$(".ts").on("tap",function () {
+						$(".ts").addClass("none");
+					});
+				} else {
+                    var loadDateTime = new Date();
+				 	window.setTimeout(function() {
+					    var timeOutDateTime = new Date();
+					    if (timeOutDateTime - loadDateTime > 5000) {
+					    	window.location = "https://m.icaibei.net/downloadapp.html";			
+					    }
+					},250);
+				  	window.location = "caibei://";
+				}			    
+			} else if (navigator.userAgent.match(/android/i)) {
+			    var state = null;
+			    if (isWeiXin()) {
+                    $(".ts").removeClass("none");
+					$(".ts").on("tap",function () {
+						$(".ts").addClass("none");
+					});
+				} else {
+					try {
+				   		state = window.open("caibei://", '_blank');
+				    } catch(e) {
+				  		if (state) {
+					   		window.close();
+					   } else {						   		
+	                        window.location = "https://m.icaibei.net/downloadapp.html";
+					    }
+				 	}
+			    }				    
+			}
+		}
+						
+											
+	})	
+	</script>
+</body>
+
+</html>

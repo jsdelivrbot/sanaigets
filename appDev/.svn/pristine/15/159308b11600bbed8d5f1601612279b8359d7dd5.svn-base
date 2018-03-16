@@ -1,0 +1,27 @@
+<template>
+	<div class="personalzone">
+		我是个人中心
+		
+		
+		
+		
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+
+<script>
+import FooterTab from 'components/FooterTab'
+
+
+export default {
+	name:"personalzone",
+	components: {
+		FooterTab
+	}
+}
+</script>
+
+<style lang="less" scoped>
+	
+</style>

@@ -1,0 +1,22 @@
+<template>
+	<div class="register">
+		我是注册页面
+		<!--底部tab-->
+    	<FooterTab></FooterTab>
+	</div>
+</template>
+
+<script>
+import FooterTab from 'components/FooterTab'
+
+export default {
+	name:"register",
+	components: {
+		FooterTab
+	}
+}
+</script>
+
+<style lang="less" scoped>
+	
+</style>

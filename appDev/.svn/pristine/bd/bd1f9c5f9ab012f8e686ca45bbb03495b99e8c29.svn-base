@@ -1,0 +1,114 @@
+{
+  "_args": [
+    [
+      "selenium-server@^3.0.1",
+      "C:\\Users\\SEELE\\Desktop\\appDev\\public\\vueapp\\vueProject"
+    ]
+  ],
+  "_cnpm_publish_time": 1492809586109,
+  "_from": "selenium-server@>=3.0.1 <4.0.0",
+  "_hasShrinkwrap": false,
+  "_id": "selenium-server@3.4.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/selenium-server",
+  "_nodeVersion": "7.9.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/selenium-server-3.4.0.tgz_1492809585270_0.46464661858044565"
+  },
+  "_npmUser": {
+    "email": "me@arty.name",
+    "name": "arty.name"
+  },
+  "_npmVersion": "4.2.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "selenium-server",
+    "raw": "selenium-server@^3.0.1",
+    "rawSpec": "^3.0.1",
+    "scope": null,
+    "spec": ">=3.0.1 <4.0.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/selenium-server/download/selenium-server-3.4.0.tgz",
+  "_shasum": "f9303656d956c8d6c856e4942167e0dec97fa7a8",
+  "_shrinkwrap": null,
+  "_spec": "selenium-server@^3.0.1",
+  "_where": "C:\\Users\\SEELE\\Desktop\\appDev\\public\\vueapp\\vueProject",
+  "author": {
+    "email": "developers@didit.com",
+    "name": "Didit Tech"
+  },
+  "bin": {
+    "selenium": "./bin/selenium"
+  },
+  "bugs": {
+    "url": "https://github.com/eugeneware/selenium-server/issues"
+  },
+  "contributors": [
+    {
+      "email": "eugene@noblesamurai.com",
+      "name": "Eugene Ware"
+    },
+    {
+      "email": "datrio@gmail.com",
+      "name": "Dariusz Siedlecki"
+    },
+    {
+      "email": "me@arty.name",
+      "name": "Artemy Tregubenko"
+    },
+    {
+      "email": "mucsi_96@yahoo.com",
+      "name": "Igor Muchychka"
+    }
+  ],
+  "dependencies": {},
+  "description": "Selenium in an npm package",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "noattachment": false,
+    "shasum": "f9303656d956c8d6c856e4942167e0dec97fa7a8",
+    "size": 18802357,
+    "tarball": "http://registry.npm.taobao.org/selenium-server/download/selenium-server-3.4.0.tgz"
+  },
+  "gitHead": "e09c9fe9fcce4c9488d1d81f6101e06280c35757",
+  "homepage": "https://github.com/eugeneware/selenium-server#readme",
+  "keywords": [
+    "bdd",
+    "tdd",
+    "selenium",
+    "server",
+    "standalone",
+    "testing"
+  ],
+  "license": "BSD",
+  "main": "lib/selenium-server.js",
+  "maintainers": [
+    {
+      "email": "me@arty.name",
+      "name": "arty.name"
+    },
+    {
+      "email": "eugene@noblesamurai.com",
+      "name": "eugeneware"
+    }
+  ],
+  "name": "selenium-server",
+  "optionalDependencies": {},
+  "publish_time": 1492809586109,
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/eugeneware/selenium-server.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "3.4.0"
+}

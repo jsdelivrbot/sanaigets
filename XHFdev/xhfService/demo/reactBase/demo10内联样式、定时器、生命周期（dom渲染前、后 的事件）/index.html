@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<title>内联样式、定时器、生命周期（dom渲染前、后 的事件）</title>
+  	<meta charset="UTF-8"/>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      var Hello = React.createClass({
+        getInitialState: function () {
+          return {
+            opacity: 1.0
+          };
+        },
+        
+        
+				/*
+				<!--生命周期
+				  componentWillMount 组件出现前 就是dom还没有渲染到html文档里面
+					componentDidMount 组件渲染完成 已经出现在dom文档里
+					可以再各个周期实现特定的操作
+				-->
+				*/
+        componentDidMount: function () {					//定时器降低透明度
+          this.timer = setInterval(function () {
+            var opacity = this.state.opacity;
+            opacity -= .05;
+            if (opacity < 0.1) {
+              opacity = 1.0;
+            }
+            this.setState({
+              opacity: opacity
+            });
+          }.bind(this), 100);
+        },
+
+        render: function () {
+          return (
+            <div style={{opacity: this.state.opacity}}>
+              Hello {this.props.name}
+            </div>
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <Hello name="world"/>,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
